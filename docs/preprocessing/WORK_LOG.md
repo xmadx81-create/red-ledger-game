@@ -76,10 +76,36 @@ GitHub 기본 폴더 구조 정리
 - 레퍼런스와 컨셉 이미지는 `assets/` 아래에서 관리한다.
 - 실제 실행 코드는 `src/` 아래에서 관리한다.
 
+---
+
+### 작업 주제 3
+
+GitHub 작업 규칙, 문서 저장 규칙, AI 협업 인수인계 기준 정리
+
+### 진행 내용
+
+1. GitHub 작업 규칙 문서 `docs/operations/GITHUB_WORKFLOW.md`를 생성했다.
+2. 문서 저장 규칙 문서 `docs/operations/DOCUMENT_RULES.md`를 생성했다.
+3. AI 협업 인수인계 문서 `docs/operations/AI_COLLABORATION_GUIDE.md`를 생성했다.
+4. `CHECKLIST.md`에서 다음 항목을 완료 처리했다.
+   - 이슈/브랜치/커밋 규칙 정리
+   - 문서 저장 규칙 정리
+   - Claude AI와 공유할 프로젝트 기준 문서 정리
+
+### 결정 사항
+
+- GitHub를 프로젝트의 최종 기준 저장소로 사용한다.
+- Google Drive는 원본/대용량/공유 자료 보관소로 사용한다.
+- Google Sheets는 표 데이터와 밸런싱 데이터를 관리한다.
+- Figma는 UI/UX와 와이어프레임을 관리한다.
+- Google Calendar는 일정과 마감일을 관리한다.
+- Gmail은 알림, 공유, 외부 전달 기록을 관리한다.
+- 새 세션 또는 외부 AI가 이어받을 때는 `AI_COLLABORATION_GUIDE.md`를 기준 인수인계 문서로 사용한다.
+
 ### 다음 작업
 
-1. 이슈/브랜치/커밋 규칙 정리
-2. 문서 저장 규칙 정리
-3. Claude AI와 공유할 프로젝트 기준 문서 정리
-4. Google Drive 저장 위치 결정
-5. Google Sheets 관리표 구조 초안 작성
+1. Google Drive 저장 위치 결정
+2. Google Sheets 관리표 구조 초안 작성
+3. Figma 화면 설계 기준 정리
+4. Calendar 일정 운영 기준 정리
+5. Gmail 알림 및 공유 기준 정리
