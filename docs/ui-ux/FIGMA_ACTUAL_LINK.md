@@ -2,19 +2,7 @@
 
 이 문서는 `red-ledger-game` 프로젝트의 실제 Figma UI/UX 파일 링크와 생성 결과를 기록합니다.
 
-## 생성 일자
-
-```text
-2026-06-15
-```
-
-## Figma 파일명
-
-```text
-red-ledger-game_적혈의장부_UIUX
-```
-
-## Figma 링크
+## 최종 기준 Figma 파일
 
 ```text
 https://www.figma.com/design/JmrFNGQidVXyZu52IdmgxK
@@ -26,6 +14,18 @@ https://www.figma.com/design/JmrFNGQidVXyZu52IdmgxK
 JmrFNGQidVXyZu52IdmgxK
 ```
 
+## Figma 파일명 기준
+
+```text
+red-ledger-game_적혈의장부_UIUX
+```
+
+## 작업 일자
+
+```text
+2026-06-15
+```
+
 ## 공식 핵심 문구
 
 ```text
@@ -34,10 +34,10 @@ JmrFNGQidVXyZu52IdmgxK
 다크 행정 누아르 운영 시뮬레이션
 ```
 
-## 생성한 페이지
+## 최종 기준 페이지
 
 ```text
-03_Wireframe_Mobile
+적혈의 장부_MVP_모바일_와이어프레임_최종기준
 ```
 
 ## 생성한 첫 화면 와이어프레임
@@ -66,8 +66,14 @@ SCR-009 메인 운영 화면
 
 ```text
 Figma 파일 생성 완료
+최종 기준 Figma 파일 확정
 모바일 첫 화면 흐름 와이어프레임 생성 완료
+GitHub 실제 Figma 링크 기록 완료
 ```
+
+## 참고 사항
+
+사용자가 중간에 제공한 다른 Figma 파일 링크도 있었으나, 최종 기준은 `JmrFNGQidVXyZu52IdmgxK` 파일로 통일합니다.
 
 ## 다음 작업
 
