@@ -1,0 +1,57 @@
+[
+  {
+    "id": "CHR-001",
+    "name": "서윤재",
+    "title": "혈연센터 실장",
+    "species": "인간형 또는 하이브리드 가능성 보류",
+    "initialRelation": "플레이어 본인 또는 대리자",
+    "rpgRole": "지휘관/관리자/밸런서",
+    "ledgerRole": "장부 관리자/중용 판단자",
+    "grade": "SR",
+    "reactionDefault": "중용 판단을 요구한다."
+  },
+  {
+    "id": "CHR-002",
+    "name": "김도현",
+    "title": "야간 의사/혈액 처리 담당",
+    "species": "인간",
+    "initialRelation": "협력자",
+    "rpgRole": "힐러/연금술사",
+    "ledgerRole": "야간 처리자/의료 기록 조정자",
+    "grade": "SR",
+    "reactionDefault": "과도한 야간 업무에 부담을 느낀다."
+  },
+  {
+    "id": "CHR-003",
+    "name": "박세연",
+    "title": "물류 협력자/외부 운송 라인 담당",
+    "species": "인간 또는 하이브리드 가능성 보류",
+    "initialRelation": "협력자이지만 완전한 아군은 아님",
+    "rpgRole": "로그/상인/정찰자",
+    "ledgerRole": "물류 브로커/암거래 추적자",
+    "grade": "SR",
+    "reactionDefault": "외부 흐름과 수상한 거래를 감지한다."
+  },
+  {
+    "id": "CHR-004",
+    "name": "정하린",
+    "title": "탐사 기자",
+    "species": "인간",
+    "initialRelation": "외부 위협",
+    "rpgRole": "레인저/추적자/심문관",
+    "ledgerRole": "언론 감시자/폭로 위험/잠재적 협력자",
+    "grade": "SSR",
+    "reactionDefault": "기록의 불일치를 집요하게 추적한다."
+  },
+  {
+    "id": "CHR-005",
+    "name": "엘리엇 카르테인",
+    "title": "카르테인 가문 원로",
+    "species": "뱀파이어",
+    "initialRelation": "상위 명령권자/압박자",
+    "rpgRole": "군주/고위 보스/후원자",
+    "ledgerRole": "가문 수요의 목소리/정치적 압박자",
+    "grade": "SSR 또는 EX",
+    "reactionDefault": "가문의 수요와 질서를 우선한다."
+  }
+]
