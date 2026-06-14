@@ -132,11 +132,45 @@ Google Drive 저장 구조 기준 정리
 - Google Drive에는 비밀번호, API 키, 토큰, 비밀키를 저장하지 않는다.
 - 새 세션에서는 GitHub의 `GOOGLE_DRIVE_STRUCTURE.md`를 먼저 확인한 뒤 실제 Drive 폴더를 찾는다.
 
+---
+
+### 작업 주제 5
+
+Google Sheets 관리표 구조 기준 정리
+
+### 진행 내용
+
+1. Google Sheets 관리표 구조 문서 `docs/data-design/GOOGLE_SHEETS_STRUCTURE.md`를 생성했다.
+2. 권장 스프레드시트명을 `red-ledger-game_적혈의장부_관리표`로 결정했다.
+3. 다음 탭 구조를 설계했다.
+   - `00_대시보드`
+   - `01_작업목록`
+   - `02_MVP_7일구조`
+   - `03_자원`
+   - `04_캐릭터`
+   - `05_이벤트`
+   - `06_선택지`
+   - `07_밸런싱`
+   - `08_UI화면목록`
+   - `99_변경로그`
+4. 실제 Google Sheets에 붙여 넣을 수 있는 CSV 템플릿 3종을 생성했다.
+   - `docs/data-design/templates/task-list-template.csv`
+   - `docs/data-design/templates/resources-template.csv`
+   - `docs/data-design/templates/mvp-7days-template.csv`
+5. `CHECKLIST.md`에서 Google Sheets 관리표 구조 관련 항목을 완료 처리했다.
+6. 실제 Google Sheets 파일 생성과 CSV 반영은 별도 확인 항목으로 남겼다.
+
+### 결정 사항
+
+- Google Sheets는 작업표, 자원표, 캐릭터표, 이벤트표, 선택지표, 밸런싱표를 관리하는 도구로 사용한다.
+- GitHub는 Sheets 구조의 기준 문서와 변경 이력을 보관한다.
+- Sheets 구조 변경 시 `99_변경로그`에 먼저 기록하고, 확정 후 GitHub 문서에도 반영한다.
+- 1차 MVP는 `02_MVP_7일구조` 탭을 기준으로 Day 1~Day 7 구조를 관리한다.
+
 ### 다음 작업
 
-1. Google Drive 실제 폴더 생성 확인
-2. Google Drive 공유 권한 확인
-3. Google Sheets 관리표 구조 초안 작성
-4. Figma 화면 설계 기준 정리
-5. Calendar 일정 운영 기준 정리
-6. Gmail 알림 및 공유 기준 정리
+1. Google Sheets 실제 파일 생성 확인
+2. CSV 템플릿을 실제 시트에 반영
+3. Figma 화면 설계 기준 정리
+4. Calendar 일정 운영 기준 정리
+5. Gmail 알림 및 공유 기준 정리
