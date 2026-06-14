@@ -102,10 +102,41 @@ GitHub 작업 규칙, 문서 저장 규칙, AI 협업 인수인계 기준 정리
 - Gmail은 알림, 공유, 외부 전달 기록을 관리한다.
 - 새 세션 또는 외부 AI가 이어받을 때는 `AI_COLLABORATION_GUIDE.md`를 기준 인수인계 문서로 사용한다.
 
+---
+
+### 작업 주제 4
+
+Google Drive 저장 구조 기준 정리
+
+### 진행 내용
+
+1. Google Drive 저장 구조 문서 `docs/operations/GOOGLE_DRIVE_STRUCTURE.md`를 생성했다.
+2. Google Drive 최상위 폴더명을 `red-ledger-game_적혈의장부`로 결정했다.
+3. Google Drive 하위 폴더 구조를 다음과 같이 정리했다.
+   - `00_admin/`
+   - `01_planning/`
+   - `02_references/`
+   - `03_design/`
+   - `04_data/`
+   - `05_exports/`
+   - `06_meetings/`
+   - `99_archive/`
+4. GitHub와 Google Drive의 역할 분리를 명확히 정리했다.
+5. `CHECKLIST.md`에서 Google Drive 저장 구조 관련 항목을 완료 처리했다.
+6. 실제 Google Drive 폴더 생성 및 공유 권한 확인은 별도 확인 항목으로 남겼다.
+
+### 결정 사항
+
+- GitHub는 최종 기준 문서와 이력 관리용 저장소로 사용한다.
+- Google Drive는 원본 파일, 대용량 자료, 공유용 문서 보관소로 사용한다.
+- Google Drive에는 비밀번호, API 키, 토큰, 비밀키를 저장하지 않는다.
+- 새 세션에서는 GitHub의 `GOOGLE_DRIVE_STRUCTURE.md`를 먼저 확인한 뒤 실제 Drive 폴더를 찾는다.
+
 ### 다음 작업
 
-1. Google Drive 저장 위치 결정
-2. Google Sheets 관리표 구조 초안 작성
-3. Figma 화면 설계 기준 정리
-4. Calendar 일정 운영 기준 정리
-5. Gmail 알림 및 공유 기준 정리
+1. Google Drive 실제 폴더 생성 확인
+2. Google Drive 공유 권한 확인
+3. Google Sheets 관리표 구조 초안 작성
+4. Figma 화면 설계 기준 정리
+5. Calendar 일정 운영 기준 정리
+6. Gmail 알림 및 공유 기준 정리
