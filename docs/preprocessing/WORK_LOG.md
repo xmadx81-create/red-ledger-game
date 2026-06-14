@@ -226,8 +226,36 @@ Google Calendar 일정 운영 기준 정리
 - 일정 완료 후에는 GitHub `CHECKLIST.md` 또는 관련 작업표에 반영한다.
 - 중요한 일정 변경은 `WORK_LOG.md` 또는 Sheets `99_변경로그`에 남긴다.
 
+---
+
+### 작업 주제 8
+
+Gmail 알림 및 공유 기준 정리
+
+### 진행 내용
+
+1. Gmail 알림 및 공유 기준 문서 `docs/operations/GMAIL_STRUCTURE.md`를 생성했다.
+2. Gmail 공유/검토 메일 템플릿 `docs/operations/templates/gmail-share-template.md`를 생성했다.
+3. 권장 Gmail 라벨을 `red-ledger-game`으로 결정했다.
+4. 하위 라벨 구조를 GitHub, Drive, Sheets, Figma, Calendar, 공유, 검토, 보관으로 정리했다.
+5. 프로젝트 관련 메일 제목 규칙을 `[red-ledger-game] 분류 - 제목` 형식으로 정리했다.
+6. 공유 메일, 검토 요청 메일, 외부 AI 전달 메일 템플릿을 작성했다.
+7. `CHECKLIST.md`에서 Gmail 알림/공유 체계 확정 항목을 완료 처리했다.
+8. 실제 Gmail 라벨 생성 및 알림 필터 연결은 별도 확인 항목으로 남겼다.
+
+### 결정 사항
+
+- Gmail은 프로젝트 관련 알림, 공유, 전달, 외부 협업 기록을 담당한다.
+- 프로젝트 관련 메일은 `red-ledger-game` 라벨 또는 하위 라벨로 분류한다.
+- GitHub/Drive/Sheets/Figma/Calendar에서 오는 알림은 각 하위 라벨로 구분한다.
+- 외부 AI 또는 협업자에게 자료를 전달할 때는 메일 템플릿을 사용한다.
+- Gmail에도 비밀번호, API 키, Personal Access Token, GitHub 비밀키, 복구 코드를 저장하지 않는다.
+
 ### 다음 작업
 
-1. Google Calendar 실제 캘린더 생성 확인
-2. 전처리 주요 일정 실제 등록 확인
-3. Gmail 알림 및 공유 기준 정리
+1. 실제 Google Drive 폴더 생성 확인
+2. 실제 Google Sheets 파일 생성 확인
+3. 실제 Figma 파일 생성 확인
+4. 실제 Google Calendar 생성 확인
+5. 실제 Gmail 라벨 생성 확인
+6. 본격 기획 단계 진입 승인
