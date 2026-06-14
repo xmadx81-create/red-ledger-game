@@ -23,11 +23,14 @@
 
 ## 2. Google Drive 준비
 
-- [ ] 게임 프로젝트용 최상위 폴더 생성 또는 지정
-- [ ] 기획 문서 저장 폴더 지정
-- [ ] 이미지/레퍼런스 자료 저장 폴더 지정
-- [ ] 회의록/작업기록 저장 폴더 지정
-- [ ] GitHub 문서와 Google Drive 문서의 역할 구분
+- [x] Google Drive 저장 구조 기준 문서 작성
+- [x] 게임 프로젝트용 최상위 폴더명 결정: `red-ledger-game_적혈의장부`
+- [x] 기획 문서 저장 폴더 지정: `01_planning/`
+- [x] 이미지/레퍼런스 자료 저장 폴더 지정: `02_references/`
+- [x] 회의록/작업기록 저장 폴더 지정: `06_meetings/`
+- [x] GitHub 문서와 Google Drive 문서의 역할 구분
+- [ ] Google Drive 실제 폴더 생성 확인
+- [ ] Google Drive 공유 권한 확인
 
 ## 3. Google Sheets 준비
 
@@ -62,7 +65,7 @@
 ## 7. 전처리 단계 완료 조건
 
 - [x] GitHub 문서 구조 확정
-- [ ] Google Drive 저장 구조 확정
+- [x] Google Drive 저장 구조 확정
 - [ ] Google Sheets 관리표 1차 생성
 - [ ] Figma 기본 화면 설계 시작 가능 상태
 - [ ] Calendar 일정 체계 확정
