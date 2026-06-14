@@ -1,0 +1,4 @@
+작업ID,분류,작업명,설명,우선순위,상태,관련도구,관련문서,담당,시작일,마감일,완료일,비고
+TASK-001,전처리,GitHub 저장소 연결,ChatGPT와 red-ledger-game 저장소 연결 확인,높음,완료,GitHub,docs/preprocessing/WORK_LOG.md,백무결,2026-06-15,2026-06-15,2026-06-15,
+TASK-002,전처리,Google Drive 저장 구조 정리,Drive 폴더 구조와 역할 기준 정리,높음,완료,Google Drive,docs/operations/GOOGLE_DRIVE_STRUCTURE.md,백무결,2026-06-15,2026-06-15,2026-06-15,
+TASK-003,전처리,Google Sheets 구조 초안 작성,관리표 탭과 헤더 구조 설계,높음,진행중,Google Sheets,docs/data-design/GOOGLE_SHEETS_STRUCTURE.md,백무결,2026-06-15,,,
