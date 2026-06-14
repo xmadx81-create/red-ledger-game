@@ -202,9 +202,32 @@ Figma 화면 설계 기준 정리
 - 핵심 화면 우선순위는 메인 운영 화면, 이벤트 발생 화면, 선택 결과 화면, 일차 시작 보고, 일차 종료 보고 순서로 잡는다.
 - Figma는 화면 구조와 시각 흐름을 담당하고, GitHub는 화면 기준과 변경 이력을 담당한다.
 
+---
+
+### 작업 주제 7
+
+Google Calendar 일정 운영 기준 정리
+
+### 진행 내용
+
+1. Google Calendar 일정 운영 기준 문서 `docs/operations/CALENDAR_STRUCTURE.md`를 생성했다.
+2. Calendar 일정 설명 템플릿 `docs/operations/templates/calendar-event-template.md`를 생성했다.
+3. 권장 캘린더명을 `red-ledger-game_적혈의장부_일정`으로 결정했다.
+4. 일정 분류를 전처리, 기획, 데이터, UIUX, 개발, 검토, 마감으로 정리했다.
+5. 일정 제목 규칙을 `[분류] 작업명` 형식으로 정리했다.
+6. GitHub, Google Sheets, Google Calendar가 일정/마감일/완료 상태를 어떻게 연결할지 정리했다.
+7. `CHECKLIST.md`에서 Calendar 일정 체계 확정 항목을 완료 처리했다.
+8. 실제 Google Calendar 생성 및 전처리 주요 일정 등록은 별도 확인 항목으로 남겼다.
+
+### 결정 사항
+
+- Google Calendar는 실제 시간 기반 리마인드와 일정 관리를 담당한다.
+- Google Sheets `01_작업목록`의 마감일과 Calendar 일정은 일치시킨다.
+- 일정 완료 후에는 GitHub `CHECKLIST.md` 또는 관련 작업표에 반영한다.
+- 중요한 일정 변경은 `WORK_LOG.md` 또는 Sheets `99_변경로그`에 남긴다.
+
 ### 다음 작업
 
-1. Figma 실제 파일 생성 확인
-2. Figma 화면ID와 Google Sheets `08_UI화면목록` 연결 확인
-3. Calendar 일정 운영 기준 정리
-4. Gmail 알림 및 공유 기준 정리
+1. Google Calendar 실제 캘린더 생성 확인
+2. 전처리 주요 일정 실제 등록 확인
+3. Gmail 알림 및 공유 기준 정리
