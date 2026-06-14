@@ -91,8 +91,30 @@ MVP 7일 운영 구조 작성
 - Day 6에서 암거래망과 복합 위기를 본격적으로 드러낸다.
 - Day 7은 결과 평가와 엔딩 분기를 담당한다.
 
+---
+
+### 작업 주제 5
+
+핵심 자원 시스템 작성
+
+### 진행 내용
+
+1. `docs/system-design/CORE_RESOURCE_SYSTEM.md`를 생성했다.
+2. 핵심 운영 자원, 외부 위험 지표, 내부/이면 위험 지표를 구분했다.
+3. 혈액 재고, 혈액 수요, 가문 자금, 인간 신뢰, 언론 노출, 보안 등급, 가문 만족도, 조직 불안, 암거래 단서를 MVP 핵심 지표로 정의했다.
+4. 수요/공급 판정식과 공급 차이에 따른 결과 방향을 정리했다.
+5. 자원별 안전 구간과 중용 시스템 방향을 정리했다.
+6. 실패 조건과 일일 종료 보고 항목을 정리했다.
+
+### 결정 사항
+
+- MVP의 주요 자원은 기본적으로 0~100 범위를 사용한다.
+- 핵심 목표는 자원 최대화가 아니라 안전 구간 유지다.
+- `혈액 재고 - 혈액 수요`를 MVP의 기본 수요/공급 판정 기준으로 사용한다.
+- 플레이어 UI에는 변화량을 모두 숫자로 노출하지 않고 요약 표현을 우선 사용한다.
+
 ### 다음 작업
 
-1. `docs/system-design/CORE_RESOURCE_SYSTEM.md` 작성
-2. `docs/game-design/CHARACTER_BRIEF.md` 작성
-3. `docs/game-design/EVENT_STRUCTURE.md` 작성
+1. `docs/game-design/CHARACTER_BRIEF.md` 작성
+2. `docs/game-design/EVENT_STRUCTURE.md` 작성
+3. `docs/ui-ux/FIRST_SCREEN_FLOW.md` 작성
