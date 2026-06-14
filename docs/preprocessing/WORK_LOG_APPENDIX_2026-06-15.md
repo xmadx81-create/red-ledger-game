@@ -39,9 +39,35 @@ docs/preprocessing/WORK_LOG_APPENDIX_2026-06-15.md
   5. `docs/game-design/EVENT_STRUCTURE.md`
   6. `docs/ui-ux/FIRST_SCREEN_FLOW.md`
 
+---
+
+## 작업 주제 10
+
+본격 기획 단계 진입 최종 승인 반영
+
+## 진행 내용
+
+1. 사용자가 `본격 기획 단계 진입 승인`을 명시했다.
+2. `docs/preprocessing/PHASE_GATE_PREPROCESSING_TO_PLANNING.md`의 승인 상태를 `승인 완료`로 갱신했다.
+3. 승인 기록에 승인일, 승인자, 승인 내용을 기록했다.
+4. `docs/preprocessing/CHECKLIST.md`의 `본격 기획 단계 진입 최종 승인` 항목을 완료 처리했다.
+
+## 승인 기록
+
+```text
+승인일: 2026-06-15
+승인자: 백무결
+승인 내용: 전처리 단계 종료 및 본격 기획 단계 진입
+```
+
+## 결정 사항
+
+- 전처리 단계는 기준 설계 관점에서 종료한다.
+- 실제 Google Drive, Google Sheets, Figma, Google Calendar, Gmail 생성 확인은 본격 기획 단계와 병행한다.
+- 다음 작업은 본격 기획 단계 첫 문서 `docs/game-design/GAME_OVERVIEW.md` 작성이다.
+
 ## 다음 작업
 
-1. 사용자의 본격 기획 단계 진입 최종 승인 확인
-2. 승인 시 `PHASE_GATE_PREPROCESSING_TO_PLANNING.md` 승인 상태 갱신
-3. 승인 시 `CHECKLIST.md`의 `본격 기획 단계 진입 최종 승인` 완료 처리
-4. 본격 기획 단계 첫 문서 `GAME_OVERVIEW.md` 작성 시작
+1. `docs/game-design/GAME_OVERVIEW.md` 작성
+2. `docs/game-design/MVP_7DAYS_PLAN.md` 작성
+3. `docs/system-design/CORE_RESOURCE_SYSTEM.md` 작성
