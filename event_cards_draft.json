@@ -1,0 +1,62 @@
+[
+  {
+    "id": "event_001",
+    "title": "내부 직원이 야간 혈액 운송 기록을 발견",
+    "status": "draft"
+  },
+  {
+    "id": "event_002",
+    "title": "기자가 야간 운송 차량을 촬영",
+    "status": "draft"
+  },
+  {
+    "id": "event_003",
+    "title": "희귀 혈액이 예상보다 부족하다",
+    "status": "draft"
+  },
+  {
+    "id": "event_004",
+    "title": "가문 원로가 특별 혈액을 요구",
+    "status": "draft"
+  },
+  {
+    "id": "event_005",
+    "title": "인간 협력자가 죄책감을 호소",
+    "status": "draft"
+  },
+  {
+    "id": "event_006",
+    "title": "오염 혈액이 발견된다",
+    "status": "draft"
+  },
+  {
+    "id": "event_007",
+    "title": "보건청 감사 일정이 앞당겨진다",
+    "status": "draft"
+  },
+  {
+    "id": "event_008",
+    "title": "신규 헌혈 캠페인이 크게 성공한다",
+    "status": "draft"
+  },
+  {
+    "id": "event_009",
+    "title": "내부 직원 사이에 소문이 돈다",
+    "status": "draft"
+  },
+  {
+    "id": "event_010",
+    "title": "경쟁 가문이 수급망을 침범한다",
+    "status": "draft"
+  },
+  {
+    "id": "event_011",
+    "title": "시민단체가 혈액 사용처 공개를 요구한다",
+    "status": "draft"
+  },
+  {
+    "id": "event_012",
+    "title": "7일차 도시보건청 감사",
+    "status": "draft"
+  }
+]

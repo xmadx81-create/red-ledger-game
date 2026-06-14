@@ -1,0 +1,66 @@
+{
+  "title": "적혈의 장부",
+  "subtitle": "뱀파이어 운영 시뮬레이션",
+  "genre": [
+    "경영 시뮬레이션",
+    "선택형 스토리",
+    "조직관리",
+    "다크 행정 누아르"
+  ],
+  "surface_org": "백십자재단 산하 혈연센터",
+  "hidden_org": "카르테인 가문 혈액관리국",
+  "player_role": "카르테인 가문의 신임 운영책임자",
+  "core_resources": {
+    "bloodStock": 37650,
+    "money": 128450000,
+    "prestige": 82,
+    "humanTrust": 58,
+    "mediaExposure": 27,
+    "internalUnrest": 35,
+    "security": 45,
+    "familySatisfaction": 76
+  },
+  "main_characters": [
+    {
+      "id": "seo_yoonjae",
+      "name": "서윤재",
+      "role": "총괄 관리자"
+    },
+    {
+      "id": "kim_dohyun",
+      "name": "김도현",
+      "role": "야간 의사"
+    },
+    {
+      "id": "park_seyeon",
+      "name": "박세연",
+      "role": "물류 협력자"
+    },
+    {
+      "id": "jung_harin",
+      "name": "정하린",
+      "role": "탐사 기자"
+    },
+    {
+      "id": "elliot_cartein",
+      "name": "엘리엇 카르테인",
+      "role": "가문 원로"
+    }
+  ],
+  "visual_style": {
+    "tone": "다크 행정 누아르",
+    "palette": [
+      "차콜",
+      "아이보리",
+      "딥 버건디",
+      "탁한 청록",
+      "황동 포인트"
+    ],
+    "rules": [
+      "실제 기관명 직접 사용 금지",
+      "한글 텍스트는 이미지가 아니라 코드로 삽입",
+      "싸구려 공포, 박쥐, 피 튀김 남발 금지",
+      "반실사 2D와 고급 UI 유지"
+    ]
+  }
+}
