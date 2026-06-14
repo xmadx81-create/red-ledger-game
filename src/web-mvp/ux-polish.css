@@ -1,0 +1,247 @@
+.case-file .subtle {
+  margin-top: 14px;
+}
+
+.case-meta {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: -4px 0 16px;
+}
+
+.case-meta span,
+.choice-code,
+.person-chip,
+.relationship-chip,
+.history-index,
+.verdict-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(156, 91, 80, 0.44);
+  background: rgba(255, 246, 220, 0.038);
+  color: var(--muted);
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.case-meta span {
+  min-height: 28px;
+  padding: 5px 10px;
+}
+
+.choice-code {
+  width: fit-content;
+  min-height: 24px;
+  padding: 4px 8px;
+  margin: 0 0 8px;
+  color: var(--gold);
+  border-color: rgba(205, 168, 90, 0.34);
+  background: rgba(205, 168, 90, 0.07);
+}
+
+.choice-button .choice-code {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.choice-summary {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 8px;
+  margin: -4px 0 16px;
+}
+
+.choice-summary strong {
+  color: var(--ivory);
+  font-size: 18px;
+  line-height: 1.42;
+  letter-spacing: -0.035em;
+}
+
+.compact-card {
+  min-height: auto;
+}
+
+.person-list,
+.relationship-list {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.person-chip,
+.relationship-chip {
+  min-height: 32px;
+  padding: 6px 11px;
+  color: var(--ivory);
+  background: rgba(241, 223, 184, 0.055);
+}
+
+.relationship-list {
+  margin-top: 14px;
+}
+
+.relationship-chip {
+  color: var(--muted);
+}
+
+.history-list {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 10px;
+}
+
+.history-item {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 12px;
+  border: 1px solid rgba(156, 91, 80, 0.36);
+  border-radius: 16px;
+  background: rgba(42, 27, 24, 0.72);
+}
+
+.history-index {
+  width: 28px;
+  height: 28px;
+  color: var(--ivory);
+  border-color: rgba(184, 23, 36, 0.48);
+  background: rgba(127, 13, 23, 0.36);
+}
+
+.history-item strong {
+  display: block;
+  color: var(--ivory);
+  font-size: 15px;
+  line-height: 1.42;
+  letter-spacing: -0.03em;
+}
+
+.history-item small {
+  display: block;
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.history-list.compact .history-item:nth-child(n + 4) {
+  display: none;
+}
+
+.result-item {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 10px;
+}
+
+.result-item span {
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.result-item strong {
+  color: var(--ivory);
+  font-size: 13px;
+}
+
+.result-item em {
+  min-width: 42px;
+  text-align: right;
+  color: var(--ivory);
+  font-style: normal;
+  font-weight: 900;
+}
+
+.result-item.up {
+  border-color: rgba(60, 132, 86, 0.48);
+  background: rgba(38, 63, 46, 0.62);
+}
+
+.result-item.down {
+  border-color: rgba(184, 110, 38, 0.48);
+  background: rgba(103, 64, 31, 0.54);
+}
+
+.result-item.flat {
+  background: rgba(42, 27, 24, 0.72);
+}
+
+.status-good {
+  border-color: rgba(60, 132, 86, 0.56);
+  color: #b8dfc0;
+}
+
+.status-warn {
+  border-color: rgba(184, 110, 38, 0.56);
+  color: #e1b777;
+}
+
+.status-danger,
+.risk-critical {
+  border-color: rgba(221, 45, 62, 0.66);
+  color: #ffb4bd;
+}
+
+.risk-high {
+  border-color: rgba(184, 110, 38, 0.58);
+  color: #e5bd82;
+}
+
+.risk-medium {
+  color: var(--muted);
+}
+
+.final-verdict {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 14px;
+}
+
+.verdict-label {
+  width: fit-content;
+  min-height: 34px;
+  padding: 7px 13px;
+  font-size: 12px;
+}
+
+.final-screen .resource-grid {
+  margin-top: 4px;
+}
+
+.seal-card::before {
+  content: 'CONFIDENTIAL';
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  z-index: 0;
+  color: rgba(241, 223, 184, 0.055);
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  transform: rotate(-8deg);
+}
+
+@media (max-width: 380px) {
+  .history-item {
+    grid-template-columns: 30px 1fr;
+    padding: 11px;
+  }
+
+  .choice-summary strong,
+  .choice-button {
+    font-size: 16px;
+  }
+}
