@@ -167,10 +167,44 @@ Google Sheets 관리표 구조 기준 정리
 - Sheets 구조 변경 시 `99_변경로그`에 먼저 기록하고, 확정 후 GitHub 문서에도 반영한다.
 - 1차 MVP는 `02_MVP_7일구조` 탭을 기준으로 Day 1~Day 7 구조를 관리한다.
 
+---
+
+### 작업 주제 6
+
+Figma 화면 설계 기준 정리
+
+### 진행 내용
+
+1. Figma 화면 설계 기준 문서 `docs/ui-ux/FIGMA_STRUCTURE.md`를 생성했다.
+2. 1차 MVP 화면 목록 문서 `docs/ui-ux/SCREEN_LIST.md`를 생성했다.
+3. 와이어프레임 설계 메모 문서 `docs/ui-ux/WIREFRAME_NOTES.md`를 생성했다.
+4. 권장 Figma 파일명을 `red-ledger-game_적혈의장부_UIUX`로 결정했다.
+5. Figma 페이지 구조를 다음과 같이 설계했다.
+   - `00_Cover`
+   - `01_Project_Brief`
+   - `02_User_Flow`
+   - `03_Wireframe_Mobile`
+   - `04_Wireframe_PC`
+   - `05_Game_Screens`
+   - `06_Components`
+   - `07_Visual_References`
+   - `99_Archive`
+6. 1차 MVP 우선 화면 10개를 정의했다.
+7. 메인 운영 화면, 이벤트 발생 화면, 선택 결과 화면, 일차 시작/종료 보고 화면의 기본 와이어프레임 기준을 정리했다.
+8. `CHECKLIST.md`에서 Figma 기본 화면 설계 시작 가능 상태를 완료 처리했다.
+9. 실제 Figma 파일 생성과 Google Sheets `08_UI화면목록` 연결 확인은 별도 확인 항목으로 남겼다.
+
+### 결정 사항
+
+- 초기 화면 기준은 모바일 세로 화면을 우선한다.
+- PC/태블릿 화면은 2차 기준으로 둔다.
+- 화면ID는 GitHub 문서, Google Sheets, Figma 프레임명에서 동일하게 사용한다.
+- 핵심 화면 우선순위는 메인 운영 화면, 이벤트 발생 화면, 선택 결과 화면, 일차 시작 보고, 일차 종료 보고 순서로 잡는다.
+- Figma는 화면 구조와 시각 흐름을 담당하고, GitHub는 화면 기준과 변경 이력을 담당한다.
+
 ### 다음 작업
 
-1. Google Sheets 실제 파일 생성 확인
-2. CSV 템플릿을 실제 시트에 반영
-3. Figma 화면 설계 기준 정리
-4. Calendar 일정 운영 기준 정리
-5. Gmail 알림 및 공유 기준 정리
+1. Figma 실제 파일 생성 확인
+2. Figma 화면ID와 Google Sheets `08_UI화면목록` 연결 확인
+3. Calendar 일정 운영 기준 정리
+4. Gmail 알림 및 공유 기준 정리
