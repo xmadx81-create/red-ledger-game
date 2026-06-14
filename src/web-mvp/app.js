@@ -440,8 +440,11 @@ function buildResultItems(result) {
 }
 
 app.addEventListener('click', (event) => {
-  const action = event.target.dataset.action;
-  const choiceId = event.target.dataset.choiceId;
+  const target = event.target.closest('[data-action], [data-choice-id]');
+  if (!target || !app.contains(target)) return;
+
+  const action = target.dataset.action;
+  const choiceId = target.dataset.choiceId;
 
   if (choiceId) {
     applyChoice(choiceId);
