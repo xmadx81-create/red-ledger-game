@@ -78,7 +78,17 @@
 - [ ] Gmail 실제 라벨 생성 확인
 - [ ] GitHub/Drive/Sheets/Figma/Calendar 알림 필터 연결 확인
 
-## 7. 전처리 단계 완료 조건
+## 7. 실제 도구 생성 확인
+
+- [x] 실제 도구 생성용 실행 체크리스트 작성
+- [ ] Google Drive 실제 폴더 생성 완료
+- [ ] Google Sheets 실제 파일 생성 완료
+- [ ] Figma 실제 파일 생성 완료
+- [ ] Google Calendar 실제 캘린더 생성 완료
+- [ ] Gmail 실제 라벨 생성 완료
+- [ ] 각 도구의 실제 링크 또는 식별명 GitHub 문서 기록
+
+## 8. 전처리 단계 완료 조건
 
 - [x] GitHub 문서 구조 확정
 - [x] Google Drive 저장 구조 확정
@@ -86,4 +96,5 @@
 - [x] Figma 기본 화면 설계 시작 가능 상태
 - [x] Calendar 일정 체계 확정
 - [x] Gmail 알림/공유 체계 확정
-- [ ] 본격 기획 단계 진입 승인
+- [x] 본격 기획 단계 진입 승인 문서 작성
+- [ ] 본격 기획 단계 진입 최종 승인
