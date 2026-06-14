@@ -1,0 +1,11 @@
+화면ID,화면명,목적,주요정보,관련Figma,관련문서,구현상태,우선순위,비고
+SCR-001,타이틀 화면,게임 시작과 첫 인상 전달,새 게임;이어하기;설정,SCR-001_Title_Mobile,docs/ui-ux/FIRST_SCREEN_FLOW.md,대기,높음,
+SCR-002,프롤로그 문서 화면,표면 조직 소개,인사 발령 통지;일반 문서,SCR-002_Prologue_Document_Mobile,docs/ui-ux/FIRST_SCREEN_FLOW.md,대기,높음,
+SCR-003,부임 통지 화면,플레이어 역할 소개,실무 책임자;공식 업무;비공식 업무 암시,SCR-003_Assignment_Notice_Mobile,docs/ui-ux/FIRST_SCREEN_FLOW.md,대기,높음,
+SCR-004,봉인 보고서 화면,이면 구조 첫 공개,가문 열람;표면 재고;이면 수요,SCR-004_Sealed_Report_Mobile,docs/ui-ux/FIRST_SCREEN_FLOW.md,대기,높음,
+SCR-005,Day 1 시작 보고,Day 시스템 소개,Day 1;오늘의 목표;상태,SCR-005_Day1_Start_Report_Mobile,docs/ui-ux/FIRST_SCREEN_FLOW.md,대기,높음,
+SCR-006,핵심 자원 튜토리얼,주요 자원 첫 노출,핵심 재고;이면 수요;인간 신뢰;언론 노출;가문 만족도,SCR-006_Resource_Tutorial_Mobile,docs/ui-ux/FIRST_SCREEN_FLOW.md,대기,높음,
+SCR-007,첫 선택지 화면,첫 운영 판단 제공,EVT-D01-001;선택지 3개,SCR-007_First_Choice_Mobile,docs/game-design/EVENT_STRUCTURE.md,대기,높음,
+SCR-008,선택 결과 화면,선택 결과와 자원 변화 표시,결과 요약;자원 변화;인물 반응,SCR-008_First_Result_Mobile,docs/game-design/EVENT_STRUCTURE.md,대기,높음,
+SCR-009,메인 운영 화면,일일 운영의 중심 화면,Day;자원바;업무카드;기록;인물,SCR-009_Main_Operation_Mobile,docs/ui-ux/WIREFRAME_NOTES.md,대기,높음,
+SCR-010,최종 평가 화면,7일 결과와 엔딩 분기 표시,최종 등급;자원 결과;엔딩 플래그,SCR-010_Final_Report_Mobile,docs/game-design/MVP_7DAYS_PLAN.md,대기,높음,
