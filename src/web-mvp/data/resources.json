@@ -1,0 +1,110 @@
+[
+  {
+    "id": "RES-001",
+    "name": "혈액 재고",
+    "uiName": "핵심 재고",
+    "category": "핵심 운영 자원",
+    "initialValue": 50,
+    "min": 0,
+    "max": 100,
+    "safeMin": 35,
+    "safeMax": 75,
+    "description": "너무 낮아도, 너무 높아도 위험한 핵심 재고 지표"
+  },
+  {
+    "id": "RES-002",
+    "name": "혈액 수요",
+    "uiName": "이면 수요",
+    "category": "핵심 운영 자원",
+    "initialValue": 45,
+    "min": 0,
+    "max": 100,
+    "safeMin": 35,
+    "safeMax": 65,
+    "description": "높을수록 공급 압박이 증가하는 수요 지표"
+  },
+  {
+    "id": "RES-003",
+    "name": "가문 자금",
+    "uiName": "자금",
+    "category": "핵심 운영 자원",
+    "initialValue": 60,
+    "min": 0,
+    "max": 100,
+    "safeMin": 30,
+    "safeMax": 80,
+    "description": "회유, 보안 강화, 비공식 대응에 사용하는 자원"
+  },
+  {
+    "id": "RES-004",
+    "name": "인간 신뢰",
+    "uiName": "신뢰",
+    "category": "외부 위험 지표",
+    "initialValue": 55,
+    "min": 0,
+    "max": 100,
+    "safeMin": 40,
+    "safeMax": 75,
+    "description": "인간 사회에서 혈연센터가 받는 공익적 신뢰"
+  },
+  {
+    "id": "RES-005",
+    "name": "언론 노출",
+    "uiName": "노출",
+    "category": "외부 위험 지표",
+    "initialValue": 10,
+    "min": 0,
+    "max": 100,
+    "safeMin": 0,
+    "safeMax": 35,
+    "description": "기자, 제보, 의혹, 보도 위험"
+  },
+  {
+    "id": "RES-006",
+    "name": "보안 등급",
+    "uiName": "보안",
+    "category": "외부 위험 지표",
+    "initialValue": 60,
+    "min": 0,
+    "max": 100,
+    "safeMin": 45,
+    "safeMax": 85,
+    "description": "기록, 출입, 내부 통제, 정보 차단 안정성"
+  },
+  {
+    "id": "RES-007",
+    "name": "가문 만족도",
+    "uiName": "가문",
+    "category": "내부/이면 위험 지표",
+    "initialValue": 50,
+    "min": 0,
+    "max": 100,
+    "safeMin": 40,
+    "safeMax": 75,
+    "description": "카르테인 가문의 현재 운영 평가"
+  },
+  {
+    "id": "RES-008",
+    "name": "조직 불안",
+    "uiName": "불안",
+    "category": "내부/이면 위험 지표",
+    "initialValue": 20,
+    "min": 0,
+    "max": 100,
+    "safeMin": 0,
+    "safeMax": 40,
+    "description": "직원, 협력자, 하부 조직의 동요와 피로"
+  },
+  {
+    "id": "RES-009",
+    "name": "암거래 단서",
+    "uiName": "단서",
+    "category": "내부/이면 위험 지표",
+    "initialValue": 0,
+    "min": 0,
+    "max": 100,
+    "safeMin": 20,
+    "safeMax": 70,
+    "description": "비공식 거래 흐름을 얼마나 파악했는지를 나타내는 단서 지표"
+  }
+]
