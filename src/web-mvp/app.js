@@ -104,6 +104,10 @@ function getChoicesForEvent(eventId) {
   return database.choices.filter((choice) => choice.eventId === eventId);
 }
 
+function getChoiceById(choiceId) {
+  return database.choices.find((choice) => choice.id === choiceId);
+}
+
 function getResourceStatus(resource) {
   if (!resource) return 'neutral';
   if (resource.value <= 10 || resource.value >= 90) return 'danger';
@@ -112,7 +116,7 @@ function getResourceStatus(resource) {
 }
 
 function applyChoice(choiceId) {
-  const choice = database.choices.find((item) => item.id === choiceId);
+  const choice = getChoiceById(choiceId);
   if (!choice) return;
 
   const before = snapshotResources();
@@ -202,7 +206,7 @@ function renderTitleScreen() {
       <p class="eyebrow">red-ledger-game</p>
       <h1>적혈의 장부</h1>
       <p class="subtle">The Red Ledger</p>
-      <div class="card document warning">
+      <div class="card document warning seal-card">
         <div class="card-title">
           <h3>봉인된 운영 기록</h3>
           <span class="tag">MVP</span>
@@ -242,19 +246,22 @@ function renderDayStartScreen() {
     <section class="screen">
       ${renderDayHeader()}
       ${renderResourceGrid(['bloodStock', 'bloodDemand', 'humanTrust', 'mediaExposure', 'familySatisfaction'])}
-      <div class="card document">
+      <div class="card document case-file">
         <div class="card-title">
           <h3>${event.name}</h3>
           <span class="tag">${event.type}</span>
         </div>
+        ${renderEventMeta(event)}
         <p class="subtle">${event.summary}</p>
       </div>
-      <div class="card">
+      <div class="card compact-card">
         <div class="card-title">
           <h3>관련 인물</h3>
           <span class="tag">${event.riskLevel}</span>
         </div>
-        <p class="subtle">${event.relatedCharacters.join(' · ')}</p>
+        <div class="person-list">
+          ${event.relatedCharacters.map((name) => `<span class="person-chip">${name}</span>`).join('')}
+        </div>
       </div>
       <div class="actions">
         <button class="primary-button" data-action="event">보고서 확인</button>
@@ -271,11 +278,12 @@ function renderEventScreen() {
     <section class="screen">
       ${renderDayHeader()}
       ${renderResourceGrid(['bloodStock', 'bloodDemand', 'humanTrust', 'mediaExposure', 'familySatisfaction'])}
-      <div class="card document warning">
+      <div class="card document warning case-file">
         <div class="card-title">
           <h3>${event.name}</h3>
-          <span class="tag">${event.riskLevel}</span>
+          <span class="tag risk-${getRiskClass(event.riskLevel)}">${event.riskLevel}</span>
         </div>
+        ${renderEventMeta(event)}
         <p class="subtle">${event.sceneText}</p>
       </div>
       <div class="choice-list">
@@ -295,23 +303,28 @@ function renderResultScreen() {
           <h3>선택 결과</h3>
           <span class="tag">${lastResult.choice.tone}</span>
         </div>
+        <div class="choice-summary">
+          <span class="choice-code">${lastResult.choice.id}</span>
+          <strong>${lastResult.choice.text}</strong>
+        </div>
         <p class="subtle">${lastResult.choice.resultSummary}</p>
       </div>
       <div class="card">
         <div class="card-title">
           <h3>자원 변화</h3>
-          <span class="tag">수급 ${lastResult.supplyCheck.label}</span>
+          <span class="tag status-${lastResult.supplyCheck.tone}">수급 ${lastResult.supplyCheck.label}</span>
         </div>
         <div class="result-list">
-          ${resultItems.map((item) => `<div class="result-item">${item}</div>`).join('')}
+          ${resultItems.map((item) => renderResultItem(item)).join('')}
         </div>
       </div>
-      <div class="card">
+      <div class="card compact-card">
         <div class="card-title">
           <h3>인물 반응</h3>
           <span class="tag">관계</span>
         </div>
-        <p class="subtle">${lastResult.choice.reaction}<br />${lastResult.choice.relationship}</p>
+        <p class="subtle">${lastResult.choice.reaction}</p>
+        ${renderRelationshipTags(lastResult.choice.relationship)}
       </div>
       <div class="actions">
         <button class="primary-button" data-action="next-day">${gameState.currentDay >= 7 ? '최종 평가로' : '다음 Day로'}</button>
@@ -330,16 +343,16 @@ function renderMainOperationScreen() {
       <div class="card document">
         <div class="card-title">
           <h3>오늘의 운영 상태</h3>
-          <span class="tag">${supply.label}</span>
+          <span class="tag status-${supply.tone}">${supply.label}</span>
         </div>
         <p class="subtle">공급 차이: ${supply.diff}. 현재 상태는 ${supply.label}입니다.</p>
       </div>
-      <div class="card">
+      <div class="card compact-card">
         <div class="card-title">
-          <h3>기록</h3>
+          <h3>운영 기록</h3>
           <span class="tag">${gameState.selectedChoices.length}개 선택</span>
         </div>
-        <p class="subtle">${gameState.selectedChoices.join(' · ') || '아직 기록된 선택지가 없습니다.'}</p>
+        ${renderChoiceHistory()}
       </div>
       <div class="actions">
         <button class="primary-button" data-action="next-day">${gameState.currentDay >= 7 ? '최종 평가로' : '다음 Day로'}</button>
@@ -355,7 +368,7 @@ function renderFinalReport() {
   const supply = checkSupplyBalance();
 
   setScreen(html`
-    <section class="screen">
+    <section class="screen final-screen">
       <p class="eyebrow">final report</p>
       <h2>${title}</h2>
       <p class="subtle">7일 운영 결과 보고</p>
@@ -365,14 +378,17 @@ function renderFinalReport() {
           <h3>최종 판정</h3>
           <span class="tag">${flag} · ${count}</span>
         </div>
-        <p class="subtle">수급 판정은 ${supply.label}입니다. 선택 흐름은 다음 운영 기록에 남았습니다.</p>
+        <div class="final-verdict">
+          <span class="verdict-label status-${supply.tone}">수급 ${supply.label}</span>
+          <p class="subtle">선택 흐름은 운영 기록에 봉인되었습니다. 다음 회차에서는 다른 균형점을 검증할 수 있습니다.</p>
+        </div>
       </div>
-      <div class="card">
+      <div class="card compact-card">
         <div class="card-title">
           <h3>선택 이력</h3>
           <span class="tag">${gameState.selectedChoices.length}개</span>
         </div>
-        <p class="subtle">${gameState.selectedChoices.join(' · ')}</p>
+        ${renderChoiceHistory('full')}
       </div>
       <div class="actions">
         <button class="primary-button" data-action="new-game">새 회차 시작</button>
@@ -418,9 +434,61 @@ function renderResourceGrid(keys) {
 function renderChoiceButton(choice, primary = false) {
   return html`
     <button class="choice-button ${primary ? 'primary' : ''}" data-choice-id="${choice.id}">
+      <span class="choice-code">${choice.id}</span>
       ${choice.text}
       <span class="choice-tone">${choice.tone}</span>
     </button>
+  `;
+}
+
+function renderEventMeta(event) {
+  return html`
+    <div class="case-meta">
+      <span>${event.id}</span>
+      <span>${event.type}</span>
+      <span>위험도 ${event.riskLevel}</span>
+    </div>
+  `;
+}
+
+function getRiskClass(riskLevel = '') {
+  if (riskLevel.includes('매우')) return 'critical';
+  if (riskLevel.includes('높음')) return 'high';
+  return 'medium';
+}
+
+function renderChoiceHistory(mode = 'compact') {
+  if (!gameState.selectedChoices.length) {
+    return '<p class="subtle">아직 기록된 선택지가 없습니다.</p>';
+  }
+
+  return html`
+    <div class="history-list ${mode}">
+      ${gameState.selectedChoices.map((choiceId, index) => {
+        const choice = getChoiceById(choiceId);
+        if (!choice) return '';
+        return html`
+          <div class="history-item">
+            <span class="history-index">${index + 1}</span>
+            <div>
+              <span class="choice-code">${choice.id}</span>
+              <strong>${choice.text}</strong>
+              <small>${choice.tone}</small>
+            </div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
+
+function renderRelationshipTags(relationship = '') {
+  const items = relationship.split(';').map((item) => item.trim()).filter(Boolean);
+  if (!items.length) return '';
+  return html`
+    <div class="relationship-list">
+      ${items.map((item) => `<span class="relationship-chip">${item}</span>`).join('')}
+    </div>
   `;
 }
 
@@ -434,9 +502,22 @@ function buildResultItems(result) {
     if (delta === 0) return;
     const label = KEY_TO_UI_LABEL[key] || key;
     const direction = delta > 0 ? '증가' : '감소';
-    items.push(`${label} ${direction} (${delta > 0 ? '+' : ''}${delta})`);
+    const tone = delta > 0 ? 'up' : 'down';
+    items.push({ label, direction, delta, tone });
   });
-  return items.length ? items : ['눈에 띄는 자원 변화 없음'];
+  return items.length ? items : [{ label: '자원', direction: '변화 없음', delta: 0, tone: 'flat' }];
+}
+
+function renderResultItem(item) {
+  const sign = item.delta > 0 ? '+' : '';
+  const value = item.delta === 0 ? '0' : `${sign}${item.delta}`;
+  return html`
+    <div class="result-item ${item.tone}">
+      <span>${item.label}</span>
+      <strong>${item.direction}</strong>
+      <em>${value}</em>
+    </div>
+  `;
 }
 
 app.addEventListener('click', (event) => {
