@@ -13,7 +13,9 @@ const EXPECTED = {
   choices: 23,
   combatBriefings: 4,
   combatActions: 10,
-  combatTypes: 6
+  combatTypes: 6,
+  combatResultMeters: 5,
+  combatRanks: 5
 };
 
 const ROUTES = [
@@ -107,7 +109,7 @@ function applyChoice(resourceState, choice) {
   }
 }
 
-function checkDataIntegrity({ resources, characters, events, choices, combatBriefings, combatActions, combatTypes }) {
+function checkDataIntegrity({ resources, characters, events, choices, combatBriefings, combatActions, combatTypes, combatResultRules }) {
   assert(resources.length === EXPECTED.resources, `Expected ${EXPECTED.resources} resources, got ${resources.length}`);
   assert(characters.length === EXPECTED.characters, `Expected ${EXPECTED.characters} characters, got ${characters.length}`);
   assert(events.length === EXPECTED.events, `Expected ${EXPECTED.events} events, got ${events.length}`);
@@ -115,15 +117,19 @@ function checkDataIntegrity({ resources, characters, events, choices, combatBrie
   assert(combatBriefings.length === EXPECTED.combatBriefings, `Expected ${EXPECTED.combatBriefings} combat briefings, got ${combatBriefings.length}`);
   assert(combatActions.length === EXPECTED.combatActions, `Expected ${EXPECTED.combatActions} combat actions, got ${combatActions.length}`);
   assert(combatTypes.length === EXPECTED.combatTypes, `Expected ${EXPECTED.combatTypes} combat types, got ${combatTypes.length}`);
+  assert(combatResultRules.resultMeters.length === EXPECTED.combatResultMeters, `Expected ${EXPECTED.combatResultMeters} combat result meters, got ${combatResultRules.resultMeters.length}`);
+  assert(combatResultRules.rankRules.length === EXPECTED.combatRanks, `Expected ${EXPECTED.combatRanks} combat ranks, got ${combatResultRules.rankRules.length}`);
 
   const eventIds = new Set(events.map((event) => event.id));
   const choiceIds = new Set(choices.map((choice) => choice.id));
   const combatTypeIds = new Set(combatTypes.map((item) => item.combatTypeId));
   const combatActionNames = new Set(combatActions.map((item) => item.name));
+  const combatActionIds = new Set(combatActions.map((item) => item.actionId));
 
   assert(eventIds.size === events.length, 'Duplicate event id found');
   assert(choiceIds.size === choices.length, 'Duplicate choice id found');
   assert(combatTypeIds.size === combatTypes.length, 'Duplicate combat type id found');
+  assert(combatActionIds.size === combatActions.length, 'Duplicate combat action id found');
 
   for (let day = 1; day <= 7; day += 1) {
     const event = events.find((item) => Number(item.day) === day);
@@ -138,6 +144,12 @@ function checkDataIntegrity({ resources, characters, events, choices, combatBrie
     assert(choice.tone, `Choice ${choice.id} has empty tone`);
     assert(choice.resultSummary, `Choice ${choice.id} has empty result summary`);
     assert(choice.flag, `Choice ${choice.id} has empty progression flag`);
+  }
+
+  for (const action of combatActions) {
+    assert(action.actionId, 'Combat action has empty id');
+    assert(action.name, `Combat action ${action.actionId} has empty name`);
+    assert(action.description, `Combat action ${action.actionId} has empty description`);
   }
 
   for (const briefing of combatBriefings) {
@@ -174,7 +186,8 @@ async function main() {
     choices: await loadJson('choices.json'),
     combatBriefings: await loadJson('combat-briefings.json'),
     combatActions: await loadJson('combat-actions.json'),
-    combatTypes: await loadJson('combat-scene-types.json')
+    combatTypes: await loadJson('combat-scene-types.json'),
+    combatResultRules: await loadJson('combat-result-rules.json')
   };
 
   checkDataIntegrity(data);
