@@ -1,0 +1,86 @@
+[
+  {
+    "factionId": "THR-MEDIA-TRUTH",
+    "name": "진실 추적 언론팀",
+    "alignment": "애매한 적대",
+    "publicRole": "탐사보도 기자단",
+    "hiddenMotive": "실종 사건과 혈액 유통 이상을 추적한다.",
+    "conflictType": ["언론", "비밀 노출", "잠입"],
+    "combatPolicy": "비살상 제압/정보 차단/협상 우선",
+    "possibleResolution": ["설득", "제보 방향 전환", "일부 진실 공개", "증거 회수"],
+    "coexistencePotential": 70,
+    "villainScore": 20
+  },
+  {
+    "factionId": "THR-BLACKMARKET-BLOOD",
+    "name": "혈액 암거래망",
+    "alignment": "명확한 적대",
+    "publicRole": "불법 유통 조직",
+    "hiddenMotive": "혈액과 희귀 샘플을 사적으로 거래해 인간과 뱀파이어 양쪽을 착취한다.",
+    "conflictType": ["암거래", "전투", "수송로 침투"],
+    "combatPolicy": "제압/증거 확보/거점 소탕 가능",
+    "possibleResolution": ["거점 제압", "간부 체포", "정보원 전환", "거래망 붕괴"],
+    "coexistencePotential": 15,
+    "villainScore": 90
+  },
+  {
+    "factionId": "THR-HUMAN-AUDIT",
+    "name": "공공 보건 감사반",
+    "alignment": "중립 감시",
+    "publicRole": "행정 감사 조직",
+    "hiddenMotive": "혈연센터의 수치와 현장 절차를 검증한다.",
+    "conflictType": ["행정", "점검", "문서 검증"],
+    "combatPolicy": "전투 금지. 행정 처리/문서 정리/신뢰 확보로 대응",
+    "possibleResolution": ["문서 보완", "절차 개선", "신뢰 상승", "감사 통과"],
+    "coexistencePotential": 85,
+    "villainScore": 5
+  },
+  {
+    "factionId": "THR-OLD-FAMILY-HARDLINERS",
+    "name": "가문 강경파 원로회",
+    "alignment": "내부 적대",
+    "publicRole": "가문 원로",
+    "hiddenMotive": "인간과의 공생보다 가문의 지배와 수급 독점을 우선한다.",
+    "conflictType": ["내부 정치", "명령", "강압"],
+    "combatPolicy": "정치전/권위 대결/명성 경쟁 중심. 직접 전투는 고위 스테이지에서만 발생",
+    "possibleResolution": ["명성으로 압박", "가문 회의 승리", "동맹 분열", "일부 원로 회유"],
+    "coexistencePotential": 35,
+    "villainScore": 65
+  },
+  {
+    "factionId": "THR-CIVILIAN-FAMILIES",
+    "name": "실종자 가족 연대",
+    "alignment": "감정적 대립",
+    "publicRole": "시민 모임",
+    "hiddenMotive": "실종 사건의 진실을 찾고 가족을 보호하려 한다.",
+    "conflictType": ["민원", "시위", "감정 갈등"],
+    "combatPolicy": "전투 금지. 보호/설명/구조/보상 중심",
+    "possibleResolution": ["피해자 구제", "일부 진실 전달", "보호 약속", "신뢰 회복"],
+    "coexistencePotential": 90,
+    "villainScore": 0
+  },
+  {
+    "factionId": "THR-ROGUE-IMPS",
+    "name": "하급 임프 정보상 무리",
+    "alignment": "기회주의",
+    "publicRole": "소문상/심부름꾼",
+    "hiddenMotive": "생존과 돈을 위해 비밀 정보를 사고판다.",
+    "conflictType": ["정보 유출", "거래", "소규모 교전"],
+    "combatPolicy": "포획/협상/고용/거래 가능",
+    "possibleResolution": ["정보원 고용", "거래 차단", "위협 제압", "암시장 연결 추적"],
+    "coexistencePotential": 55,
+    "villainScore": 45
+  },
+  {
+    "factionId": "THR-HUNTER-CELL",
+    "name": "비공식 사냥꾼 셀",
+    "alignment": "위험 적대",
+    "publicRole": "민간 실종사건 추적자",
+    "hiddenMotive": "초자연 존재를 위협으로 보고 선제 제거하려 한다.",
+    "conflictType": ["잠입", "전투", "추적"],
+    "combatPolicy": "비살상 제압 우선. 치명전은 최후 수단",
+    "possibleResolution": ["오해 해소", "공동의 적 제시", "무장 해제", "동맹화"],
+    "coexistencePotential": 50,
+    "villainScore": 55
+  }
+]
