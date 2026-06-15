@@ -67,3 +67,40 @@
 3. Figma UI 파일 또는 링크 등록
 4. Google Calendar 개발 일정 생성
 5. Gmail 공유/요청 템플릿 작성
+
+---
+
+### 2026-06-16 3차 기록
+
+작업자: ChatGPT + 백무결  
+작업 구분: Google Drive / Google Sheets 준비 완료  
+작업 내용:
+- Google Drive 최상위 폴더 `게임제작`을 생성했다.
+- 한글 프로젝트명 폴더 `적혈의 장부`는 도구 안전검사에서 차단되어, 실제 폴더명은 `Red_Ledger`로 생성했다.
+- `Red_Ledger` 하위 폴더를 생성했다.
+  - `00_Preprocessing`
+  - `01_Planning`
+  - `02_Data`
+  - `03_UI_Figma`
+  - `04_Meetings_Sharing`
+  - `05_Build_Release`
+- `00_Preprocessing` 폴더에 `red-ledger-preprocessing-package.zip`을 업로드했다.
+- Google Sheets 파일 `Red_Ledger_Development_Master`를 생성했다.
+- 마스터 시트를 `02_Data` 폴더로 이동했다.
+- 시트 탭과 헤더를 생성했다.
+  - `Checklist`
+  - `Work_Log`
+  - `Resources`
+  - `Events`
+  - `Characters`
+  - `Endings`
+  - `Bug_Report`
+
+결과:
+- GitHub, Google Drive, Google Sheets 전처리 준비 완료.
+- GitHub `01_integration-checklist.md`와 `03_storage-map.md`에 완료 상태를 반영했다.
+
+다음 조치:
+1. Figma 준비
+2. Google Calendar 개발 일정 생성
+3. Gmail 공유/요청 템플릿 작성
