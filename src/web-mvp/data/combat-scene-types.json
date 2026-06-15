@@ -1,0 +1,68 @@
+[
+  {
+    "combatTypeId": "COMBAT-CENTER-DEFENSE",
+    "name": "센터 방어전",
+    "tone": "밝은 운영 공간에서 비상 상황으로 전환",
+    "primaryGoal": "방문자 안전 확보와 센터 운영 보호",
+    "combatStyle": ["방어", "제압", "보호"],
+    "keyMeters": ["visitorSafety", "facilityStability", "secretExposure"],
+    "allowedOutcomes": ["제압 성공", "방문자 보호", "사태 진정", "운영 재개"],
+    "failureStates": ["방문자 안전도 붕괴", "시설 파손", "비밀 노출 증가"],
+    "recommendedRoles": ["간호사", "보안요원", "협상가", "의무관"]
+  },
+  {
+    "combatTypeId": "COMBAT-STORAGE-INTRUSION",
+    "name": "보관실 침투 대응",
+    "tone": "깨끗한 보관 구역에서 긴급 잠금 상황 발생",
+    "primaryGoal": "혈액 재고와 증거 자료 보호",
+    "combatStyle": ["차단", "증거 회수", "보안 봉쇄"],
+    "keyMeters": ["bloodStock", "securityLevel", "secretExposure"],
+    "allowedOutcomes": ["침입자 포획", "증거 회수", "보관실 안정화"],
+    "failureStates": ["재고 손실", "장비 파손", "보안 로그 유출"],
+    "recommendedRoles": ["보안요원", "기록관", "기술자", "전투원"]
+  },
+  {
+    "combatTypeId": "COMBAT-TRANSPORT-CHASE",
+    "name": "야간 수송 추격전",
+    "tone": "수송 차량과 도심 경로를 활용한 아케이드/전략 혼합",
+    "primaryGoal": "수송품을 안전하게 이동시키고 추적을 회피",
+    "combatStyle": ["회피", "수송", "경로 선택"],
+    "keyMeters": ["transportIntegrity", "pursuitRisk", "secretExposure"],
+    "allowedOutcomes": ["수송 성공", "추적 회피", "경로 은폐"],
+    "failureStates": ["수송 실패", "추적 노출", "차량 손상"],
+    "recommendedRoles": ["수송원", "기술자", "정보원", "보안요원"]
+  },
+  {
+    "combatTypeId": "COMBAT-MISUNDERSTANDING-HUMAN",
+    "name": "오해한 인간 세력 설득전",
+    "tone": "전투보다 설득과 보호가 우선되는 긴장 상황",
+    "primaryGoal": "인명 피해 없이 오해 해소와 비밀 노출 최소화",
+    "combatStyle": ["협상", "비살상 제압", "진정"],
+    "keyMeters": ["humanTrust", "secretExposure", "panicLevel"],
+    "allowedOutcomes": ["설득 성공", "무장 해제", "동맹화", "안전 귀가"],
+    "failureStates": ["신뢰 하락", "소문 확산", "감정 충돌 심화"],
+    "recommendedRoles": ["협상가", "간호사", "의무관", "기록관"]
+  },
+  {
+    "combatTypeId": "COMBAT-BLACKMARKET-RAID",
+    "name": "암거래 조직 소탕전",
+    "tone": "명확한 방해 세력과 맞서는 전투/증거 확보 임무",
+    "primaryGoal": "암거래망 제압과 피해자 보호",
+    "combatStyle": ["집단 전투", "증거 확보", "거점 제압"],
+    "keyMeters": ["blackMarketClue", "familySatisfaction", "humanTrust"],
+    "allowedOutcomes": ["거점 제압", "간부 체포", "증거 확보", "피해자 구조"],
+    "failureStates": ["암거래망 확산", "피해자 방치", "증거 폐기"],
+    "recommendedRoles": ["전투원", "보안요원", "기록관", "의무관"]
+  },
+  {
+    "combatTypeId": "COMBAT-GUILD-RAID",
+    "name": "주간 길드 던전 대규모 전투",
+    "tone": "협동형 대규모 편성 전투",
+    "primaryGoal": "길드 단위 보스 제압과 기여도 누적",
+    "combatStyle": ["대규모 전투", "보스전", "협동"],
+    "keyMeters": ["guildContribution", "raidBossHp", "teamSurvival"],
+    "allowedOutcomes": ["보스 제압", "길드 보상", "개인 기여도 상승"],
+    "failureStates": ["레이드 실패", "기여도 부족", "보상 등급 하락"],
+    "recommendedRoles": ["전투원", "의무관", "보안요원", "지원형 간호사"]
+  }
+]
