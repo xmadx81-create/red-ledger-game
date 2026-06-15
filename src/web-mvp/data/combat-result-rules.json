@@ -1,0 +1,126 @@
+{
+  "version": "0.1.0",
+  "purpose": "전투 결과/정산 화면에서 클리어 랭크, 공생 점수, 비밀 노출도, 방문자 안전도, 보상 지급 기준을 계산하기 위한 규칙",
+  "resultMeters": [
+    {
+      "meterId": "visitorSafety",
+      "name": "방문자 안전도",
+      "description": "센터에 방문한 일반 시민과 헌혈자의 안전을 얼마나 잘 지켰는지 나타냅니다.",
+      "positiveWhenHigh": true
+    },
+    {
+      "meterId": "secretExposure",
+      "name": "비밀 노출도",
+      "description": "센터의 이면 구조와 특수 운영 정보가 외부에 노출될 위험입니다.",
+      "positiveWhenHigh": false
+    },
+    {
+      "meterId": "facilityStability",
+      "name": "시설 안정도",
+      "description": "센터 시설, 보관실, 수송 장비가 얼마나 안정적으로 유지되었는지 나타냅니다.",
+      "positiveWhenHigh": true
+    },
+    {
+      "meterId": "humanTrust",
+      "name": "시민 신뢰",
+      "description": "사건 이후 인간 사회가 센터를 얼마나 신뢰하는지 나타냅니다.",
+      "positiveWhenHigh": true
+    },
+    {
+      "meterId": "coexistenceScore",
+      "name": "공생 점수",
+      "description": "처치보다 보호, 설득, 구조, 제압을 우선했는지 나타내는 핵심 점수입니다.",
+      "positiveWhenHigh": true
+    }
+  ],
+  "rankRules": [
+    {
+      "rank": "S",
+      "condition": "visitorSafety >= 90 && secretExposure <= 15 && coexistenceScore >= 85",
+      "label": "완벽한 공생 방어",
+      "rewardMultiplier": 1.5
+    },
+    {
+      "rank": "A",
+      "condition": "visitorSafety >= 80 && secretExposure <= 25 && coexistenceScore >= 70",
+      "label": "안정적 해결",
+      "rewardMultiplier": 1.25
+    },
+    {
+      "rank": "B",
+      "condition": "visitorSafety >= 65 && secretExposure <= 40",
+      "label": "부분 해결",
+      "rewardMultiplier": 1.0
+    },
+    {
+      "rank": "C",
+      "condition": "visitorSafety >= 50 && secretExposure <= 60",
+      "label": "위험한 해결",
+      "rewardMultiplier": 0.75
+    },
+    {
+      "rank": "D",
+      "condition": "visitorSafety < 50 || secretExposure > 60",
+      "label": "운영 리스크 발생",
+      "rewardMultiplier": 0.5
+    }
+  ],
+  "outcomeTypes": [
+    {
+      "outcomeId": "OUTCOME-SUBDUE",
+      "name": "비살상 제압",
+      "description": "방해 세력을 제거하지 않고 무력화했습니다.",
+      "scoreEffects": { "coexistenceScore": 12, "secretExposure": -4, "humanTrust": 2 }
+    },
+    {
+      "outcomeId": "OUTCOME-NEGOTIATE",
+      "name": "협상 성공",
+      "description": "대화와 설득으로 오해를 낮췄습니다.",
+      "scoreEffects": { "coexistenceScore": 18, "humanTrust": 10, "secretExposure": -2 }
+    },
+    {
+      "outcomeId": "OUTCOME-PROTECT",
+      "name": "방문자 보호",
+      "description": "방문자 안전을 최우선으로 지켰습니다.",
+      "scoreEffects": { "visitorSafety": 15, "humanTrust": 5, "coexistenceScore": 8 }
+    },
+    {
+      "outcomeId": "OUTCOME-CONCEAL",
+      "name": "현장 은폐",
+      "description": "사건 흔적과 민감한 정보를 정리했습니다.",
+      "scoreEffects": { "secretExposure": -15, "facilityStability": 3, "humanTrust": -1 }
+    },
+    {
+      "outcomeId": "OUTCOME-EVIDENCE",
+      "name": "증거 회수",
+      "description": "방해 세력의 증거를 확보했습니다.",
+      "scoreEffects": { "secretExposure": -4, "facilityStability": 2, "blackMarketClue": 12 }
+    },
+    {
+      "outcomeId": "OUTCOME-RETREAT",
+      "name": "전략적 후퇴",
+      "description": "즉시 승리를 포기하고 피해를 최소화했습니다.",
+      "scoreEffects": { "visitorSafety": 8, "secretExposure": 6, "rewardMultiplier": -0.25 }
+    }
+  ],
+  "rewardTypes": [
+    "캐릭터 경험치",
+    "센터 명성",
+    "시민 신뢰",
+    "직원 사기",
+    "방해 세력 단서",
+    "아이템 상자",
+    "승급 재료",
+    "던전 입장권"
+  ],
+  "resultScreenSections": [
+    "클리어 랭크",
+    "전투 목표 달성률",
+    "방문자 안전도",
+    "비밀 노출도",
+    "공생 점수",
+    "선택한 액션",
+    "획득 보상",
+    "다음 이벤트 영향"
+  ]
+}
