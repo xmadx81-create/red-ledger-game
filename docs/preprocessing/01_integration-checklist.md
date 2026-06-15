@@ -10,7 +10,7 @@
 | 1 | GitHub | 코드, 문서, 작업로그의 기준 저장소 | 완료 | Issue #1에서 추적 |
 | 2 | Google Drive | 기획서/자료/이미지/외부문서 보관 | 완료 | 폴더별 자료 적재 |
 | 3 | Google Sheets | 밸런스표, 이벤트표, 작업현황표 관리 | 완료 | Resources/Events/Characters 데이터 입력 |
-| 4 | Figma | 게임 UI/UX 화면 설계 | 대기 | 파일 생성 또는 링크 등록 |
+| 4 | Figma | 게임 UI/UX 화면 설계 | 완료 | 화면 구체화 및 프로토타입 연결 |
 | 5 | Google Calendar | 개발 일정, 테스트 일정, 마일스톤 관리 | 대기 | MVP 일정표 생성 |
 | 6 | Gmail | 협업자 공유, 개발 요청, 회의록 전달 | 대기 | 기본 메일 템플릿 작성 |
 
@@ -71,12 +71,12 @@
 
 | 체크 | 항목 | 세부 내용 |
 |---|---|---|
-| [ ] | Figma 파일 생성 | `Red_Ledger_UI_MVP` 또는 기존 Figma 링크 등록 |
-| [ ] | 페이지 구성 | Cover, Flow, Components, Screens, Prototype |
-| [ ] | 모바일 기준 화면 | Galaxy S25 기준 우선 |
-| [ ] | 핵심 화면 설계 | 메인 대시보드, 일일 운영, 이벤트, 결산, 엔딩 |
-| [ ] | 컴포넌트 작성 | 버튼, 카드, 경고창, 선택지, 자원바 |
-| [ ] | 링크 등록 | `03_storage-map.md`에 Figma URL 기록 |
+| [x] | Figma 파일 생성 | `Red_Ledger_UI_MVP` |
+| [x] | 페이지 구성 | Cover, Flow, Components, Screens, Prototype |
+| [x] | 모바일 기준 화면 | Galaxy S25 기준 390×844 프레임 생성 |
+| [x] | 핵심 화면 설계 | Dashboard, Daily Operation, Event Decision, Settlement, Ending |
+| [x] | 컴포넌트 작성 | Primary Button, Resource Card, Decision Modal 초안 |
+| [x] | 링크 등록 | `https://www.figma.com/design/66jy5pA53glrYSspUTB6bH` |
 
 ## 5. Google Calendar 준비
 
