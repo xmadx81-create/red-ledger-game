@@ -194,3 +194,34 @@
 2. Figma 화면과 실제 자원/이벤트 데이터 연결 구조 정의
 3. GitHub `data/` 폴더에 CSV/JSON 데이터 파일 생성
 4. MVP 코드 구조 설계
+
+---
+
+### 2026-06-16 6차 기록
+
+작업자: ChatGPT + 백무결  
+작업 구분: GitHub 데이터 파일 생성 / 데이터 스키마 문서화  
+작업 내용:
+- GitHub `data/` 폴더에 MVP 데이터 파일을 생성했다.
+- 생성 파일:
+  - `data/README.md`
+  - `data/resources.csv`
+  - `data/resources.json`
+  - `data/events.csv`
+  - `data/events.json`
+  - `data/characters.csv`
+  - `data/characters.json`
+  - `data/endings.csv`
+  - `data/endings.json`
+- GitHub `docs/game-design/06_data-schema.md` 문서를 생성했다.
+- CSV는 검토용, JSON은 게임 코드 연동용으로 구분했다.
+
+결과:
+- Google Sheets 원본 데이터를 GitHub 배포용 데이터 파일로 이전했다.
+- 게임 코드에서 읽을 수 있는 기본 JSON 구조가 준비되었다.
+
+다음 조치:
+1. 선택지 효과 문자열을 구조화된 수치 변화 객체로 변환
+2. MVP 코드 폴더 구조 생성
+3. JSON 로더와 기본 게임 상태 계산 로직 작성
+4. Figma 화면과 코드 데이터 표시 항목 매핑
