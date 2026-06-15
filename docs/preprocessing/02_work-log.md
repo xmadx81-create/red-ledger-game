@@ -104,3 +104,50 @@
 1. Figma 준비
 2. Google Calendar 개발 일정 생성
 3. Gmail 공유/요청 템플릿 작성
+
+---
+
+### 2026-06-16 4차 기록
+
+작업자: ChatGPT + 백무결  
+작업 구분: Figma / Google Calendar / Gmail 준비  
+작업 내용:
+- Figma 파일 `Red_Ledger_UI_MVP`를 생성했다.
+- Figma 파일 안에 다음 페이지를 구성했다.
+  - `Cover`
+  - `Flow`
+  - `Components`
+  - `Screens`
+  - `Prototype`
+- Figma `Screens` 페이지에 Galaxy S25 기준 390×844 모바일 프레임 5개를 생성했다.
+  - Dashboard
+  - Daily Operation
+  - Event Decision
+  - Settlement
+  - Ending
+- Figma `Components` 페이지에 기본 컴포넌트 초안을 생성했다.
+  - Primary Button
+  - Resource Card
+  - Decision Modal
+- Google Calendar 기본 캘린더에 프로젝트 일정 4개를 생성했다.
+  - `Red Ledger - Preprocessing Complete Check`
+  - `Red Ledger - MVP Planning Lock`
+  - `Red Ledger - Data & System Design`
+  - `RL Project - UI Review`
+- 장기 MVP 스프린트 일정은 도구 안전검사에 의해 생성이 차단되어 수동 등록 필요로 남겼다.
+- Gmail 임시보관함에 템플릿 4개를 생성했다.
+  - `[RL Project] 개발 공유 템플릿`
+  - `[RL Project] 기능 요청 템플릿`
+  - `[RL Project] 버그 리포트 템플릿`
+  - `[RL Project] 회의록 전달 템플릿`
+
+결과:
+- Figma 준비 완료.
+- Google Calendar는 핵심 일정 4개 등록 완료, 장기 일정은 부분 완료.
+- Gmail 템플릿 준비 완료.
+- GitHub `01_integration-checklist.md`에 전체 진행 상태를 반영했다.
+
+다음 조치:
+1. Google Sheets `Resources`, `Events`, `Characters`에 실제 게임 데이터 입력
+2. Figma 화면별 상세 UI 확정
+3. GitHub에 기획 문서 `docs/game-design/` 생성
