@@ -13,15 +13,15 @@ const RESOURCE_KEYS = {
 };
 
 const KEY_TO_UI_LABEL = {
-  bloodStock: '핵심 재고',
-  bloodDemand: '이면 수요',
-  familyFund: '자금',
-  humanTrust: '신뢰',
-  mediaExposure: '노출',
-  securityLevel: '보안',
-  familySatisfaction: '가문',
-  organizationUnrest: '불안',
-  blackMarketClue: '단서'
+  bloodStock: '헌혈 보유량',
+  bloodDemand: '특수 수요',
+  familyFund: '운영 자금',
+  humanTrust: '시민 신뢰',
+  mediaExposure: '노출 위험',
+  securityLevel: '안전 관리',
+  familySatisfaction: '후원 만족도',
+  organizationUnrest: '직원 불안',
+  blackMarketClue: '방해 단서'
 };
 
 const app = document.querySelector('#app');
@@ -30,7 +30,10 @@ let database = {
   resources: [],
   characters: [],
   events: [],
-  choices: []
+  choices: [],
+  combatBriefings: [],
+  combatActions: [],
+  combatTypes: []
 };
 
 let gameState = null;
@@ -45,14 +48,25 @@ async function loadJson(fileName) {
 }
 
 async function loadData() {
-  const [resources, characters, events, choices] = await Promise.all([
+  const [
+    resources,
+    characters,
+    events,
+    choices,
+    combatBriefings,
+    combatActions,
+    combatTypes
+  ] = await Promise.all([
     loadJson('resources.json'),
     loadJson('characters.json'),
     loadJson('events.json'),
-    loadJson('choices.json')
+    loadJson('choices.json'),
+    loadJson('combat-briefings.json'),
+    loadJson('combat-actions.json'),
+    loadJson('combat-scene-types.json')
   ]);
 
-  database = { resources, characters, events, choices };
+  database = { resources, characters, events, choices, combatBriefings, combatActions, combatTypes };
 }
 
 function clamp(value, min = 0, max = 100) {
@@ -108,6 +122,18 @@ function getChoicesForEvent(eventId) {
 
 function getChoiceById(choiceId) {
   return database.choices.find((choice) => choice.id === choiceId);
+}
+
+function getCombatBriefing(index = 0) {
+  return database.combatBriefings[index] || database.combatBriefings[0];
+}
+
+function getCombatType(combatTypeId) {
+  return database.combatTypes.find((item) => item.combatTypeId === combatTypeId);
+}
+
+function getActionByName(name) {
+  return database.combatActions.find((action) => action.name === name);
 }
 
 function getResourceStatus(resource) {
@@ -186,9 +212,9 @@ function getStageResultTitle(flag) {
     SUPPLY_STABLE: '안정 운영 클리어',
     SUPPLY_COLLAPSE: '공급 붕괴 위험 클리어',
     EXPOSED_MEDIA: '언론 노출 위험 클리어',
-    FAMILY_DOMINANT: '가문 우선 루트 클리어',
-    HUMAN_TRUST: '인간 신뢰 루트 클리어',
-    BLACK_MARKET_DOMINANT: '암거래 잠식 루트 클리어',
+    FAMILY_DOMINANT: '후원 우선 루트 클리어',
+    HUMAN_TRUST: '시민 신뢰 루트 클리어',
+    BLACK_MARKET_DOMINANT: '방해 세력 잠식 위험 클리어',
     INTERNAL_COLLAPSE: '내부 붕괴 위험 클리어'
   };
   return titles[flag] || '미분류 루트 클리어';
@@ -219,18 +245,19 @@ function setScreen(content) {
 function renderTitleScreen() {
   setScreen(html`
     <section class="title-screen">
-      <p class="eyebrow">red-ledger-game</p>
-      <h1>적혈의 장부</h1>
-      <p class="subtle">The Red Ledger</p>
+      <p class="eyebrow">donation center management rpg</p>
+      <h1>헌혈의 집</h1>
+      <p class="subtle">사람과 생명이 있는 따뜻한 공간</p>
       <div class="card document warning seal-card">
         <div class="card-title">
-          <h3>봉인된 운영 기록</h3>
+          <h3>센터 운영 기록</h3>
           <span class="tag">Stage MVP</span>
         </div>
-        <p class="subtle">헌혈센터처럼 보이는 혈연센터를 기반으로 캐릭터를 성장시키고, 명성을 쌓고, 스테이지를 장악하십시오.</p>
+        <p class="subtle">밝고 친절한 헌혈센터를 운영하며 직원, 방문자, 센터 신뢰, 비밀 유지, 방해 세력 대응을 함께 관리하십시오.</p>
       </div>
       <div class="actions">
-        <button class="primary-button" data-action="new-game">운영 시작</button>
+        <button class="primary-button" data-action="new-game">센터 운영 시작</button>
+        <button class="secondary-button" data-action="combat">전투 브리핑 보기</button>
         <button class="secondary-button" data-action="about">프로젝트 정보</button>
       </div>
     </section>
@@ -241,13 +268,13 @@ function renderAboutScreen() {
   setScreen(html`
     <section class="screen">
       <p class="eyebrow">project brief</p>
-      <h2>성장형 다중 장르 운영 게임</h2>
+      <h2>밝은 센터 운영 + 성장형 전략 게임</h2>
       <div class="card document">
         <div class="card-title">
           <h3>핵심 구조</h3>
           <span class="tag">기획 검증</span>
         </div>
-        <p class="subtle">문서형 UI, 자원 관리, 선택지 처리, 캐릭터 반응, 스테이지 정산, 랭크 판정을 검증하는 웹 MVP입니다. 전투, 퍼즐, 아케이드, 전략 미션으로 확장될 구조를 전제로 합니다.</p>
+        <p class="subtle">직원 근무표, 방문자 응대, 센터 신뢰, 이벤트 처리, 캐릭터 성장, 전투 브리핑, 스테이지 정산을 검증하는 웹 MVP입니다.</p>
       </div>
       <div class="actions">
         <button class="primary-button" data-action="title">돌아가기</button>
@@ -281,6 +308,7 @@ function renderDayStartScreen() {
       </div>
       <div class="actions">
         <button class="primary-button" data-action="event">미션 보고서 확인</button>
+        <button class="secondary-button" data-action="combat">전투 브리핑</button>
       </div>
     </section>
   `);
@@ -373,6 +401,73 @@ function renderMainOperationScreen() {
       <div class="actions">
         <button class="primary-button" data-action="next-day">${gameState.currentDay >= 7 ? '스테이지 정산으로' : '다음 구간으로'}</button>
         <button class="secondary-button" data-action="event">현재 미션 보기</button>
+        <button class="secondary-button" data-action="combat">전투 브리핑</button>
+      </div>
+    </section>
+  `);
+}
+
+function renderCombatBriefingScreen() {
+  const briefing = getCombatBriefing();
+  const combatType = getCombatType(briefing.combatTypeId);
+  const preferredActions = briefing.preferredActions
+    .map((name) => getActionByName(name))
+    .filter(Boolean);
+
+  setScreen(html`
+    <section class="screen">
+      ${gameState ? renderDayHeader() : ''}
+      <p class="eyebrow">combat briefing</p>
+      <h2>${briefing.title}</h2>
+      <div class="card document warning">
+        <div class="card-title">
+          <h3>${combatType?.name || '전투 브리핑'}</h3>
+          <span class="tag">${briefing.location}</span>
+        </div>
+        <p class="subtle">${briefing.summary}</p>
+      </div>
+      <div class="card compact-card">
+        <div class="card-title">
+          <h3>추천 편성</h3>
+          <span class="tag">${briefing.threatFaction}</span>
+        </div>
+        <div class="person-list">
+          ${briefing.recommendedTeam.map((name) => `<span class="person-chip">${name}</span>`).join('')}
+        </div>
+      </div>
+      <div class="card compact-card">
+        <div class="card-title">
+          <h3>클리어 조건</h3>
+          <span class="tag">공생 방어</span>
+        </div>
+        <div class="history-list full">
+          ${briefing.winConditions.map((item, index) => renderSimpleHistoryItem(index + 1, item, '승리 조건')).join('')}
+        </div>
+      </div>
+      <div class="card compact-card">
+        <div class="card-title">
+          <h3>실패 조건</h3>
+          <span class="tag risk-high">주의</span>
+        </div>
+        <div class="history-list full">
+          ${briefing.loseConditions.map((item, index) => renderSimpleHistoryItem(index + 1, item, '실패 조건')).join('')}
+        </div>
+      </div>
+      <div class="choice-list">
+        ${preferredActions.map((action) => renderCombatActionButton(action)).join('')}
+      </div>
+      <div class="card compact-card">
+        <div class="card-title">
+          <h3>예상 보상</h3>
+          <span class="tag">정산 미리보기</span>
+        </div>
+        <div class="person-list">
+          ${briefing.rewardPreview.map((item) => `<span class="relationship-chip">${item}</span>`).join('')}
+        </div>
+      </div>
+      <div class="actions">
+        <button class="primary-button" data-action="main">운영 본부로</button>
+        <button class="secondary-button" data-action="event">현재 미션 보기</button>
       </div>
     </section>
   `);
@@ -456,6 +551,28 @@ function renderChoiceButton(choice, primary = false) {
       ${choice.text}
       <span class="choice-tone">${choice.tone}</span>
     </button>
+  `;
+}
+
+function renderCombatActionButton(action) {
+  return html`
+    <button class="choice-button">
+      <span class="choice-code">${action.category}</span>
+      ${action.name}
+      <span class="choice-tone">${action.description}</span>
+    </button>
+  `;
+}
+
+function renderSimpleHistoryItem(index, title, subtitle = '') {
+  return html`
+    <div class="history-item">
+      <span class="history-index">${index}</span>
+      <div>
+        <strong>${title}</strong>
+        <small>${subtitle}</small>
+      </div>
+    </div>
   `;
 }
 
@@ -558,6 +675,21 @@ app.addEventListener('click', (event) => {
     about: renderAboutScreen,
     event: renderEventScreen,
     main: renderMainOperationScreen,
+    combat: () => {
+      if (!gameState) {
+        gameState = {
+          currentDay: 1,
+          currentStage: 1,
+          stageName: '튜토리얼 운영 구간',
+          resources: createInitialResources(),
+          selectedChoices: [],
+          progressionFlags: {},
+          lastChoice: null,
+          currentScreen: 'combat'
+        };
+      }
+      renderCombatBriefingScreen();
+    },
     'next-day': advanceDay
   };
 
