@@ -4,7 +4,8 @@ const state = {
   characters: [],
   styles: null,
   selectedId: null,
-  selectedRarity: null
+  selectedRarity: null,
+  validation: null
 };
 
 const selectEl = document.querySelector('#character-select');
@@ -25,6 +26,7 @@ async function boot() {
     loadJson('character-card-registry.json')
   ]);
 
+  state.validation = validateCardRegistry(registryData);
   state.styles = styleData;
   state.characters = buildCharacters(heroData, enemyData, registryData);
   state.selectedId = state.characters[0]?.characterId;
@@ -33,6 +35,27 @@ async function boot() {
   fillControls();
   bindEvents();
   render();
+}
+
+function validateCardRegistry(registryData) {
+  const seen = new Set();
+  const duplicates = [];
+  const missing = [];
+
+  for (const card of registryData.cards || []) {
+    if (!card.cardUid) {
+      missing.push(card.characterId || 'UNKNOWN');
+      continue;
+    }
+    if (seen.has(card.cardUid)) duplicates.push(card.cardUid);
+    seen.add(card.cardUid);
+  }
+
+  return {
+    ok: duplicates.length === 0 && missing.length === 0,
+    duplicates,
+    missing
+  };
 }
 
 function buildCharacters(heroData, enemyData, registryData) {
@@ -162,6 +185,21 @@ function getAura(alignmentId, rarityId) {
   return (state.styles.alignmentAuras || []).find((aura) => aura.alignmentId === alignmentId) || state.styles.alignmentAuras[0];
 }
 
+function renderValidationNotice() {
+  if (!state.validation || state.validation.ok) {
+    return '<div class="card-validation ok">CARD UID CHECK · 중복 없음</div>';
+  }
+
+  const duplicateText = state.validation.duplicates.length
+    ? `중복: ${state.validation.duplicates.join(', ')}`
+    : '';
+  const missingText = state.validation.missing.length
+    ? `누락: ${state.validation.missing.join(', ')}`
+    : '';
+
+  return `<div class="card-validation error">CARD UID ERROR · ${escapeHtml([duplicateText, missingText].filter(Boolean).join(' / '))}</div>`;
+}
+
 function render() {
   const character = getSelectedCharacter();
   const rarity = getRarity(state.selectedRarity || character.rarity);
@@ -172,6 +210,7 @@ function render() {
     : buildCardUid(character.characterId, rarity.rarityId, character.serial || 1);
 
   previewEl.innerHTML = `
+    ${renderValidationNotice()}
     <article class="official-card" style="--rarity-border:${rarity.borderColor}; --rarity-accent:${rarity.accentColor}; --aura-color:${aura.auraColor}; --aura-intensity:${rarity.auraIntensity}">
       <div class="rarity-badge"><div><small>${escapeHtml(rarity.name)}</small><strong>${escapeHtml(rarity.shortLabel)}</strong></div></div>
       <div class="card-grid">
