@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>헌혈의 집 · 캐릭터 도감</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./characters.css" />
+  </head>
+  <body>
+    <main class="app-shell character-shell">
+      <section class="screen">
+        <p class="eyebrow">character codex</p>
+        <h1 class="codex-title">캐릭터 도감</h1>
+        <p class="subtle">종족, 진영, 아우라, 직업, 스토리 아크를 기준으로 영웅과 적 영웅을 확인합니다.</p>
+
+        <div class="card compact-card codex-tabs">
+          <button class="filter-button active" data-view="hero">아군 영웅</button>
+          <button class="filter-button" data-view="enemy">적 영웅</button>
+          <button class="filter-button" data-view="arc">스토리 아크</button>
+        </div>
+
+        <div class="card compact-card">
+          <div class="card-title">
+            <h3>필터</h3>
+            <span class="tag" id="result-count">0명</span>
+          </div>
+          <div class="filter-row">
+            <select id="race-filter" class="codex-select">
+              <option value="all">전체 종족</option>
+            </select>
+            <select id="aura-filter" class="codex-select">
+              <option value="all">전체 아우라</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="codex-list" class="codex-list"></div>
+
+        <div class="actions">
+          <a class="primary-button link-button" href="./index.html">운영 본부로</a>
+        </div>
+      </section>
+    </main>
+    <script type="module" src="./characters.js"></script>
+  </body>
+</html>
