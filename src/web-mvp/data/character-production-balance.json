@@ -1,0 +1,108 @@
+{
+  "version": "0.1.0",
+  "description": "캐릭터 도감 제작 시 등급, 성향, 색상, 종족, 상태 균형을 점검하기 위한 밸런스 체크 데이터.",
+  "globalTarget1000": {
+    "rarity": {
+      "N": 450,
+      "R": 300,
+      "SR": 170,
+      "EP": 70,
+      "L": 10
+    },
+    "alignment": {
+      "GOOD": 400,
+      "NEUTRAL": 300,
+      "EVIL": 250,
+      "LEGEND": 50
+    },
+    "note": "1,000장 기준 장기 목표. 스토리 핵심 배치는 예외적으로 고등급 비율이 높을 수 있다."
+  },
+  "batchTargets": [
+    {
+      "batchId": "BATCH-001",
+      "type": "story-core-prototype",
+      "targetCount": 10,
+      "rarityTarget": {
+        "N": 1,
+        "R": 2,
+        "SR": 3,
+        "EP": 3,
+        "L": 1
+      },
+      "alignmentTarget": {
+        "GOOD": 4,
+        "NEUTRAL": 3,
+        "EVIL": 2,
+        "LEGEND": 1
+      },
+      "raceTarget": {
+        "인간": 5,
+        "뱀프": 5
+      }
+    },
+    {
+      "batchId": "BATCH-002",
+      "type": "normal-expansion",
+      "targetCount": 10,
+      "rarityTarget": {
+        "N": 4,
+        "R": 3,
+        "SR": 2,
+        "EP": 1,
+        "L": 0
+      },
+      "alignmentTarget": {
+        "GOOD": 3,
+        "NEUTRAL": 3,
+        "EVIL": 3,
+        "LEGEND": 1
+      },
+      "raceTargetPolicy": "인간/뱀프 외 엘프, 드워프, 골렘, 늑대인간, 하이브리드, 임프, 위자드 중 최소 4종족 포함"
+    }
+  ],
+  "batchActuals": [
+    {
+      "batchId": "BATCH-001",
+      "actualCount": 10,
+      "rarityActual": {
+        "N": 1,
+        "R": 2,
+        "SR": 3,
+        "EP": 3,
+        "L": 1
+      },
+      "alignmentActual": {
+        "GOOD": 6,
+        "NEUTRAL": 4,
+        "EVIL": 0,
+        "LEGEND": 0
+      },
+      "raceActual": {
+        "인간": 5,
+        "뱀프": 5
+      },
+      "statusActual": {
+        "cardReady": 4,
+        "illustrationReady": 3,
+        "needsReview": 2,
+        "illustrationNeeded": 1,
+        "rejected": 0
+      },
+      "balanceWarning": [
+        "GOOD 성향이 목표보다 많다.",
+        "EVIL 성향이 없다.",
+        "Batch 002에서는 악/검붉은 계열을 보강해야 한다.",
+        "Batch 002에서는 인간/뱀프 외 종족을 늘려야 한다."
+      ]
+    }
+  ],
+  "requiredPreProductionChecks": [
+    "10명 단위 텍스트 명세가 먼저 작성되어 있는가",
+    "cardUid가 중복되지 않는가",
+    "등급 목표 대비 현재 수량을 확인했는가",
+    "성향/아우라 색상 목표 대비 현재 수량을 확인했는가",
+    "직전 2장과 실루엣이 겹치지 않는가",
+    "이미지 생성 전에 금지 요소를 명시했는가",
+    "AI 이미지 안의 텍스트를 최종 데이터로 사용하지 않는가"
+  ]
+}
