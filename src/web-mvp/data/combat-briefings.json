@@ -1,0 +1,54 @@
+[
+  {
+    "briefingId": "BRF-001",
+    "combatTypeId": "COMBAT-CENTER-DEFENSE",
+    "title": "대기실 소동 진정 작전",
+    "location": "서울 동대문 헌혈센터 대기실",
+    "threatFaction": "실종자 가족 연대",
+    "summary": "불안해진 방문자와 보호자들이 대기실에서 소란을 일으키고 있습니다. 방문자 안전과 인간 신뢰를 지키는 것이 우선입니다.",
+    "recommendedTeam": ["한서연", "정다은", "오유리"],
+    "winConditions": ["방문자 안전도 70 이상", "비밀 노출도 30 이하", "패닉 레벨 20 이하"],
+    "loseConditions": ["방문자 안전도 30 이하", "비밀 노출도 70 이상"],
+    "preferredActions": ["진정 안내", "보호", "협상"],
+    "rewardPreview": ["인간 신뢰 +8", "센터 명성 +5", "간호사 경험치 +80"]
+  },
+  {
+    "briefingId": "BRF-002",
+    "combatTypeId": "COMBAT-STORAGE-INTRUSION",
+    "title": "혈액 보관실 침입 경보",
+    "location": "지하 혈액 보관실",
+    "threatFaction": "혈액 암거래망",
+    "summary": "암거래 조직원이 보관실 로그와 샘플을 탈취하려 합니다. 증거 회수와 보안 봉쇄가 필요합니다.",
+    "recommendedTeam": ["강지윤", "문소라", "김세아"],
+    "winConditions": ["핵심 재고 80 이상", "보안 등급 60 이상", "증거 회수 1개 이상"],
+    "loseConditions": ["핵심 재고 40 이하", "보안 로그 유출"],
+    "preferredActions": ["보안 봉쇄", "증거 회수", "제압"],
+    "rewardPreview": ["암거래 단서 +12", "보안 등급 +6", "아이템 재료 획득"]
+  },
+  {
+    "briefingId": "BRF-003",
+    "combatTypeId": "COMBAT-TRANSPORT-CHASE",
+    "title": "야간 수송 추적 회피",
+    "location": "도심 외곽 수송로",
+    "threatFaction": "비공식 사냥꾼 셀",
+    "summary": "수송 차량이 추적당하고 있습니다. 경로를 바꾸고 수송품을 안전하게 이동시켜야 합니다.",
+    "recommendedTeam": ["오유리", "김세아", "문소라"],
+    "winConditions": ["수송품 안정도 70 이상", "추적 위험 25 이하", "비밀 노출도 35 이하"],
+    "loseConditions": ["차량 손상 80 이상", "추적 노출"],
+    "preferredActions": ["회피 기동", "은폐", "보호"],
+    "rewardPreview": ["물류 명성 +10", "혈액 재고 +15", "수송 장비 재료"]
+  },
+  {
+    "briefingId": "BRF-004",
+    "combatTypeId": "COMBAT-BLACKMARKET-RAID",
+    "title": "암거래 거점 압박",
+    "location": "폐창고 구역",
+    "threatFaction": "혈액 암거래망",
+    "summary": "암거래 조직의 중간 거점이 확인되었습니다. 피해자를 보호하고 증거를 확보한 뒤 거점을 제압해야 합니다.",
+    "recommendedTeam": ["강지윤", "오유리", "한서연", "문소라"],
+    "winConditions": ["거점 제압", "피해자 보호", "증거 2개 이상 확보"],
+    "loseConditions": ["증거 폐기", "피해자 안전도 40 이하"],
+    "preferredActions": ["제압", "증거 회수", "응급 처치"],
+    "rewardPreview": ["캐릭터 경험치 +180", "암거래 단서 +20", "희귀 장비 상자"]
+  }
+]
