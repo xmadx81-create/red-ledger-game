@@ -41,6 +41,7 @@ button {
 
 .hero-card,
 .event-panel,
+.control-panel,
 .list-panel,
 .resource-card {
   border: 1px solid var(--line);
@@ -49,9 +50,28 @@ button {
 }
 
 .hero-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 22px;
+  align-items: flex-start;
   padding: 34px;
   border-radius: 28px;
   margin-bottom: 22px;
+}
+
+.save-status {
+  display: grid;
+  gap: 6px;
+  min-width: 148px;
+  border: 1px solid rgba(216, 179, 106, 0.28);
+  border-radius: 18px;
+  padding: 14px;
+  background: rgba(216, 179, 106, 0.08);
+  color: var(--muted);
+}
+
+.save-status strong {
+  color: var(--gold);
 }
 
 .eyebrow {
@@ -107,7 +127,8 @@ h3 {
 .resource-card span,
 .resource-card small,
 .character-row span,
-.history-list {
+.history-list,
+.control-panel p {
   color: var(--muted);
 }
 
@@ -189,6 +210,20 @@ h3 {
   line-height: 1.5;
 }
 
+.control-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  border-radius: 22px;
+  padding: 18px;
+  margin-bottom: 22px;
+}
+
+.control-panel p {
+  margin-bottom: 0;
+}
+
 .lower-grid {
   align-items: stretch;
 }
@@ -247,19 +282,38 @@ h3 {
   color: var(--muted);
 }
 
-.primary-button {
+.primary-button,
+.secondary-button {
   border: 0;
   border-radius: 16px;
   padding: 14px 20px;
   color: white;
-  background: var(--red);
   cursor: pointer;
   font-weight: 800;
+}
+
+.primary-button {
+  background: var(--red);
+}
+
+.secondary-button {
+  border: 1px solid rgba(216, 179, 106, 0.35);
+  color: var(--gold);
+  background: rgba(216, 179, 106, 0.1);
 }
 
 @media (max-width: 860px) {
   .app-shell {
     padding: 16px;
+  }
+
+  .hero-card,
+  .control-panel {
+    flex-direction: column;
+  }
+
+  .save-status {
+    width: 100%;
   }
 
   .resource-grid {
