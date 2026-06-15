@@ -1,0 +1,114 @@
+{
+  "version": "0.1.0",
+  "description": "헌혈의 집 후보 E 기반 공식 캐릭터 카드 스타일 시스템. 등급별 테두리, 성향별 아우라, 카드 렌더링 규칙을 정의한다.",
+  "officialTemplate": {
+    "templateId": "CARD-TEMPLATE-E",
+    "name": "후보 E 공식 도감 카드",
+    "layout": "portrait-card",
+    "ratio": "4:5",
+    "safeUse": "텍스트와 데이터는 코드로 렌더링하고, AI 이미지는 캐릭터 일러스트 영역에만 삽입한다.",
+    "sections": [
+      "header",
+      "rarityBadge",
+      "portrait",
+      "auraRing",
+      "identityPanel",
+      "auraPanel",
+      "introPanel",
+      "tagPanel",
+      "rarityPanel"
+    ]
+  },
+  "rarityTiers": [
+    {
+      "rarityId": "N",
+      "name": "일반",
+      "shortLabel": "N",
+      "borderColor": "#8f8f8f",
+      "accentColor": "#565656",
+      "auraIntensity": 0.25,
+      "frameDescription": "무채색 금속 테두리, 낮은 광택, 기본 카드",
+      "starCount": 1
+    },
+    {
+      "rarityId": "R",
+      "name": "고급",
+      "shortLabel": "R",
+      "borderColor": "#0f7d57",
+      "accentColor": "#009b72",
+      "auraIntensity": 0.45,
+      "frameDescription": "초록빛 금속 테두리, 실무형 고급 카드",
+      "starCount": 2
+    },
+    {
+      "rarityId": "SR",
+      "name": "희귀",
+      "shortLabel": "SR",
+      "borderColor": "#1769d1",
+      "accentColor": "#2e91ff",
+      "auraIntensity": 0.65,
+      "frameDescription": "파란 테두리, 선명한 후광, 핵심 전투/운영 카드",
+      "starCount": 3
+    },
+    {
+      "rarityId": "EP",
+      "name": "영웅",
+      "shortLabel": "EP",
+      "borderColor": "#7a35d8",
+      "accentColor": "#a764ff",
+      "auraIntensity": 0.82,
+      "frameDescription": "보라 테두리, 강한 광채, 메인 스토리급 카드",
+      "starCount": 4
+    },
+    {
+      "rarityId": "L",
+      "name": "전설",
+      "shortLabel": "L",
+      "borderColor": "#c79524",
+      "accentColor": "#ffd86b",
+      "auraIntensity": 1,
+      "frameDescription": "황금 테두리, 무지개빛 섬광, 시즌 핵심 전설 카드",
+      "starCount": 5
+    }
+  ],
+  "alignmentAuras": [
+    {
+      "alignmentId": "GOOD",
+      "name": "선",
+      "auraColor": "#2e91ff",
+      "auraName": "푸른 아우라",
+      "meaning": "공생 질서를 지키는 캐릭터"
+    },
+    {
+      "alignmentId": "EVIL",
+      "name": "악",
+      "auraColor": "#8b1e24",
+      "auraName": "검붉은 아우라",
+      "meaning": "명확한 적대 캐릭터"
+    },
+    {
+      "alignmentId": "NEUTRAL",
+      "name": "중립",
+      "auraColor": "#7b3dbb",
+      "auraName": "보라 아우라",
+      "meaning": "선악이 애매하거나 회유/배신/동맹 분기가 있는 캐릭터"
+    },
+    {
+      "alignmentId": "LEGEND",
+      "name": "전설",
+      "auraColor": "#ffd86b",
+      "auraName": "골드 아우라",
+      "meaning": "전설급 또는 세계관 핵심 캐릭터"
+    }
+  ],
+  "renderingRules": {
+    "textOwnership": "name, id, race, job, role, tags, rarity, aura는 반드시 JSON 데이터와 코드로 렌더링한다.",
+    "imageOwnership": "AI 이미지는 인물 일러스트만 담당한다. 이미지 안 텍스트는 사용하지 않는다.",
+    "errorPrevention": [
+      "이미지 안의 이름이 틀려도 코드 텍스트를 우선한다.",
+      "도감에는 characterId 기준으로 표시한다.",
+      "1캐릭터 1카드 원칙을 유지한다.",
+      "여러 캐릭터 시트형 이미지는 도감용으로 쓰지 않는다."
+    ]
+  }
+}
