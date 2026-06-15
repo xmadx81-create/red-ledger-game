@@ -24,6 +24,7 @@ CARD_GAME_DESIGN_001.md   ← 현재 마스터 기획서 (장르 전환 기준)
 docs/game-design/
 ├─ 00_game-design-index.md              (본 인덱스)
 ├─ CARD_GAME_DESIGN_001.md              (★ 마스터 기획서)
+├─ RACE_HYBRID_FUSION_SYSTEM_001.md     (종족·하이브리드·합성 가챠·등급 세분화)
 ├─ CORE_LOOP_REDESIGN_001.md            (지속형 성장 루프)
 ├─ CARD_PRODUCTION_PIPELINE_001.md      (카드 제작/ cardUid 규칙)
 ├─ VISUAL_TONE_GUIDE_001.md             (밝은 톤 가이드)
