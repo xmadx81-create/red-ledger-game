@@ -225,3 +225,34 @@
 2. MVP 코드 폴더 구조 생성
 3. JSON 로더와 기본 게임 상태 계산 로직 작성
 4. Figma 화면과 코드 데이터 표시 항목 매핑
+
+---
+
+### 2026-06-16 7차 기록
+
+작업자: ChatGPT + 백무결  
+작업 구분: Vite React TypeScript MVP 코드 뼈대 생성  
+작업 내용:
+- 기존 저장소에 이미 있던 `index.html`을 Vite 진입점으로 갱신했다.
+- `package.json`, `tsconfig.json`, `tsconfig.node.json`, `vite.config.ts`를 생성했다.
+- `src/` 폴더에 MVP 코드 파일을 생성했다.
+  - `src/main.tsx`
+  - `src/App.tsx`
+  - `src/styles.css`
+  - `src/types.ts`
+  - `src/data.ts`
+  - `src/gameEngine.ts`
+- `src/data.ts`에는 이벤트 선택지 효과를 구조화된 수치 변화 배열로 변환해 넣었다.
+- `src/gameEngine.ts`에는 초기 상태 생성, 자원 증감 적용, 자원 범위 제한, 현재 이벤트 조회, 선택지 처리, 엔딩 판정 로직을 구현했다.
+- `README.md`를 Vite React TypeScript 기준 실행 안내로 갱신했다.
+
+결과:
+- `npm install` 후 `npm run dev`로 실행 가능한 1차 웹 MVP 코드 구조가 준비되었다.
+- 첫 화면에서 자원, 일일 이벤트, 선택지, 주요 인물, 진행 기록, 엔딩 판정을 확인할 수 있다.
+
+다음 조치:
+1. 로컬 또는 배포 환경에서 `npm install` / `npm run dev` 실행 테스트
+2. TypeScript 빌드 오류 확인 및 수정
+3. UI를 Figma 후보E/카드형 규칙에 맞춰 정교화
+4. 저장/불러오기 기능 추가
+5. 카드 도감 시스템 설계
