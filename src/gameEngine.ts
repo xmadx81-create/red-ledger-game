@@ -1,5 +1,13 @@
 import { endings, events, resources } from './data';
-import type { EndingDefinition, GameState, ResourceDefinition, ResourceDelta, ResourceId, ResourceState } from './types';
+import type {
+  EndingDefinition,
+  GameState,
+  ResourceCondition,
+  ResourceDefinition,
+  ResourceDelta,
+  ResourceId,
+  ResourceState,
+} from './types';
 
 const resourceMap = new Map<ResourceId, ResourceDefinition>(
   resources.map((resource) => [resource.id, resource] as const),
@@ -58,30 +66,38 @@ export function isFinalDayComplete(state: GameState): boolean {
   return state.history.length >= 8;
 }
 
+function evaluateCondition(resourcesState: ResourceState, condition: ResourceCondition): boolean {
+  const current = resourcesState[condition.resourceId];
+
+  switch (condition.operator) {
+    case 'gt':
+      return current > condition.value;
+    case 'gte':
+      return current >= condition.value;
+    case 'lt':
+      return current < condition.value;
+    case 'lte':
+      return current <= condition.value;
+    case 'eq':
+      return current === condition.value;
+    default:
+      return false;
+  }
+}
+
+function matchesEnding(state: GameState, ending: EndingDefinition): boolean {
+  const { all = [], any = [] } = ending.conditions;
+  const allMatched = all.every((condition) => evaluateCondition(state.resources, condition));
+  const anyMatched = any.length === 0 || any.some((condition) => evaluateCondition(state.resources, condition));
+
+  return allMatched && anyMatched;
+}
+
 export function pickEnding(state: GameState): EndingDefinition {
-  const r = state.resources;
+  const sortedEndings = [...endings].sort((a, b) => b.priority - a.priority);
+  const matchedEnding = sortedEndings.find((ending) => matchesEnding(state, ending));
 
-  if (r.RES_UNREST >= 85 || r.RES_BLOOD <= 5) {
-    return endings.find((ending) => ending.id === 'END_COLLAPSE') ?? endings[0];
-  }
-
-  if (r.RES_EXPOSURE >= 80 || r.RES_TRUST <= 10) {
-    return endings.find((ending) => ending.id === 'END_EXPOSED') ?? endings[0];
-  }
-
-  if (r.RES_FAMILY >= 75 && r.RES_PRESTIGE >= 70 && r.RES_TRUST >= 20) {
-    return endings.find((ending) => ending.id === 'END_FAMILY') ?? endings[0];
-  }
-
-  if (r.RES_TRUST >= 75 && r.RES_EXPOSURE < 25 && r.RES_FAMILY >= 25) {
-    return endings.find((ending) => ending.id === 'END_PUBLIC') ?? endings[0];
-  }
-
-  if (r.RES_BLOOD >= 40 && r.RES_TRUST >= 45 && r.RES_EXPOSURE < 50 && r.RES_FAMILY >= 45) {
-    return endings.find((ending) => ending.id === 'END_BALANCED') ?? endings[0];
-  }
-
-  return endings.find((ending) => ending.id === 'END_EXPOSED') ?? endings[0];
+  return matchedEnding ?? endings.find((ending) => ending.id === 'END_EXPOSED') ?? endings[0];
 }
 
 export function formatDelta(delta: ResourceDelta): string {
