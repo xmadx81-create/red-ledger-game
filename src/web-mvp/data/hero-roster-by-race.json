@@ -1,0 +1,138 @@
+{
+  "version": "0.1.0",
+  "description": "종족별 5인 아군 주역급 영웅 로스터. 종족 특화 직업군, 아우라, 등장 구간, 주요 서사 포함.",
+  "races": [
+    {
+      "raceId": "RACE-HUMAN",
+      "raceName": "인간",
+      "specialization": ["체술", "구조", "방어", "민원 대응"],
+      "heroes": [
+        { "id": "HUM-001", "name": "서윤", "genderAge": "여성 청년", "job": "격투가", "aura": "AURA-GOOD-BLUE", "role": "근접 체술 딜러", "storyArc": "평범한 인간의 한계를 의지와 체술로 넘는 정통파 영웅", "firstAppearance": "1장 후반" },
+        { "id": "HUM-002", "name": "지호", "genderAge": "남성 청년", "job": "특수요원", "aura": "AURA-AMBIGUOUS-PURPLE", "role": "제압/침투", "storyArc": "처음에는 센터를 의심하지만 내부 진실을 보고 협력자로 전환", "firstAppearance": "2장" },
+        { "id": "HUM-003", "name": "민서", "genderAge": "여성 장년", "job": "구조대원", "aura": "AURA-GOOD-BLUE", "role": "구조/보호", "storyArc": "사람을 구하는 일을 최우선으로 삼는 구조 전문가", "firstAppearance": "1장" },
+        { "id": "HUM-004", "name": "현우", "genderAge": "남성 청년", "job": "무에타이 파이터", "aura": "AURA-AMBIGUOUS-PURPLE", "role": "고화력 근접", "storyArc": "강한 힘을 가졌지만 감정 조절을 배워야 하는 성장형 캐릭터", "firstAppearance": "3장" },
+        { "id": "HUM-005", "name": "하린", "genderAge": "여성 노년", "job": "방호 전문가", "aura": "AURA-GOOD-BLUE", "role": "탱커/보호", "storyArc": "오랜 현장 경험으로 시민과 직원 모두를 지키는 방패", "firstAppearance": "2장" }
+      ]
+    },
+    {
+      "raceId": "RACE-VAMPIRE",
+      "raceName": "뱀프",
+      "specialization": ["초능력", "혈액술", "정신계", "은폐"],
+      "heroes": [
+        { "id": "VMP-001", "name": "카멜리아", "genderAge": "여성 성인", "job": "혈액술사", "aura": "AURA-GOOD-BLUE", "role": "혈액술/지원", "storyArc": "공생 질서를 지지하는 고귀한 뱀프 혈액술사", "firstAppearance": "3장" },
+        { "id": "VMP-002", "name": "발렌", "genderAge": "남성 성인", "job": "환영술사", "aura": "AURA-AMBIGUOUS-PURPLE", "role": "은폐/환영", "storyArc": "진실을 숨기는 것이 때로는 사람을 보호하는 일이라 믿는다", "firstAppearance": "3장" },
+        { "id": "VMP-003", "name": "리아스", "genderAge": "남성 청년", "job": "정신 지배자", "aura": "AURA-AMBIGUOUS-PURPLE", "role": "정신계/정보", "storyArc": "초반에는 위험한 정보 수집자로 등장하지만 회유 가능", "firstAppearance": "2장 적대 후 분기" },
+        { "id": "VMP-004", "name": "그라프", "genderAge": "남성 노년", "job": "혈향 감지자", "aura": "AURA-GOOD-BLUE", "role": "추적/분석", "storyArc": "혈흔과 기록에서 과거의 진실을 읽어내는 노련한 감지자", "firstAppearance": "4장" },
+        { "id": "VMP-005", "name": "태오", "genderAge": "남성 청년", "job": "혈기 폭발 전사", "aura": "AURA-AMBIGUOUS-PURPLE", "role": "폭발형 딜러/수송", "storyArc": "장난기 많은 박쥐 하이브리드에서 뱀프 혈통이 각성", "firstAppearance": "3장" }
+      ]
+    },
+    {
+      "raceId": "RACE-ELF",
+      "raceName": "엘프",
+      "specialization": ["치유", "자연", "정령 마법", "룬 해독"],
+      "heroes": [
+        { "id": "ELF-001", "name": "세라엘", "genderAge": "여성 청년", "job": "아케인 힐러", "aura": "AURA-GOOD-BLUE", "role": "치유/보호", "storyArc": "센터 검진 담당에서 전설 치유사로 성장", "firstAppearance": "1장" },
+        { "id": "ELF-002", "name": "리아", "genderAge": "남성 청년", "job": "윈드 아처-메이지", "aura": "AURA-GOOD-BLUE", "role": "원거리/수송 지원", "storyArc": "바람의 궤적으로 수송로와 적의 움직임을 읽는다", "firstAppearance": "3장" },
+        { "id": "ELF-003", "name": "루나리", "genderAge": "여성 성인", "job": "문 라이트 리추얼리스트", "aura": "AURA-GOOD-BLUE", "role": "야간 의식/정화", "storyArc": "달의 주기로 혈류와 감정을 안정화한다", "firstAppearance": "4장" },
+        { "id": "ELF-004", "name": "에일론", "genderAge": "남성 노년", "job": "룬 스칼라", "aura": "AURA-LEGEND-GOLD", "role": "기록 해독/전설 퀘스트", "storyArc": "고대 룬과 협약 원본을 해독하는 핵심 인물", "firstAppearance": "5장" },
+        { "id": "ELF-005", "name": "아이리", "genderAge": "여성 소녀", "job": "스피릿 싱어", "aura": "AURA-GOOD-BLUE", "role": "정신 안정/지원", "storyArc": "노래로 방문자와 정령을 진정시키는 어린 영웅", "firstAppearance": "3장" }
+      ]
+    },
+    {
+      "raceId": "RACE-DWARF",
+      "raceName": "드워프",
+      "specialization": ["공학", "장비", "방어 설비", "합성"],
+      "heroes": [
+        { "id": "DWF-001", "name": "브록", "genderAge": "남성 장년", "job": "블러드뱅크 메카닉", "aura": "AURA-GOOD-BLUE", "role": "보관 장비 정비", "storyArc": "혈액 보관 장치를 완벽하게 관리하는 공학자", "firstAppearance": "2장" },
+        { "id": "DWF-002", "name": "하르그", "genderAge": "여성 청년", "job": "엑소-수트 스미스", "aura": "AURA-GOOD-BLUE", "role": "장비 제작/방어", "storyArc": "생명 보호용 외골격 장비를 만드는 기술자", "firstAppearance": "3장" },
+        { "id": "DWF-003", "name": "티르", "genderAge": "남성 노년", "job": "가젯 디펜더", "aura": "AURA-GOOD-BLUE", "role": "트랩/퍼즐", "storyArc": "작은 장치로 큰 위기를 막는 노련한 장인", "firstAppearance": "3장" },
+        { "id": "DWF-004", "name": "몰딘", "genderAge": "남성 성인", "job": "알케미 엔지니어", "aura": "AURA-AMBIGUOUS-PURPLE", "role": "합성/강화", "storyArc": "연금술과 공학 사이에서 위험한 실험을 조율한다", "firstAppearance": "4장" },
+        { "id": "DWF-005", "name": "그럼블", "genderAge": "남성 노년", "job": "터렛 아티잔", "aura": "AURA-GOOD-BLUE", "role": "대규모 방어", "storyArc": "자동 방어 장치로 길드 던전에서 전선을 지킨다", "firstAppearance": "길드 던전" }
+      ]
+    },
+    {
+      "raceId": "RACE-HYBRID",
+      "raceName": "하이브리드",
+      "specialization": ["이중 직업", "적응형 스킬", "각성 분기"],
+      "heroes": [
+        { "id": "HYB-001", "name": "이든", "genderAge": "남성 청년", "job": "수혈 전략가", "aura": "AURA-AMBIGUOUS-PURPLE", "role": "전략/편성", "storyArc": "두 혈통 사이에서 균형을 찾는 하이브리드 전략가", "firstAppearance": "3장" },
+        { "id": "HYB-002", "name": "레이나", "genderAge": "여성 성인", "job": "유전자 전환자", "aura": "AURA-AMBIGUOUS-PURPLE", "role": "각성/변환", "storyArc": "자신의 혈통을 제어하려는 과학형 하이브리드", "firstAppearance": "4장" },
+        { "id": "HYB-003", "name": "세린", "genderAge": "여성 청년", "job": "이중 마법 치료사", "aura": "AURA-GOOD-BLUE", "role": "공격/치유", "storyArc": "공격과 치유를 동시에 수행하는 불안정하지만 강한 힐러", "firstAppearance": "4장" },
+        { "id": "HYB-004", "name": "카온", "genderAge": "남성 소년", "job": "키메라 스카우트", "aura": "AURA-GOOD-BLUE", "role": "탐색/정찰", "storyArc": "혼합 감각으로 숨겨진 위협을 찾는 정찰병", "firstAppearance": "탐색 던전" },
+        { "id": "HYB-005", "name": "카인", "genderAge": "남성 성인", "job": "공명 듀얼리스트", "aura": "AURA-AMBIGUOUS-PURPLE", "role": "결투/분기", "storyArc": "공명검으로 전장의 흐름을 끊지만 자신의 혈통을 두려워한다", "firstAppearance": "5장" }
+      ]
+    },
+    {
+      "raceId": "RACE-WEREWOLF",
+      "raceName": "늑대인간",
+      "specialization": ["추적", "팩 전투", "야간전"],
+      "heroes": [
+        { "id": "WRW-001", "name": "루나", "genderAge": "여성 청년", "job": "문 추적자", "aura": "AURA-GOOD-BLUE", "role": "추적/야간", "storyArc": "달빛 아래 흔적을 읽어 암거래망을 쫓는다", "firstAppearance": "3장" },
+        { "id": "WRW-002", "name": "브란", "genderAge": "남성 장년", "job": "팩 가디언", "aura": "AURA-GOOD-BLUE", "role": "탱커/보호", "storyArc": "동료를 지키는 것을 무리의 법으로 삼는 방패", "firstAppearance": "센터 방어전" },
+        { "id": "WRW-003", "name": "하울", "genderAge": "남성 청년", "job": "센트 헌터", "aura": "AURA-AMBIGUOUS-PURPLE", "role": "암거래 추적", "storyArc": "냄새와 흔적으로 적을 찾지만 본능을 억제해야 한다", "firstAppearance": "4장" },
+        { "id": "WRW-004", "name": "바이론", "genderAge": "남성 성인", "job": "버서커 스트라이커", "aura": "AURA-AMBIGUOUS-PURPLE", "role": "고화력 전투", "storyArc": "강력하지만 통제 실패 시 위험한 딜러", "firstAppearance": "고난도 전투" },
+        { "id": "WRW-005", "name": "알드릭", "genderAge": "남성 노년", "job": "알파 센티널", "aura": "AURA-LEGEND-GOLD", "role": "팩 지휘", "storyArc": "늑대인간 무리를 지휘하는 전설급 수호자", "firstAppearance": "길드 던전" }
+      ]
+    },
+    {
+      "raceId": "RACE-ANCIENT-VAMPIRE",
+      "raceName": "초고대뱀프",
+      "specialization": ["예언", "기억", "지배", "고대 법칙"],
+      "heroes": [
+        { "id": "AVP-001", "name": "릴리스", "genderAge": "여성 초고대", "job": "블러드 오라클", "aura": "AURA-LEGEND-GOLD", "role": "예언/메인 서사", "storyArc": "협약의 미래를 예지하는 전설급 존재", "firstAppearance": "6장" },
+        { "id": "AVP-002", "name": "발터스", "genderAge": "남성 초고대", "job": "메모리 모나크", "aura": "AURA-LEGEND-GOLD", "role": "기억 복원", "storyArc": "과거 협약의 원본을 기억으로 복원한다", "firstAppearance": "6장" },
+        { "id": "AVP-003", "name": "누아르", "genderAge": "남성 초고대", "job": "섀도우 노블", "aura": "AURA-AMBIGUOUS-PURPLE", "role": "그림자/정치", "storyArc": "공생 질서에 회의적인 고대 귀족", "firstAppearance": "6장" },
+        { "id": "AVP-004", "name": "세레나", "genderAge": "여성 초고대", "job": "크림슨 시어", "aura": "AURA-LEGEND-GOLD", "role": "운명 분기", "storyArc": "붉은 운명의 실을 보고 스토리 분기점을 알려준다", "firstAppearance": "전설 퀘스트" },
+        { "id": "AVP-005", "name": "아자조엘", "genderAge": "남성 초고대", "job": "에인션트 마인드브레이커", "aura": "AURA-AMBIGUOUS-PURPLE", "role": "정신 시험", "storyArc": "인간의 의지와 공생 신념을 시험하는 위험한 존재", "firstAppearance": "고난도 던전" }
+      ]
+    },
+    {
+      "raceId": "RACE-ANCIENT-WEREWOLF",
+      "raceName": "초고대늑대인간",
+      "specialization": ["부족 왕권", "달의 저주", "고대 전쟁"],
+      "heroes": [
+        { "id": "AWR-001", "name": "가르문", "genderAge": "남성 초고대", "job": "문 워 치프", "aura": "AURA-LEGEND-GOLD", "role": "전쟁 지휘", "storyArc": "고대 늑대 전쟁을 기억하는 전쟁 군주", "firstAppearance": "6장" },
+        { "id": "AWR-002", "name": "유나이", "genderAge": "여성 초고대", "job": "프라이멀 샤먼", "aura": "AURA-LEGEND-GOLD", "role": "저주 해제/의식", "storyArc": "달의 저주와 생명 반동을 다스리는 샤먼", "firstAppearance": "6장" },
+        { "id": "AWR-003", "name": "카이라", "genderAge": "여성 초고대", "job": "엘더 로얄 워든", "aura": "AURA-LEGEND-GOLD", "role": "수호/시험", "storyArc": "고대 혈통의 경계를 지키는 전설 수호자", "firstAppearance": "전설 수호전" },
+        { "id": "AWR-004", "name": "아이락", "genderAge": "남성 초고대", "job": "이클립스 스토커", "aura": "AURA-AMBIGUOUS-PURPLE", "role": "잠입/추적", "storyArc": "일식의 그림자로 적을 추적하는 고대 추격자", "firstAppearance": "잠입 던전" },
+        { "id": "AWR-005", "name": "라에벨", "genderAge": "여성 초고대", "job": "팩 소버린", "aura": "AURA-LEGEND-GOLD", "role": "무리 통합", "storyArc": "모든 무리를 하나로 묶는 고대 여왕", "firstAppearance": "시즌 후반" }
+      ]
+    },
+    {
+      "raceId": "RACE-HOBBIT",
+      "raceName": "호빗",
+      "specialization": ["지원", "요리", "물류", "탐색"],
+      "heroes": [
+        { "id": "HOB-001", "name": "피프", "genderAge": "남성 소년", "job": "쿠리어 로그", "aura": "AURA-GOOD-BLUE", "role": "배달/정보", "storyArc": "작지만 빠른 심부름과 정보 전달자", "firstAppearance": "2장" },
+        { "id": "HOB-002", "name": "메리골드", "genderAge": "여성 성인", "job": "파우더 연금사", "aura": "AURA-GOOD-BLUE", "role": "회복 아이템", "storyArc": "회복 음식과 가루약으로 팀을 돕는다", "firstAppearance": "3장" },
+        { "id": "HOB-003", "name": "로리안", "genderAge": "남성 청년", "job": "럭키 스카우트", "aura": "AURA-GOOD-BLUE", "role": "탐색 보너스", "storyArc": "운 좋은 발견으로 숨은 보상을 찾아낸다", "firstAppearance": "탐색 던전" },
+        { "id": "HOB-004", "name": "샤이", "genderAge": "여성 소녀", "job": "슬링 에이스", "aura": "AURA-GOOD-BLUE", "role": "원거리 지원", "storyArc": "작은 체구지만 정확한 지원 사격을 담당한다", "firstAppearance": "전투 튜토리얼" },
+        { "id": "HOB-005", "name": "바름", "genderAge": "남성 노년", "job": "클리닉 픽서", "aura": "AURA-GOOD-BLUE", "role": "수리/정비", "storyArc": "낡은 도구로도 장비를 살리는 노련한 수리공", "firstAppearance": "장비 고장 이벤트" }
+      ]
+    },
+    {
+      "raceId": "RACE-SPIRIT",
+      "raceName": "정령",
+      "specialization": ["원소", "회복", "오라", "자연 균형"],
+      "heroes": [
+        { "id": "SPR-001", "name": "이그니스", "genderAge": "무성/성인형", "job": "플레임 위스퍼러", "aura": "AURA-GOOD-BLUE", "role": "정화/화염", "storyArc": "오염된 흔적을 태워 정화하는 불의 정령", "firstAppearance": "정화 던전" },
+        { "id": "SPR-002", "name": "리비아", "genderAge": "여성형 청년", "job": "스트림 힐러", "aura": "AURA-GOOD-BLUE", "role": "회복/감정 안정", "storyArc": "물의 흐름으로 상처와 감정을 회복한다", "firstAppearance": "상담 이벤트" },
+        { "id": "SPR-003", "name": "실프", "genderAge": "남성형 소년", "job": "윈드 댄서", "aura": "AURA-GOOD-BLUE", "role": "회피/수송", "storyArc": "바람의 길을 열어 수송 추격전을 돕는다", "firstAppearance": "수송 추격전" },
+        { "id": "SPR-004", "name": "그랜", "genderAge": "남성형 노년", "job": "스톤 힘 캐스터", "aura": "AURA-GOOD-BLUE", "role": "방벽/시설 안정", "storyArc": "대지의 노래로 센터를 보호한다", "firstAppearance": "센터 방어전" },
+        { "id": "SPR-005", "name": "아우로라", "genderAge": "여성형 전설", "job": "오로라 가이드", "aura": "AURA-LEGEND-GOLD", "role": "전설 길잡이", "storyArc": "협약의 길을 비추는 전설급 정령", "firstAppearance": "전설 퀘스트" }
+      ]
+    },
+    {
+      "raceId": "RACE-GOLEM",
+      "raceName": "골렘",
+      "specialization": ["탱커", "시설 보호", "자동 방어", "기록 보관"],
+      "heroes": [
+        { "id": "GLM-001", "name": "아르고스", "genderAge": "무성/거대형", "job": "성벽 수호자", "aura": "AURA-GOOD-BLUE", "role": "탱커/방어", "storyArc": "몸으로 센터를 지키는 거대 방어형 골렘", "firstAppearance": "센터 방어전" },
+        { "id": "GLM-002", "name": "볼키온", "genderAge": "남성형 장년", "job": "이동식 대장간", "aura": "AURA-GOOD-BLUE", "role": "장비 강화", "storyArc": "전장에서 장비를 고치고 제작하는 골렘", "firstAppearance": "장비 강화 해금" },
+        { "id": "GLM-003", "name": "세레스", "genderAge": "여성형 청년", "job": "수정 치유체", "aura": "AURA-GOOD-BLUE", "role": "상태 이상 회복", "storyArc": "수정 에너지로 상태 이상을 정화한다", "firstAppearance": "정화 던전" },
+        { "id": "GLM-004", "name": "바실리스크", "genderAge": "무성/전투형", "job": "유물 포격체", "aura": "AURA-AMBIGUOUS-PURPLE", "role": "원거리 포격", "storyArc": "고대 포격 장비를 탑재했지만 통제 장치가 불안정하다", "firstAppearance": "길드 던전" },
+        { "id": "GLM-005", "name": "모니토르", "genderAge": "무성/노년형", "job": "기록 보관자", "aura": "AURA-LEGEND-GOLD", "role": "예측/기록", "storyArc": "고대 데이터를 분석해 미래 위험을 예측한다", "firstAppearance": "협약 원본 루트" }
+      ]
+    }
+  ]
+}
