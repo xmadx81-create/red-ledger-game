@@ -1,0 +1,86 @@
+[
+  {
+    "stageId": "STG-001",
+    "stageName": "부임 첫 주: 봉인된 운영 기록",
+    "region": "혈연센터 본관",
+    "recommendedLevel": 1,
+    "difficulty": "Normal",
+    "missionTypes": ["운영", "조사", "전략"],
+    "description": "혈연센터의 표면 운영과 이면 장부 시스템을 익히는 튜토리얼 스테이지입니다.",
+    "clearConditions": [
+      "7개 운영 구간 완료",
+      "핵심 재고 0 초과 유지",
+      "언론 노출 90 미만 유지"
+    ],
+    "unlockConditions": [],
+    "rewards": {
+      "exp": 120,
+      "centerReputation": 10,
+      "familyReputation": 6,
+      "gold": 300
+    }
+  },
+  {
+    "stageId": "STG-002",
+    "stageName": "야간 수송로 확보",
+    "region": "도심 외곽 수송망",
+    "recommendedLevel": 3,
+    "difficulty": "Normal",
+    "missionTypes": ["수송", "아케이드", "전략"],
+    "description": "밤 시간대 혈액 수송로를 확보하고 추적을 피하는 스테이지입니다.",
+    "clearConditions": [
+      "수송 목표량 달성",
+      "추적 노출 70 미만",
+      "차량 손상 60 미만"
+    ],
+    "unlockConditions": ["STG-001 클리어"],
+    "rewards": {
+      "exp": 180,
+      "centerReputation": 8,
+      "logisticsReputation": 12,
+      "gold": 420
+    }
+  },
+  {
+    "stageId": "STG-003",
+    "stageName": "기록 보관실의 암호",
+    "region": "지하 기록 보관실",
+    "recommendedLevel": 4,
+    "difficulty": "Hard",
+    "missionTypes": ["퍼즐", "조사", "해독"],
+    "description": "봉인된 문서와 오래된 장부 암호를 해독하는 퍼즐 중심 스테이지입니다.",
+    "clearConditions": [
+      "핵심 문서 3개 해독",
+      "시간 제한 내 완료",
+      "보안 경보 3회 이하"
+    ],
+    "unlockConditions": ["STG-001 클리어", "암거래 단서 10 이상"],
+    "rewards": {
+      "exp": 240,
+      "knowledgeReputation": 15,
+      "rareDocument": 1,
+      "gold": 500
+    }
+  },
+  {
+    "stageId": "STG-004",
+    "stageName": "암거래망 소탕 작전",
+    "region": "폐창고 구역",
+    "recommendedLevel": 6,
+    "difficulty": "Hard",
+    "missionTypes": ["집단 전투", "전략", "보스전"],
+    "description": "암거래 조직의 거점을 압박하는 전투/전략 복합 스테이지입니다.",
+    "clearConditions": [
+      "거점 제압",
+      "주요 인물 생존",
+      "증거 2개 이상 확보"
+    ],
+    "unlockConditions": ["STG-002 클리어", "STG-003 클리어"],
+    "rewards": {
+      "exp": 380,
+      "familyReputation": 18,
+      "blackMarketReputation": -12,
+      "gold": 760
+    }
+  }
+]
