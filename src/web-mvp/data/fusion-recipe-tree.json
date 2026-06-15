@@ -1,0 +1,94 @@
+{
+  "version": "0.1.0",
+  "description": "하향식(top-down) 합성 경제. 전설(L)을 정점으로, 한 단계 위로 도약하는 데 필요한 하위 카드 소요량을 역산한다. 고정 레시피(확정 가챠)가 아니라 확률+천장 기반이며, 아래 수치는 v0 밸런스 초안으로 전부 튜닝 대상이다.",
+  "model": {
+    "type": "probabilistic-fusion-with-pity",
+    "isDeterministicCraft": false,
+    "rule": "베이스 카드 1장을 같은 등급의 재료(fodder)와 합성해 다음 등급으로의 도약을 확률로 시도한다. 실패 시 베이스는 보존되고 재료는 소모되며, 천장(누적 보정)이 올라간다. pityCap회 실패 시 다음 시도는 확정 성공.",
+    "fodderConsumedOnFail": true,
+    "baseSurvivesOnFail": true,
+    "reachability": "매우 희귀하지만 pityCap으로 도달이 수학적으로 보장된다(노력하면 반드시 도달)."
+  },
+  "tierOrder": ["N", "R", "SR", "EP", "L"],
+  "tierNameMap": {
+    "N": "일반",
+    "R": "고급",
+    "SR": "희귀",
+    "EP": "영웅(흔히 말하는 SSR 위치)",
+    "L": "전설"
+  },
+  "jumps": [
+    {
+      "from": "N",
+      "to": "R",
+      "baseSuccessRate": 0.25,
+      "pityCap": 8,
+      "fodderPerAttempt": 1,
+      "expectedAttempts": 4.0,
+      "expectedFromTierPerOutput": 5.0,
+      "worstCaseFromTierPerOutput": 9
+    },
+    {
+      "from": "R",
+      "to": "SR",
+      "baseSuccessRate": 0.15,
+      "pityCap": 12,
+      "fodderPerAttempt": 1,
+      "expectedAttempts": 6.67,
+      "expectedFromTierPerOutput": 7.67,
+      "worstCaseFromTierPerOutput": 13
+    },
+    {
+      "from": "SR",
+      "to": "EP",
+      "baseSuccessRate": 0.08,
+      "pityCap": 20,
+      "fodderPerAttempt": 1,
+      "expectedAttempts": 12.5,
+      "expectedFromTierPerOutput": 13.5,
+      "worstCaseFromTierPerOutput": 21
+    },
+    {
+      "from": "EP",
+      "to": "L",
+      "baseSuccessRate": 0.03,
+      "pityCap": 40,
+      "fodderPerAttempt": 1,
+      "expectedAttempts": 33.33,
+      "expectedFromTierPerOutput": 34.33,
+      "worstCaseFromTierPerOutput": 41
+    }
+  ],
+  "rolledUpToN": {
+    "note": "순수 바닥(N)부터 쌓아올릴 때 전설 1장에 필요한 누적 N 카드 환산값. 중간 등급 직접 공급(드랍)으로 실제 부담은 크게 줄어든다.",
+    "expected": {
+      "N_per_R": 5,
+      "N_per_SR": 38,
+      "N_per_EP": 518,
+      "N_per_L": 17757
+    },
+    "worstCasePity": {
+      "N_per_R": 9,
+      "N_per_SR": 117,
+      "N_per_EP": 2457,
+      "N_per_L": 100737
+    },
+    "interpretation": "이 v0 세팅이면 전설 1장은 '순수 N 환산 약 1.7만 장(기대) ~ 10만 장(천장 최악)' 규모의 장기 누적이다. 곱셈 구조라 의도적으로 매우 희귀하며, pity로 도달은 보장된다."
+  },
+  "supplyPolicy": {
+    "principle": "전부를 N부터 합성해 올리지 않게 한다. 중간 등급도 직접 공급해 곱셈 폭증 부담을 완화한다.",
+    "N": "출석/로그인/드랍으로 무료 대량 공급 (합성 연료)",
+    "R_SR": "스테이지/던전 드랍으로 직접 공급",
+    "EP": "고난도 던전/주간 콘텐츠 보상으로 제한적 직접 공급 + 합성",
+    "L": "직접 뽑기 없음. 합성 도약(확률+천장) 또는 스토리/시즌 한정 보상"
+  },
+  "luckSystem": {
+    "note": "성공률 = baseSuccessRate + 재료보정 + 행운보정 + 누적보정(천장).",
+    "luckSources": ["캐릭터 행운 스탯", "합성석/촉매", "이벤트 보너스", "동일 종족/성향 재료 보너스"]
+  },
+  "tuningNotes": [
+    "곱셈 구조 특성상 pityCap/baseSuccessRate를 조금만 바꿔도 전설 도달 난이도가 크게 변한다.",
+    "전설 5장(legendary-anchor-set.json)을 기준점으로, 시즌 길이/일일 N 공급량과 함께 함께 튜닝해야 한다.",
+    "등급 내 ★단계 강화 비용은 별도 표로 분리 예정(RACE_HYBRID_FUSION_SYSTEM_001.md §4)."
+  ]
+}
