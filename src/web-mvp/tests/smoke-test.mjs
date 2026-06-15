@@ -10,7 +10,10 @@ const EXPECTED = {
   resources: 9,
   characters: 5,
   events: 7,
-  choices: 23
+  choices: 23,
+  combatBriefings: 4,
+  combatActions: 10,
+  combatTypes: 6
 };
 
 const ROUTES = [
@@ -29,7 +32,7 @@ const ROUTES = [
   },
   {
     id: 'SMOKE-FAMILY',
-    name: '가문 우선 흐름',
+    name: '후원 우선 흐름',
     choices: [
       'CHO-D01-001-B',
       'CHO-D02-001-B',
@@ -42,7 +45,7 @@ const ROUTES = [
   },
   {
     id: 'SMOKE-HUMAN',
-    name: '인간 사회 우선 흐름',
+    name: '시민 신뢰 우선 흐름',
     choices: [
       'CHO-D01-001-A',
       'CHO-D02-001-A',
@@ -104,17 +107,23 @@ function applyChoice(resourceState, choice) {
   }
 }
 
-function checkDataIntegrity({ resources, characters, events, choices }) {
+function checkDataIntegrity({ resources, characters, events, choices, combatBriefings, combatActions, combatTypes }) {
   assert(resources.length === EXPECTED.resources, `Expected ${EXPECTED.resources} resources, got ${resources.length}`);
   assert(characters.length === EXPECTED.characters, `Expected ${EXPECTED.characters} characters, got ${characters.length}`);
   assert(events.length === EXPECTED.events, `Expected ${EXPECTED.events} events, got ${events.length}`);
   assert(choices.length === EXPECTED.choices, `Expected ${EXPECTED.choices} choices, got ${choices.length}`);
+  assert(combatBriefings.length === EXPECTED.combatBriefings, `Expected ${EXPECTED.combatBriefings} combat briefings, got ${combatBriefings.length}`);
+  assert(combatActions.length === EXPECTED.combatActions, `Expected ${EXPECTED.combatActions} combat actions, got ${combatActions.length}`);
+  assert(combatTypes.length === EXPECTED.combatTypes, `Expected ${EXPECTED.combatTypes} combat types, got ${combatTypes.length}`);
 
   const eventIds = new Set(events.map((event) => event.id));
   const choiceIds = new Set(choices.map((choice) => choice.id));
+  const combatTypeIds = new Set(combatTypes.map((item) => item.combatTypeId));
+  const combatActionNames = new Set(combatActions.map((item) => item.name));
 
   assert(eventIds.size === events.length, 'Duplicate event id found');
   assert(choiceIds.size === choices.length, 'Duplicate choice id found');
+  assert(combatTypeIds.size === combatTypes.length, 'Duplicate combat type id found');
 
   for (let day = 1; day <= 7; day += 1) {
     const event = events.find((item) => Number(item.day) === day);
@@ -128,7 +137,17 @@ function checkDataIntegrity({ resources, characters, events, choices }) {
     assert(choice.text, `Choice ${choice.id} has empty text`);
     assert(choice.tone, `Choice ${choice.id} has empty tone`);
     assert(choice.resultSummary, `Choice ${choice.id} has empty result summary`);
-    assert(choice.flag, `Choice ${choice.id} has empty ending flag`);
+    assert(choice.flag, `Choice ${choice.id} has empty progression flag`);
+  }
+
+  for (const briefing of combatBriefings) {
+    assert(combatTypeIds.has(briefing.combatTypeId), `Briefing ${briefing.briefingId} references missing combat type ${briefing.combatTypeId}`);
+    assert(briefing.title, `Briefing ${briefing.briefingId} has empty title`);
+    assert(briefing.summary, `Briefing ${briefing.briefingId} has empty summary`);
+    assert(Array.isArray(briefing.preferredActions), `Briefing ${briefing.briefingId} has invalid preferred actions`);
+    for (const actionName of briefing.preferredActions) {
+      assert(combatActionNames.has(actionName), `Briefing ${briefing.briefingId} references missing action ${actionName}`);
+    }
   }
 }
 
@@ -152,7 +171,10 @@ async function main() {
     resources: await loadJson('resources.json'),
     characters: await loadJson('characters.json'),
     events: await loadJson('events.json'),
-    choices: await loadJson('choices.json')
+    choices: await loadJson('choices.json'),
+    combatBriefings: await loadJson('combat-briefings.json'),
+    combatActions: await loadJson('combat-actions.json'),
+    combatTypes: await loadJson('combat-scene-types.json')
   };
 
   checkDataIntegrity(data);
