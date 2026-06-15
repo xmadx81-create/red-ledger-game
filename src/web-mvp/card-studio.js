@@ -41,14 +41,17 @@ function buildCharacters(heroData, enemyData, registryData) {
   const heroes = (heroData.races || []).flatMap((race) => {
     return (race.heroes || []).map((hero) => {
       const registered = registryMap.get(hero.id) || {};
+      const rarity = registered.rarity || inferRarity(hero.aura);
       return normalizeCharacter({
+        cardUid: registered.cardUid || buildCardUid(hero.id, rarity, registered.serial || 1),
         characterId: hero.id,
         name: hero.name,
         race: race.raceName,
         job: hero.job,
         role: hero.role,
         alignment: registered.alignment || inferAlignment(hero.aura),
-        rarity: registered.rarity || inferRarity(hero.aura),
+        rarity,
+        serial: registered.serial || 1,
         story: hero.storyArc,
         firstAppearance: hero.firstAppearance,
         tags: [hero.job, hero.role, ...(race.specialization || [])].filter(Boolean).slice(0, 5),
@@ -57,37 +60,49 @@ function buildCharacters(heroData, enemyData, registryData) {
     });
   });
 
-  const enemies = (enemyData.enemyHeroes || []).map((enemy) => normalizeCharacter({
-    characterId: enemy.id,
-    name: enemy.name,
-    race: enemy.race,
-    job: enemy.job,
-    role: enemy.threatType?.[0] || '적 영웅',
-    alignment: inferAlignment(enemy.secondaryAura || enemy.aura),
-    rarity: inferRarity(enemy.aura),
-    story: enemy.personalStory || enemy.motive,
-    firstAppearance: enemy.firstAppearance,
-    tags: [enemy.job, ...(enemy.threatType || [])].filter(Boolean).slice(0, 5),
-    sourceType: 'enemy'
-  }));
+  const enemies = (enemyData.enemyHeroes || []).map((enemy) => {
+    const rarity = inferRarity(enemy.aura);
+    return normalizeCharacter({
+      cardUid: buildCardUid(enemy.id, rarity, 1),
+      characterId: enemy.id,
+      name: enemy.name,
+      race: enemy.race,
+      job: enemy.job,
+      role: enemy.threatType?.[0] || '적 영웅',
+      alignment: inferAlignment(enemy.secondaryAura || enemy.aura),
+      rarity,
+      serial: 1,
+      story: enemy.personalStory || enemy.motive,
+      firstAppearance: enemy.firstAppearance,
+      tags: [enemy.job, ...(enemy.threatType || [])].filter(Boolean).slice(0, 5),
+      sourceType: 'enemy'
+    });
+  });
 
   return [...heroes, ...enemies];
 }
 
 function normalizeCharacter(character) {
+  const rarity = character.rarity || 'N';
   return {
+    cardUid: character.cardUid || buildCardUid(character.characterId, rarity, character.serial || 1),
     characterId: character.characterId,
     name: character.name,
     race: character.race,
     job: character.job,
     role: character.role,
     alignment: character.alignment || 'GOOD',
-    rarity: character.rarity || 'N',
+    rarity,
+    serial: character.serial || 1,
     story: character.story || '',
     firstAppearance: character.firstAppearance || '',
     tags: character.tags || [],
     sourceType: character.sourceType || 'hero'
   };
+}
+
+function buildCardUid(characterId, rarityId, serial = 1) {
+  return `CARD-${characterId}-${rarityId}-${String(serial).padStart(4, '0')}`;
 }
 
 function inferAlignment(auraId) {
@@ -152,6 +167,9 @@ function render() {
   const rarity = getRarity(state.selectedRarity || character.rarity);
   const aura = getAura(character.alignment, rarity.rarityId);
   const stars = '★'.repeat(rarity.starCount) + '☆'.repeat(Math.max(0, 5 - rarity.starCount));
+  const cardUid = character.rarity === rarity.rarityId
+    ? character.cardUid
+    : buildCardUid(character.characterId, rarity.rarityId, character.serial || 1);
 
   previewEl.innerHTML = `
     <article class="official-card" style="--rarity-border:${rarity.borderColor}; --rarity-accent:${rarity.accentColor}; --aura-color:${aura.auraColor}; --aura-intensity:${rarity.auraIntensity}">
@@ -159,7 +177,8 @@ function render() {
       <div class="card-grid">
         <section>
           <div class="card-logo">헌혈의 집</div>
-          <div class="card-id">ID ${escapeHtml(character.characterId)}</div>
+          <div class="card-uid">${escapeHtml(cardUid)}</div>
+          <div class="card-id">CHARACTER ${escapeHtml(character.characterId)}</div>
           <div class="card-name">${escapeHtml(character.name)}</div>
           <div class="card-subtitle">${escapeHtml(character.race)} · ${escapeHtml(character.job)}</div>
           <div class="info-list">
