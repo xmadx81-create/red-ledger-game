@@ -34,7 +34,11 @@ let database = {
   combatBriefings: [],
   combatActions: [],
   combatTypes: [],
-  combatResultRules: null
+  combatResultRules: null,
+  nurses: [],
+  shiftRules: null,
+  mbtiSynergy: null,
+  workplaceEvents: []
 };
 
 let gameState = null;
@@ -58,7 +62,11 @@ async function loadData() {
     combatBriefings,
     combatActions,
     combatTypes,
-    combatResultRules
+    combatResultRules,
+    nurses,
+    shiftRules,
+    mbtiSynergy,
+    workplaceEvents
   ] = await Promise.all([
     loadJson('resources.json'),
     loadJson('characters.json'),
@@ -67,10 +75,27 @@ async function loadData() {
     loadJson('combat-briefings.json'),
     loadJson('combat-actions.json'),
     loadJson('combat-scene-types.json'),
-    loadJson('combat-result-rules.json')
+    loadJson('combat-result-rules.json'),
+    loadJson('nurse-npcs.json'),
+    loadJson('shift-rotation-rules.json'),
+    loadJson('mbti-synergy-rules.json'),
+    loadJson('workplace-events.json')
   ]);
 
-  database = { resources, characters, events, choices, combatBriefings, combatActions, combatTypes, combatResultRules };
+  database = {
+    resources,
+    characters,
+    events,
+    choices,
+    combatBriefings,
+    combatActions,
+    combatTypes,
+    combatResultRules,
+    nurses,
+    shiftRules,
+    mbtiSynergy,
+    workplaceEvents
+  };
 }
 
 function clamp(value, min = 0, max = 100) {
@@ -153,6 +178,10 @@ function getActionByName(name) {
 
 function getCombatAction(actionId) {
   return database.combatActions.find((action) => action.actionId === actionId);
+}
+
+function getNursesByShift(shiftTeam) {
+  return database.nurses.filter((nurse) => nurse.shiftTeam === shiftTeam);
 }
 
 function getResourceStatus(resource) {
@@ -388,6 +417,7 @@ function renderTitleScreen() {
       </div>
       <div class="actions">
         <button class="primary-button" data-action="new-game">센터 운영 시작</button>
+        <button class="secondary-button" data-action="staff">직원/근무표 보기</button>
         <button class="secondary-button" data-action="combat">전투 브리핑 보기</button>
         <button class="secondary-button" data-action="about">프로젝트 정보</button>
       </div>
@@ -439,6 +469,7 @@ function renderDayStartScreen() {
       </div>
       <div class="actions">
         <button class="primary-button" data-action="event">미션 보고서 확인</button>
+        <button class="secondary-button" data-action="staff">직원/근무표</button>
         <button class="secondary-button" data-action="combat">전투 브리핑</button>
       </div>
     </section>
@@ -531,11 +562,97 @@ function renderMainOperationScreen() {
       </div>
       <div class="actions">
         <button class="primary-button" data-action="next-day">${gameState.currentDay >= 7 ? '스테이지 정산으로' : '다음 구간으로'}</button>
+        <button class="secondary-button" data-action="staff">직원/근무표</button>
         <button class="secondary-button" data-action="event">현재 미션 보기</button>
         <button class="secondary-button" data-action="combat">전투 브리핑</button>
       </div>
     </section>
   `);
+}
+
+function renderStaffScreen() {
+  ensureGameState('staff');
+  const shiftRules = database.shiftRules;
+  const teamBonus = database.mbtiSynergy?.teamBonusRules?.[0];
+  const sampleEvents = database.workplaceEvents.slice(0, 3);
+
+  setScreen(html`
+    <section class="screen">
+      ${renderDayHeader()}
+      <p class="eyebrow">staff roster</p>
+      <h2>직원/근무표</h2>
+      <div class="card document">
+        <div class="card-title">
+          <h3>3조 3교대 운영</h3>
+          <span class="tag">${shiftRules?.shiftSystem || '3조 3교대'}</span>
+        </div>
+        <p class="subtle">간호사 NPC는 밝고 상냥한 서비스직 마인드를 기본으로 하며, A/B/C조 로테이션과 피로도, 사기, 팀 신뢰, MBTI 시너지 영향을 받습니다.</p>
+      </div>
+      <div class="card compact-card">
+        <div class="card-title">
+          <h3>근무 시간표</h3>
+          <span class="tag">오늘 기준</span>
+        </div>
+        <div class="history-list full">
+          ${shiftRules.shifts.map((shift, index) => renderSimpleHistoryItem(index + 1, `${shift.name} · ${shift.time}`, shift.mainTasks.join(' / '))).join('')}
+        </div>
+      </div>
+      ${renderShiftTeamSection('A조', '오전조')}
+      ${renderShiftTeamSection('B조', '오후조')}
+      ${renderShiftTeamSection('C조', '야간/마감조')}
+      <div class="card compact-card">
+        <div class="card-title">
+          <h3>MBTI 시너지</h3>
+          <span class="tag">${teamBonus?.name || '균형 조합'}</span>
+        </div>
+        <p class="subtle">${teamBonus?.condition || '성향이 고르게 섞이면 응대, 문서, 위기 대응에서 균형 보너스가 발생합니다.'}</p>
+        <div class="person-list">
+          ${Object.entries(teamBonus?.effect || { serviceQuality: 10, conflictRisk: -5, humanTrust: 4 }).map(([key, value]) => `<span class="relationship-chip">${key} ${value > 0 ? '+' : ''}${value}</span>`).join('')}
+        </div>
+      </div>
+      <div class="card compact-card">
+        <div class="card-title">
+          <h3>직장 내 이벤트 후보</h3>
+          <span class="tag risk-high">랜덤 발생</span>
+        </div>
+        <div class="history-list full">
+          ${sampleEvents.map((item, index) => renderSimpleHistoryItem(index + 1, `${item.name} · ${item.eventType}`, item.description)).join('')}
+        </div>
+      </div>
+      <div class="actions">
+        <button class="primary-button" data-action="main">운영 본부로</button>
+        <button class="secondary-button" data-action="combat">전투 브리핑</button>
+      </div>
+    </section>
+  `);
+}
+
+function renderShiftTeamSection(teamName, label) {
+  const members = getNursesByShift(teamName);
+  return html`
+    <div class="card compact-card">
+      <div class="card-title">
+        <h3>${teamName} · ${label}</h3>
+        <span class="tag">${members.length}명</span>
+      </div>
+      <div class="history-list full">
+        ${members.map((nurse, index) => renderNurseItem(nurse, index + 1)).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function renderNurseItem(nurse, index) {
+  return html`
+    <div class="history-item">
+      <span class="history-index">${index}</span>
+      <div>
+        <span class="choice-code">${nurse.mbti}</span>
+        <strong>${nurse.name} · ${nurse.personality}</strong>
+        <small>${nurse.workStrengths.join(' / ')} · 피로 ${nurse.fatigue} · 사기 ${nurse.morale}</small>
+      </div>
+    </div>
+  `;
 }
 
 function renderCombatBriefingScreen() {
@@ -598,6 +715,7 @@ function renderCombatBriefingScreen() {
       </div>
       <div class="actions">
         <button class="secondary-button" data-action="main">운영 본부로</button>
+        <button class="secondary-button" data-action="staff">직원/근무표</button>
         <button class="secondary-button" data-action="event">현재 미션 보기</button>
       </div>
     </section>
@@ -882,6 +1000,10 @@ app.addEventListener('click', (event) => {
     about: renderAboutScreen,
     event: renderEventScreen,
     main: renderMainOperationScreen,
+    staff: () => {
+      ensureGameState('staff');
+      renderStaffScreen();
+    },
     combat: () => {
       ensureGameState('combat');
       renderCombatBriefingScreen();
