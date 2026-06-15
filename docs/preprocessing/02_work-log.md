@@ -256,3 +256,33 @@
 3. UI를 Figma 후보E/카드형 규칙에 맞춰 정교화
 4. 저장/불러오기 기능 추가
 5. 카드 도감 시스템 설계
+
+---
+
+### 2026-06-16 8차 기록
+
+작업자: ChatGPT + 백무결  
+작업 구분: MVP 실행 검증 준비 / CI 설정  
+작업 내용:
+- `package.json`에 React 타입 패키지를 추가했다.
+  - `@types/react`
+  - `@types/react-dom`
+- `.gitignore`를 생성했다.
+- GitHub Actions 워크플로 `.github/workflows/build.yml`을 생성했다.
+- 워크플로 이름은 `Build MVP`로 설정했다.
+- Node.js 20 환경에서 `npm install` 후 `npm run build`를 실행하도록 구성했다.
+- 개발 문서를 생성했다.
+  - `docs/development/00_local-run.md`
+  - `docs/development/01_test-checklist.md`
+- GitHub Issue #2 `[MVP-1] MVP 실행 테스트 및 빌드 검증`을 생성했다.
+
+결과:
+- 로컬 실행과 GitHub Actions 빌드 검증을 위한 기본 준비가 완료되었다.
+- 다음부터는 실제 빌드 실패 로그를 확인하며 수정하는 단계로 진입한다.
+
+다음 조치:
+1. GitHub Actions `Build MVP` 실행 결과 확인
+2. 실패 시 로그 기준 수정
+3. 로컬에서 `npm install`, `npm run dev`, `npm run build` 테스트
+4. `data/events.json`의 선택지 효과를 구조화된 배열로 정리
+5. 저장/불러오기 기능 추가
