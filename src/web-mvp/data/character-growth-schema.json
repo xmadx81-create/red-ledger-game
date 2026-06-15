@@ -1,0 +1,87 @@
+{
+  "version": "0.1.0",
+  "description": "캐릭터 레벨링, 직업, 속성, 특기, 궁극기, 전직, 승급, 유니크 버프 기준 스키마",
+  "leveling": {
+    "maxLevel": 100,
+    "expCurve": "progressive",
+    "levelBands": [
+      { "from": 1, "to": 20, "band": "초급", "focus": "기본 역할 이해" },
+      { "from": 21, "to": 40, "band": "중급", "focus": "직업 숙련도 성장" },
+      { "from": 41, "to": 60, "band": "상급", "focus": "특기 강화 및 파티 역할 확정" },
+      { "from": 61, "to": 80, "band": "고급", "focus": "궁극기 강화 및 전직 핵심" },
+      { "from": 81, "to": 100, "band": "최상급", "focus": "승급/각성/고난도 던전 대응" }
+    ]
+  },
+  "characterFields": {
+    "characterId": "string",
+    "name": "string",
+    "race": "string",
+    "job": "string",
+    "attribute": "string",
+    "level": "number",
+    "exp": "number",
+    "grade": "N | R | SR | SSR | UR | LR | Mythic",
+    "roleMastery": "object",
+    "workTraits": "array",
+    "specialty": "array",
+    "ultimateSkill": "object",
+    "uniqueBuff": "object",
+    "promotionStage": "number",
+    "jobAdvancement": "string",
+    "gearSlots": "array",
+    "relationship": "number"
+  },
+  "grades": [
+    { "grade": "N", "maxPromotion": 2, "baseBuffSlots": 0 },
+    { "grade": "R", "maxPromotion": 3, "baseBuffSlots": 1 },
+    { "grade": "SR", "maxPromotion": 4, "baseBuffSlots": 2 },
+    { "grade": "SSR", "maxPromotion": 5, "baseBuffSlots": 3 },
+    { "grade": "UR", "maxPromotion": 6, "baseBuffSlots": 4 },
+    { "grade": "LR", "maxPromotion": 7, "baseBuffSlots": 5 },
+    { "grade": "Mythic", "maxPromotion": 8, "baseBuffSlots": 6 }
+  ],
+  "workTraits": [
+    "접수",
+    "채혈",
+    "보관",
+    "수송",
+    "문서",
+    "보안",
+    "언론 대응",
+    "가문 보고",
+    "던전 탐색",
+    "전투 지휘"
+  ],
+  "skillTypes": [
+    "active",
+    "passive",
+    "ultimate",
+    "support",
+    "field",
+    "guild"
+  ],
+  "promotionMaterials": [
+    "동일 캐릭터 조각",
+    "직업 휘장",
+    "종족 결정",
+    "혈액 코어",
+    "가문 인장",
+    "던전 보상 재료"
+  ],
+  "advancementRule": {
+    "requiredLevel": [20, 40, 60, 80],
+    "requiredMastery": "직업 숙련도",
+    "requiresSpecialEvent": true,
+    "allowsUniqueJob": true
+  },
+  "racePromotionBuffPolicy": {
+    "뱀파이어": ["혈 속성 강화", "야간 보정", "회복 보정"],
+    "늑대계": ["속도 증가", "추적 보정", "근접전 보정"],
+    "엘프계": ["명중 증가", "감지 보정", "정밀 조작 보정"],
+    "드워프계": ["장비 강화", "방어 증가", "제작 보정"],
+    "골렘": ["체력 증가", "상태이상 저항", "방어전 보정"],
+    "위자드": ["주문 강화", "해독 보정", "퍼즐 보정"],
+    "임프": ["회피 증가", "은폐 보정", "암시장 보정"],
+    "드래곤계": ["광역 피해", "위압", "고위 속성 보정"]
+  }
+}
