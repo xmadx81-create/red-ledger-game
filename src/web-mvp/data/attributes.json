@@ -1,0 +1,14 @@
+[
+  { "attributeId": "ATTR-BLOOD", "name": "혈", "role": "흡수/회복/생명력", "strongAgainst": ["독"], "weakAgainst": ["성"] },
+  { "attributeId": "ATTR-DARK", "name": "암", "role": "은폐/저주/야간 보정", "strongAgainst": ["성장 억제"], "weakAgainst": ["성"] },
+  { "attributeId": "ATTR-MOON", "name": "월", "role": "야간 기동/직감/추적", "strongAgainst": ["혼돈"], "weakAgainst": ["철"] },
+  { "attributeId": "ATTR-IRON", "name": "철", "role": "방어/장비/기계", "strongAgainst": ["월"], "weakAgainst": ["전격"] },
+  { "attributeId": "ATTR-MIND", "name": "심", "role": "협상/정신/통제", "strongAgainst": ["혼돈"], "weakAgainst": ["암"] },
+  { "attributeId": "ATTR-POISON", "name": "독", "role": "지속 피해/오염/교란", "strongAgainst": ["혈"], "weakAgainst": ["성"] },
+  { "attributeId": "ATTR-SPIRIT", "name": "영", "role": "영체/감지/해독", "strongAgainst": ["암"], "weakAgainst": ["철"] },
+  { "attributeId": "ATTR-FIRE", "name": "불", "role": "광역 피해/정화/파괴", "strongAgainst": ["냉"], "weakAgainst": ["혈"] },
+  { "attributeId": "ATTR-ICE", "name": "냉", "role": "둔화/보관/방어", "strongAgainst": ["불"], "weakAgainst": ["전격"] },
+  { "attributeId": "ATTR-LIGHTNING", "name": "전격", "role": "기계/속도/마비", "strongAgainst": ["철", "냉"], "weakAgainst": ["심"] },
+  { "attributeId": "ATTR-HOLY", "name": "성", "role": "정화/봉인/대응", "strongAgainst": ["암", "독"], "weakAgainst": ["혼돈"] },
+  { "attributeId": "ATTR-CHAOS", "name": "혼돈", "role": "변칙/위험/고위 던전", "strongAgainst": ["성"], "weakAgainst": ["심"] }
+]
