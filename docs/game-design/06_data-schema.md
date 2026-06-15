@@ -18,8 +18,8 @@ GitHub JSON = 게임 코드 연동용
 |---|---|
 | `data/resources.csv` | 자원 데이터 검토용 |
 | `data/resources.json` | 자원 데이터 코드 연동용 |
-| `data/events.csv` | 이벤트 데이터 검토용 |
-| `data/events.json` | 이벤트 데이터 코드 연동용 |
+| `data/events.csv` | 이벤트 데이터 검토용, 사람이 읽기 쉬운 문자열 효과 포함 |
+| `data/events.json` | 이벤트 데이터 코드 연동용, 구조화된 선택지 효과 포함 |
 | `data/characters.csv` | 캐릭터 데이터 검토용 |
 | `data/characters.json` | 캐릭터 데이터 코드 연동용 |
 | `data/endings.csv` | 엔딩 데이터 검토용 |
@@ -40,7 +40,9 @@ GitHub JSON = 게임 코드 연동용
 | `ui` | UI 표시 위치 |
 | `memo` | 메모 |
 
-## 4. Events 스키마
+## 4. Events JSON 스키마
+
+`data/events.json`은 실제 코드가 읽는 기준 데이터다.
 
 | 필드 | 의미 |
 |---|---|
@@ -48,16 +50,70 @@ GitHub JSON = 게임 코드 연동용
 | `day` | 발생 일차 |
 | `name` | 이벤트명 |
 | `condition` | 발생 조건 |
-| `choiceA` | 선택지 A |
-| `effectA` | 선택지 A 효과 |
-| `choiceB` | 선택지 B |
-| `effectB` | 선택지 B 효과 |
+| `risk` | 위험도 |
+| `reward` | 보상/역할 |
+| `character` | 연결 인물 |
+| `memo` | 메모 |
+| `choices` | 선택지 묶음 |
+| `choices.A` | 선택지 A |
+| `choices.B` | 선택지 B |
+| `choices.A.label` | 선택지 A 표시명 |
+| `choices.A.textEffect` | 선택지 A 사람이 읽는 효과 설명 |
+| `choices.A.effects` | 선택지 A 실제 자원 변화 배열 |
+| `choices.B.label` | 선택지 B 표시명 |
+| `choices.B.textEffect` | 선택지 B 사람이 읽는 효과 설명 |
+| `choices.B.effects` | 선택지 B 실제 자원 변화 배열 |
+
+선택지 효과 구조:
+
+```json
+{
+  "resourceId": "RES_TRUST",
+  "amount": 8
+}
+```
+
+예시:
+
+```json
+{
+  "id": "EVT_D1_001",
+  "day": 1,
+  "name": "첫날 운영 점검",
+  "choices": {
+    "A": {
+      "label": "공개 캠페인 강화",
+      "textEffect": "인간 신뢰 +8, 자금 -20, 혈액 재고 +5",
+      "effects": [
+        { "resourceId": "RES_TRUST", "amount": 8 },
+        { "resourceId": "RES_FUNDS", "amount": -20 },
+        { "resourceId": "RES_BLOOD", "amount": 5 }
+      ]
+    }
+  }
+}
+```
+
+## 5. Events CSV 스키마
+
+`data/events.csv`는 검토와 사람이 읽는 용도다. 코드 연동 기준은 JSON이다.
+
+| 필드 | 의미 |
+|---|---|
+| `id` | 이벤트 고유 ID |
+| `day` | 발생 일차 |
+| `name` | 이벤트명 |
+| `condition` | 발생 조건 |
+| `choiceA` | 선택지 A 표시명 |
+| `effectA` | 선택지 A 설명 문자열 |
+| `choiceB` | 선택지 B 표시명 |
+| `effectB` | 선택지 B 설명 문자열 |
 | `risk` | 위험도 |
 | `reward` | 보상/역할 |
 | `character` | 연결 인물 |
 | `memo` | 메모 |
 
-## 5. Characters 스키마
+## 6. Characters 스키마
 
 | 필드 | 의미 |
 |---|---|
@@ -74,7 +130,7 @@ GitHub JSON = 게임 코드 연동용
 | `unlock` | 해금 조건 |
 | `memo` | 메모 |
 
-## 6. Endings 스키마
+## 7. Endings 스키마
 
 | 필드 | 의미 |
 |---|---|
@@ -89,17 +145,8 @@ GitHub JSON = 게임 코드 연동용
 | `type` | 엔딩 타입 |
 | `memo` | 메모 |
 
-## 7. 다음 작업
+## 8. 다음 작업
 
-- JSON 데이터를 불러오는 코드 구조를 만든다.
-- 선택지 효과 문자열을 실제 수치 변화 객체로 분해할지 결정한다.
-- MVP 구현 전 `effectA`, `effectB`를 구조화할 필요가 있다.
-
-예시:
-
-```json
-{
-  "resource": "RES_TRUST",
-  "delta": 8
-}
-```
+- 엔딩 조건도 문자열에서 구조화된 조건 배열로 바꾼다.
+- `pickEnding` 함수가 `endings.json`의 구조화 조건을 읽도록 개선한다.
+- Google Sheets 원본 탭도 JSON 구조와 맞춰 확장한다.
