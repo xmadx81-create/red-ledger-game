@@ -1,0 +1,57 @@
+{
+  "version": "0.1.0",
+  "shiftSystem": "3조 3교대",
+  "shifts": [
+    {
+      "shiftId": "SHIFT-A",
+      "name": "오전조",
+      "time": "07:00-15:00",
+      "mainTasks": ["접수", "채혈", "보관 확인", "방문자 응대"],
+      "fatigueGain": 12,
+      "servicePressure": 70
+    },
+    {
+      "shiftId": "SHIFT-B",
+      "name": "오후조",
+      "time": "15:00-23:00",
+      "mainTasks": ["혼잡 응대", "문서 정리", "수송 준비", "민원 처리"],
+      "fatigueGain": 16,
+      "servicePressure": 78
+    },
+    {
+      "shiftId": "SHIFT-C",
+      "name": "야간/마감조",
+      "time": "23:00-07:00",
+      "mainTasks": ["보관실 점검", "이면 장부 확인", "야간 수송", "비밀 이벤트 대응"],
+      "fatigueGain": 22,
+      "servicePressure": 55
+    }
+  ],
+  "rotationPattern": [
+    { "day": 1, "A": "오전조", "B": "오후조", "C": "야간/마감조" },
+    { "day": 2, "A": "오후조", "B": "야간/마감조", "C": "오전조" },
+    { "day": 3, "A": "야간/마감조", "B": "오전조", "C": "오후조" }
+  ],
+  "strictRules": {
+    "maxConsecutiveNight": 2,
+    "requiredRestAfterNight": 1,
+    "maxFatigueBeforePenalty": 70,
+    "maxStressBeforeConflict": 75,
+    "understaffedPenalty": ["서비스 품질 하락", "대기 시간 증가", "실수 이벤트 증가"]
+  },
+  "failureEvents": [
+    "근무표 누락",
+    "연속 야간 근무 불만",
+    "인수인계 실패",
+    "마감조 피로 누적",
+    "오전조 지각",
+    "오후 혼잡 대응 실패"
+  ],
+  "positiveEvents": [
+    "완벽한 인수인계",
+    "혼잡 시간대 무사 처리",
+    "야간 보관실 무사 점검",
+    "신입 교육 성공",
+    "팀 분위기 회복"
+  ]
+}
