@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "도감 카드 제작 진행 상태를 characterId 기준으로 추적하는 레지스트리. 생성 이미지가 부정확해도 카드 데이터는 이 레지스트리와 원본 캐릭터 데이터 기준으로 유지한다.",
   "productionRules": {
     "oneCharacterOneCard": true,
@@ -45,9 +45,9 @@
       "race": "인간",
       "alignment": "GOOD",
       "rarity": "SR",
-      "status": "rejected",
-      "acceptedImageLocalName": null,
-      "rejectedReason": "생성 이미지가 정보 분석관으로 나와 원래 설정인 구조대원/여성 장년/보호형 영웅과 불일치."
+      "status": "cardReady",
+      "acceptedImageLocalName": "헌혈의_집_구조대원_카드.png",
+      "note": "후보 E 카드폼 기준 통과. 구조/보호형 캐릭터로 사용 가능."
     },
     {
       "characterId": "HUM-004",
@@ -65,9 +65,9 @@
       "race": "인간",
       "alignment": "GOOD",
       "rarity": "R",
-      "status": "illustrationNeeded",
-      "acceptedImageLocalName": null,
-      "note": "여성 노년 방호 전문가. 아직 공식 후보 E 기준 개별 카드 필요."
+      "status": "needsReview",
+      "acceptedImageLocalName": "a_detailed_illustrated_fantasy_card_profile_sheet.png",
+      "note": "ID와 이름은 맞지만 여성 노년 방호 전문가가 아니라 젊은 간호사 이미지로 생성됨. 하린 최종 카드로는 재작업 필요."
     },
     {
       "characterId": "VMP-001",
@@ -75,9 +75,9 @@
       "race": "뱀프",
       "alignment": "GOOD",
       "rarity": "EP",
-      "status": "illustrationNeeded",
-      "acceptedImageLocalName": null,
-      "note": "혈액술사. 뱀프지만 공생 수호 성향. 푸른/보라 혼합 아우라 가능."
+      "status": "needsReview",
+      "acceptedImageLocalName": "a_highly_detailed_fantasy_character_card_style_gam.png",
+      "note": "ID와 이름은 맞지만 혈액술사/EP 설정과 달리 메이드/R 카드로 생성됨. 최종 등록 보류."
     },
     {
       "characterId": "VMP-002",
@@ -85,9 +85,9 @@
       "race": "뱀프",
       "alignment": "NEUTRAL",
       "rarity": "SR",
-      "status": "illustrationNeeded",
-      "acceptedImageLocalName": null,
-      "note": "환영술사. 보라 아우라. 회유/정보전 캐릭터."
+      "status": "illustrationReady",
+      "acceptedImageLocalName": "a_highly_detailed_fantasy_vampiric_portrait_scene.png",
+      "note": "남성 성인 뱀프 환영술사 분위기와 보라 아우라 통과. 카드 스튜디오 일러스트 슬롯용으로 사용."
     },
     {
       "characterId": "VMP-003",
@@ -95,9 +95,9 @@
       "race": "뱀프",
       "alignment": "NEUTRAL",
       "rarity": "EP",
-      "status": "illustrationNeeded",
-      "acceptedImageLocalName": null,
-      "note": "정신 지배자. 위험하지만 동료화 가능."
+      "status": "illustrationReady",
+      "acceptedImageLocalName": "a_highly_detailed_cinematic_fantasy_portrait_scen.png",
+      "note": "남성 청년 뱀프, 정신계/정보 캐릭터, 보라 아우라, 단일 일러스트 기준 통과."
     },
     {
       "characterId": "VMP-004",
@@ -121,11 +121,8 @@
     }
   ],
   "nextProductionQueue": [
-    "HUM-003",
     "HUM-005",
     "VMP-001",
-    "VMP-002",
-    "VMP-003",
     "VMP-004",
     "VMP-005"
   ]
