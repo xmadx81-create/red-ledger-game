@@ -37,12 +37,19 @@ function resolveAssetForCard(card) {
   return getAssetGroup('IMG-HERO-ROSTER-001');
 }
 
+function getDisplayPath(asset) {
+  const path = asset.plannedWebPath || '';
+  if (path.endsWith('.png')) return path.replace('.png', '.svg');
+  if (path.endsWith('.jpg')) return path.replace('.jpg', '.svg');
+  return path;
+}
+
 function createThumb(asset) {
   const wrap = document.createElement('div');
   wrap.className = 'codex-thumb mapped';
 
   const image = document.createElement('img');
-  image.src = asset.plannedWebPath;
+  image.src = getDisplayPath(asset);
   image.alt = asset.title;
   image.loading = 'lazy';
   image.addEventListener('error', () => {
