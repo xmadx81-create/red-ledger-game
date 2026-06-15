@@ -1,0 +1,7 @@
+[
+  {"id":"CHR_SEO","name":"서윤재","affiliation":"백십자재단 / 혈연센터","role":"총괄 관리자 / 플레이어 대리인","grade":"희귀","loyalty":70,"risk":35,"ability":"행정 통제, 위기 판단","skill":"긴급 결재: 자금 소모로 노출 감소","relationship":"전체 인물과 연결","unlock":"기본 해금","memo":"MVP 중심 인물"},
+  {"id":"CHR_KIM","name":"김도현","affiliation":"야간 진료실","role":"야간 의사 / 기록 관리자","grade":"고급","loyalty":62,"risk":45,"ability":"의료 기록 정리, 오염 판별","skill":"무균 판정: 폐기 손실 감소","relationship":"서윤재와 업무 신뢰","unlock":"2일차 기록 이벤트 후","memo":"보안/재고 이벤트 담당"},
+  {"id":"CHR_PARK","name":"박세연","affiliation":"외부 물류망","role":"물류 협력자","grade":"고급","loyalty":55,"risk":50,"ability":"은밀한 수송, 긴급 회수","skill":"야간 루트: 재고 증가, 노출 소폭 증가","relationship":"김도현과 실무 협업","unlock":"5일차 물류 이벤트","memo":"보상 관리 필요"},
+  {"id":"CHR_JUNG","name":"정하린","affiliation":"외부 언론","role":"기자 / 외부 위협","grade":"희귀","loyalty":20,"risk":80,"ability":"취재 압박, 제보 연결","skill":"추적 기사: 노출 급증","relationship":"플레이어와 대립","unlock":"3일차 제보 이벤트","memo":"적대 NPC"},
+  {"id":"CHR_ELIOT","name":"엘리엇 카르테인","affiliation":"카르테인 가문","role":"가문 원로 / 평가자","grade":"전설","loyalty":90,"risk":70,"ability":"가문 명령, 최종 평가","skill":"원로의 요구: 가문 만족 변동","relationship":"서윤재를 감시","unlock":"4일차 가문 요청","memo":"엔딩 평가 담당"}
+]
