@@ -1,5 +1,5 @@
 {
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "도감 카드 제작 진행 상태를 characterId 기준으로 추적하는 레지스트리. 생성 이미지가 부정확해도 카드 데이터는 이 레지스트리와 원본 캐릭터 데이터 기준으로 유지한다.",
   "productionRules": {
     "oneCharacterOneCard": true,
@@ -124,9 +124,9 @@
       "alignment": "GOOD",
       "rarity": "R",
       "serial": 1,
-      "status": "illustrationNeeded",
-      "acceptedImageLocalName": null,
-      "note": "혈향 감지자. 추적/분석형 노년 뱀프."
+      "status": "illustrationReady",
+      "acceptedImageLocalName": "CARD-VMP-004-R-0001_그라프.png",
+      "note": "노년 남성 추적/분석형, 냉장 보관실, 샘플 탐지 장비, 푸른 추적 아우라 기준 통과. 이미지 내 일부 표식은 최종 카드에서 데이터 출력 기준으로 무시."
     },
     {
       "cardUid": "CARD-VMP-005-SR-0001",
@@ -142,7 +142,6 @@
     }
   ],
   "nextProductionQueue": [
-    "VMP-004",
     "VMP-005"
   ]
 }
