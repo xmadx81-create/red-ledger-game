@@ -81,9 +81,11 @@ function createInitialResources() {
 function startNewGame() {
   gameState = {
     currentDay: 1,
+    currentStage: 1,
+    stageName: '튜토리얼 운영 구간',
     resources: createInitialResources(),
     selectedChoices: [],
-    endingFlags: {},
+    progressionFlags: {},
     lastChoice: null,
     currentScreen: 'dayStart'
   };
@@ -91,9 +93,9 @@ function startNewGame() {
   renderDayStartScreen();
 }
 
-function addFlag(flag) {
+function addProgressionFlag(flag) {
   if (!flag) return;
-  gameState.endingFlags[flag] = (gameState.endingFlags[flag] || 0) + 1;
+  gameState.progressionFlags[flag] = (gameState.progressionFlags[flag] || 0) + 1;
 }
 
 function getDayEvent(day = gameState.currentDay) {
@@ -128,7 +130,7 @@ function applyChoice(choiceId) {
     resource.value = clamp(resource.value + Number(delta), resource.min, resource.max);
   });
 
-  addFlag(choice.flag);
+  addProgressionFlag(choice.flag);
 
   gameState.selectedChoices.push(choice.id);
   gameState.lastChoice = choice.id;
@@ -165,7 +167,7 @@ function checkSupplyBalance() {
 
 function advanceDay() {
   if (gameState.currentDay >= 7) {
-    renderFinalReport();
+    renderStageResult();
     return;
   }
   gameState.currentDay += 1;
@@ -173,23 +175,37 @@ function advanceDay() {
   renderDayStartScreen();
 }
 
-function getDominantEndingFlag() {
-  const entries = Object.entries(gameState.endingFlags);
+function getDominantProgressionFlag() {
+  const entries = Object.entries(gameState.progressionFlags);
   if (entries.length === 0) return ['SUPPLY_STABLE', 0];
   return entries.sort((a, b) => b[1] - a[1])[0];
 }
 
-function getEndingTitle(flag) {
+function getStageResultTitle(flag) {
   const titles = {
-    SUPPLY_STABLE: '안정 운영',
-    SUPPLY_COLLAPSE: '공급 붕괴 위험',
-    EXPOSED_MEDIA: '언론 노출 위험',
-    FAMILY_DOMINANT: '가문 우선 운영',
-    HUMAN_TRUST: '인간 사회 우선 운영',
-    BLACK_MARKET_DOMINANT: '암거래 잠식 위험',
-    INTERNAL_COLLAPSE: '내부 붕괴 위험'
+    SUPPLY_STABLE: '안정 운영 클리어',
+    SUPPLY_COLLAPSE: '공급 붕괴 위험 클리어',
+    EXPOSED_MEDIA: '언론 노출 위험 클리어',
+    FAMILY_DOMINANT: '가문 우선 루트 클리어',
+    HUMAN_TRUST: '인간 신뢰 루트 클리어',
+    BLACK_MARKET_DOMINANT: '암거래 잠식 루트 클리어',
+    INTERNAL_COLLAPSE: '내부 붕괴 위험 클리어'
   };
-  return titles[flag] || '미분류 운영 결과';
+  return titles[flag] || '미분류 루트 클리어';
+}
+
+function getClearRank() {
+  const trust = gameState.resources.humanTrust?.value ?? 0;
+  const exposure = gameState.resources.mediaExposure?.value ?? 0;
+  const unrest = gameState.resources.organizationUnrest?.value ?? 0;
+  const clue = gameState.resources.blackMarketClue?.value ?? 0;
+  const stabilityScore = trust + (100 - exposure) + (100 - unrest) + clue;
+
+  if (stabilityScore >= 270) return 'S';
+  if (stabilityScore >= 230) return 'A';
+  if (stabilityScore >= 190) return 'B';
+  if (stabilityScore >= 150) return 'C';
+  return 'D';
 }
 
 function html(strings, ...values) {
@@ -209,12 +225,12 @@ function renderTitleScreen() {
       <div class="card document warning seal-card">
         <div class="card-title">
           <h3>봉인된 운영 기록</h3>
-          <span class="tag">MVP</span>
+          <span class="tag">Stage MVP</span>
         </div>
-        <p class="subtle">헌혈센터처럼 보이는 혈연센터. 그 이면의 수요와 장부를 관리하십시오.</p>
+        <p class="subtle">헌혈센터처럼 보이는 혈연센터를 기반으로 캐릭터를 성장시키고, 명성을 쌓고, 스테이지를 장악하십시오.</p>
       </div>
       <div class="actions">
-        <button class="primary-button" data-action="new-game">새 게임</button>
+        <button class="primary-button" data-action="new-game">운영 시작</button>
         <button class="secondary-button" data-action="about">프로젝트 정보</button>
       </div>
     </section>
@@ -225,13 +241,13 @@ function renderAboutScreen() {
   setScreen(html`
     <section class="screen">
       <p class="eyebrow">project brief</p>
-      <h2>다크 행정 누아르 운영 시뮬레이션</h2>
+      <h2>성장형 다중 장르 운영 게임</h2>
       <div class="card document">
         <div class="card-title">
           <h3>핵심 구조</h3>
           <span class="tag">기획 검증</span>
         </div>
-        <p class="subtle">문서형 UI, 자원 관리, 선택지 처리, Day 진행, 캐릭터 반응, 최종 평가를 검증하는 웹 MVP입니다.</p>
+        <p class="subtle">문서형 UI, 자원 관리, 선택지 처리, 캐릭터 반응, 스테이지 정산, 랭크 판정을 검증하는 웹 MVP입니다. 전투, 퍼즐, 아케이드, 전략 미션으로 확장될 구조를 전제로 합니다.</p>
       </div>
       <div class="actions">
         <button class="primary-button" data-action="title">돌아가기</button>
@@ -264,7 +280,7 @@ function renderDayStartScreen() {
         </div>
       </div>
       <div class="actions">
-        <button class="primary-button" data-action="event">보고서 확인</button>
+        <button class="primary-button" data-action="event">미션 보고서 확인</button>
       </div>
     </section>
   `);
@@ -327,8 +343,8 @@ function renderResultScreen() {
         ${renderRelationshipTags(lastResult.choice.relationship)}
       </div>
       <div class="actions">
-        <button class="primary-button" data-action="next-day">${gameState.currentDay >= 7 ? '최종 평가로' : '다음 Day로'}</button>
-        <button class="secondary-button" data-action="main">메인 운영 화면</button>
+        <button class="primary-button" data-action="next-day">${gameState.currentDay >= 7 ? '스테이지 정산으로' : '다음 구간으로'}</button>
+        <button class="secondary-button" data-action="main">운영 본부 화면</button>
       </div>
     </section>
   `);
@@ -342,10 +358,10 @@ function renderMainOperationScreen() {
       ${renderResourceGrid(['bloodStock', 'bloodDemand', 'humanTrust', 'mediaExposure', 'familySatisfaction', 'securityLevel', 'organizationUnrest', 'blackMarketClue'])}
       <div class="card document">
         <div class="card-title">
-          <h3>오늘의 운영 상태</h3>
+          <h3>현재 운영 상태</h3>
           <span class="tag status-${supply.tone}">${supply.label}</span>
         </div>
-        <p class="subtle">공급 차이: ${supply.diff}. 현재 상태는 ${supply.label}입니다.</p>
+        <p class="subtle">공급 차이: ${supply.diff}. 이 상태는 Stage ${gameState.currentStage} 클리어 랭크와 다음 스테이지 개방 조건에 반영됩니다.</p>
       </div>
       <div class="card compact-card">
         <div class="card-title">
@@ -355,32 +371,34 @@ function renderMainOperationScreen() {
         ${renderChoiceHistory()}
       </div>
       <div class="actions">
-        <button class="primary-button" data-action="next-day">${gameState.currentDay >= 7 ? '최종 평가로' : '다음 Day로'}</button>
-        <button class="secondary-button" data-action="event">현재 사건 보기</button>
+        <button class="primary-button" data-action="next-day">${gameState.currentDay >= 7 ? '스테이지 정산으로' : '다음 구간으로'}</button>
+        <button class="secondary-button" data-action="event">현재 미션 보기</button>
       </div>
     </section>
   `);
 }
 
-function renderFinalReport() {
-  const [flag, count] = getDominantEndingFlag();
-  const title = getEndingTitle(flag);
+function renderStageResult() {
+  const [flag, count] = getDominantProgressionFlag();
+  const title = getStageResultTitle(flag);
   const supply = checkSupplyBalance();
+  const rank = getClearRank();
 
   setScreen(html`
     <section class="screen final-screen">
-      <p class="eyebrow">final report</p>
+      <p class="eyebrow">stage result</p>
       <h2>${title}</h2>
-      <p class="subtle">7일 운영 결과 보고</p>
+      <p class="subtle">Stage ${gameState.currentStage} · 튜토리얼 운영 구간 정산</p>
       ${renderResourceGrid(['bloodStock', 'bloodDemand', 'humanTrust', 'mediaExposure', 'familySatisfaction', 'securityLevel', 'organizationUnrest', 'blackMarketClue'])}
       <div class="card document warning">
         <div class="card-title">
-          <h3>최종 판정</h3>
-          <span class="tag">${flag} · ${count}</span>
+          <h3>클리어 판정</h3>
+          <span class="tag">RANK ${rank}</span>
         </div>
         <div class="final-verdict">
           <span class="verdict-label status-${supply.tone}">수급 ${supply.label}</span>
-          <p class="subtle">선택 흐름은 운영 기록에 봉인되었습니다. 다음 회차에서는 다른 균형점을 검증할 수 있습니다.</p>
+          <p class="subtle">이번 스테이지의 운영 성향은 다음 구간의 명성, 해금 조건, 스테이지 난이도에 반영됩니다.</p>
+          <p class="subtle">주요 경향: ${flag} · ${count}</p>
         </div>
       </div>
       <div class="card compact-card">
@@ -391,8 +409,8 @@ function renderFinalReport() {
         ${renderChoiceHistory('full')}
       </div>
       <div class="actions">
-        <button class="primary-button" data-action="new-game">새 회차 시작</button>
-        <button class="secondary-button" data-action="title">타이틀로</button>
+        <button class="primary-button" data-action="new-game">다음 스테이지 준비</button>
+        <button class="secondary-button" data-action="title">운영 본부로</button>
       </div>
     </section>
   `);
@@ -402,13 +420,13 @@ function renderDayHeader() {
   return html`
     <header class="day-header">
       <div>
-        <p class="eyebrow">Day ${gameState.currentDay}</p>
-        <h2>${gameState.currentDay === 1 ? '부임 첫날' : `운영 ${gameState.currentDay}일차`}</h2>
+        <p class="eyebrow">Stage ${gameState.currentStage} · Day ${gameState.currentDay}</p>
+        <h2>${gameState.currentDay === 1 ? '튜토리얼 부임' : `운영 ${gameState.currentDay}구간`}</h2>
         <div class="progress-dots">
           ${Array.from({ length: 7 }, (_, index) => `<span class="dot ${index + 1 <= gameState.currentDay ? 'active' : ''}"></span>`).join('')}
         </div>
       </div>
-      <span class="tag">관찰 단계</span>
+      <span class="tag">튜토리얼 스테이지</span>
     </header>
   `;
 }
