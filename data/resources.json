@@ -1,0 +1,10 @@
+[
+  {"id":"RES_BLOOD","name":"혈액 재고","initial":72,"min":0,"max":100,"increase":"헌혈 캠페인 성공, 물류 회수, 야간 확보","decrease":"가문 요청, 오염 폐기, 사건 대응","impact":"핵심 생존 자원. 0에 가까우면 가문 불만과 조직 불안 급증","ui":"상단 자원바 / 카드","memo":"MVP 최우선 자원"},
+  {"id":"RES_FUNDS","name":"가문 자금","initial":420,"min":0,"max":999,"increase":"후원금, 비밀 거래, 고급 혈액 공급","decrease":"장비 보강, 매수, 보안 비용","impact":"선택지 비용과 시설 업그레이드 조건","ui":"상단 자원바 / 결산","memo":"단위는 K 또는 만 단위로 추후 확정"},
+  {"id":"RES_PRESTIGE","name":"가문 위신","initial":55,"min":0,"max":100,"increase":"가문 임무 성공, 고품질 공급, 비밀 유지","decrease":"공급 실패, 외부 노출, 내부 배신","impact":"상위 엔딩과 가문 지원 이벤트 조건","ui":"가문 패널","memo":"플레이어의 장기 평가 지표"},
+  {"id":"RES_TRUST","name":"인간 신뢰","initial":61,"min":0,"max":100,"increase":"공개 캠페인, 친절 응대, 투명한 행정","decrease":"실종 의혹, 언론 보도, 무리한 채혈 소문","impact":"낮으면 조사 이벤트와 언론 위험 증가","ui":"사회 신뢰 카드","memo":"표면 조직 운영의 핵심"},
+  {"id":"RES_EXPOSURE","name":"언론 노출","initial":18,"min":0,"max":100,"increase":"기자 추적, 시민 제보, 수상한 기록","decrease":"홍보 대응, 자료 은폐, 신뢰 회복","impact":"높을수록 발각형 이벤트와 배드 엔딩 위험 증가","ui":"위험도 게이지","memo":"낮을수록 좋음"},
+  {"id":"RES_UNREST","name":"조직 불안","initial":24,"min":0,"max":100,"increase":"과로, 내부 의심, 보상 부족, 스파이 활동","decrease":"휴식, 보상, 내부 단속, 충성 관리","impact":"높으면 직원 이탈/배신/실수 이벤트 발생","ui":"내부 관리 카드","memo":"인물 시스템과 연결"},
+  {"id":"RES_SECURITY","name":"보안 등급","initial":2,"min":1,"max":5,"increase":"시설 보강, 기록 정리, 야간 감시 강화","decrease":"보안 실패, 외부 침입, 장비 노후","impact":"조사 회피, 고급 이벤트 해금, 위험 감소","ui":"등급 배지","memo":"정수형 레벨"},
+  {"id":"RES_FAMILY","name":"가문 만족도","initial":50,"min":0,"max":100,"increase":"정기 공급 성공, 원로 요청 수행","decrease":"공급 지연, 위신 하락, 공개 리스크 증가","impact":"7일차 평가와 엔딩 분기 핵심","ui":"가문 평가 패널","memo":"MVP 최종 점수와 연결"}
+]
