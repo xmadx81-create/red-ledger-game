@@ -1,0 +1,85 @@
+[
+  {
+    "eventId": "WORK-001",
+    "name": "신입 간호사 업무 배제",
+    "eventType": "직장 내 따돌림",
+    "severity": "중간",
+    "centerScope": ["도심 센터", "지방 센터"],
+    "trigger": ["teamTrust 낮음", "신입 NPC 배치", "선임 피로도 높음"],
+    "description": "신입 간호사가 반복적으로 중요한 인수인계에서 제외됩니다.",
+    "choices": ["면담", "근무표 재편성", "선임 경고", "신입 보호 멘토 지정"],
+    "effects": {
+      "ignored": ["teamTrust -10", "serviceQuality -5", "npcExitRisk +8"],
+      "resolved": ["teamTrust +8", "morale +6", "conflictRisk -10"]
+    }
+  },
+  {
+    "eventId": "WORK-002",
+    "name": "근무표 불공정 논란",
+    "eventType": "근무 갈등",
+    "severity": "높음",
+    "centerScope": ["도심 센터", "야간 특수 센터"],
+    "trigger": ["연속 야간 근무", "fatigue 70 이상", "관리자 부재"],
+    "description": "특정 조에 야간 근무가 몰렸다는 불만이 터져 나옵니다.",
+    "choices": ["근무표 재산정", "보상 휴식 지급", "센터장 설명", "불만 직원 면담"],
+    "effects": {
+      "ignored": ["morale -12", "conflictRisk +15", "serviceQuality -8"],
+      "resolved": ["morale +10", "fatigue -8", "teamTrust +6"]
+    }
+  },
+  {
+    "eventId": "WORK-003",
+    "name": "실수 책임 전가",
+    "eventType": "괴롭힘/책임 전가",
+    "severity": "높음",
+    "centerScope": ["모든 센터"],
+    "trigger": ["문서 오류 발생", "ISTJ/ENTJ 강한 직원", "갈등 위험 높음"],
+    "description": "혈액 보관 기록 실수의 책임이 특정 NPC에게 몰립니다.",
+    "choices": ["로그 조사", "공개 중재", "책임 분산", "재교육 실시"],
+    "effects": {
+      "ignored": ["teamTrust -15", "npcExitRisk +12", "humanTrust -3"],
+      "resolved": ["teamTrust +12", "securityLevel +5", "morale +4"]
+    }
+  },
+  {
+    "eventId": "WORK-004",
+    "name": "밝은 응대 뒤의 번아웃",
+    "eventType": "피로/번아웃",
+    "severity": "중간",
+    "centerScope": ["대학가 센터", "도심 센터"],
+    "trigger": ["servicePressure 높음", "ENFP/ESFJ NPC 피로도 높음", "방문자 급증"],
+    "description": "항상 밝던 NPC가 응대 피로를 숨기다 한계에 가까워집니다.",
+    "choices": ["휴식 배정", "응대 인력 추가", "상담 지원", "업무 변경"],
+    "effects": {
+      "ignored": ["serviceMind -10", "burnoutRisk +18", "serviceQuality -7"],
+      "resolved": ["fatigue -15", "morale +10", "teamTrust +5"]
+    }
+  },
+  {
+    "eventId": "WORK-005",
+    "name": "파벌 형성",
+    "eventType": "조직 갈등",
+    "severity": "매우 높음",
+    "centerScope": ["지방 센터", "야간 특수 센터"],
+    "trigger": ["teamTrust 40 이하", "반복 갈등 2회 이상", "관리자 개입 실패"],
+    "description": "센터 내부에 두 개의 파벌이 생기고 업무 협조가 무너집니다.",
+    "choices": ["팀 전면 재편", "핵심 인물 면담", "외부 중재자 투입", "근무조 분리"],
+    "effects": {
+      "ignored": ["teamTrust -25", "serviceQuality -15", "operationRisk +20"],
+      "resolved": ["teamTrust +18", "conflictRisk -20", "morale +8"]
+    }
+  },
+  {
+    "eventId": "WORK-006",
+    "name": "신입 교육 성공",
+    "eventType": "긍정 이벤트",
+    "severity": "낮음",
+    "centerScope": ["모든 센터"],
+    "trigger": ["멘토 지정", "ISFJ/ESFJ/INFJ NPC 배치", "피로도 낮음"],
+    "description": "선임 NPC의 친절한 교육으로 신입이 빠르게 적응합니다.",
+    "choices": ["교육 보상 지급", "정식 배치", "멘토링 유지"],
+    "effects": {
+      "resolved": ["teamTrust +10", "serviceQuality +8", "newNpcGrowth +12"]
+    }
+  }
+]
