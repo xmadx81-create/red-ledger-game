@@ -8,6 +8,8 @@ export type ResourceId =
   | 'RES_SECURITY'
   | 'RES_FAMILY';
 
+export type ResourceConditionOperator = 'gt' | 'gte' | 'lt' | 'lte' | 'eq';
+
 export interface ResourceDefinition {
   id: ResourceId;
   name: string;
@@ -24,6 +26,17 @@ export interface ResourceDefinition {
 export interface ResourceDelta {
   resourceId: ResourceId;
   amount: number;
+}
+
+export interface ResourceCondition {
+  resourceId: ResourceId;
+  operator: ResourceConditionOperator;
+  value: number;
+}
+
+export interface EndingConditions {
+  all?: ResourceCondition[];
+  any?: ResourceCondition[];
 }
 
 export interface GameEventChoice {
@@ -73,6 +86,7 @@ export interface EndingDefinition {
   priority: number;
   type: string;
   memo: string;
+  conditions: EndingConditions;
 }
 
 export type ResourceState = Record<ResourceId, number>;
