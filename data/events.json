@@ -1,0 +1,9 @@
+[
+  {"id":"EVT_D1_001","day":1,"name":"첫날 운영 점검","condition":"게임 시작","choiceA":"공개 캠페인 강화","effectA":"인간 신뢰 +8, 자금 -20, 혈액 재고 +5","choiceB":"야간 물류 우선","effectB":"혈액 재고 +12, 언론 노출 +5, 조직 불안 +3","risk":"낮음","reward":"초기 방향성 결정","character":"서윤재","memo":"튜토리얼 이벤트"},
+  {"id":"EVT_D2_001","day":2,"name":"기록 누락 발견","condition":"보안 등급 2 이하","choiceA":"직접 정리","effectA":"보안 +1, 자금 -15, 조직 불안 +2","choiceB":"조용히 덮기","effectB":"언론 노출 +6, 인간 신뢰 -4","risk":"보통","reward":"보안 개선 가능","character":"김도현","memo":"기록 시스템 소개"},
+  {"id":"EVT_D3_001","day":3,"name":"수상한 제보","condition":"언론 노출 20 이상","choiceA":"홍보자료 배포","effectA":"인간 신뢰 +6, 자금 -25, 언론 노출 -4","choiceB":"제보자 추적","effectB":"보안 +1, 조직 불안 +8, 인간 신뢰 -3","risk":"보통","reward":"노출 관리","character":"정하린","memo":"외부 위협 첫 등장"},
+  {"id":"EVT_D4_001","day":4,"name":"가문 원로의 추가 요청","condition":"혈액 재고 50 이상","choiceA":"요청 수락","effectA":"혈액 재고 -18, 가문 만족 +12, 가문 위신 +6","choiceB":"부분 거절","effectB":"혈액 재고 -6, 가문 만족 -8, 조직 불안 -3","risk":"높음","reward":"가문 평가 변화","character":"엘리엇 카르테인","memo":"중반 압박 이벤트"},
+  {"id":"EVT_D5_001","day":5,"name":"물류 협력자 지연","condition":"박세연 관계도 보통 이하","choiceA":"추가 보상 지급","effectA":"자금 -30, 혈액 재고 +10, 조직 불안 -4","choiceB":"압박","effectB":"혈액 재고 +6, 조직 불안 +10, 충성 위험 증가","risk":"보통","reward":"물류 안정화","character":"박세연","memo":"협력자 관리"},
+  {"id":"EVT_D6_001","day":6,"name":"내부 스파이 의심","condition":"조직 불안 45 이상","choiceA":"내부 감사","effectA":"조직 불안 -10, 보안 +1, 인간 신뢰 -4","choiceB":"조용히 관찰","effectB":"조직 불안 +5, 언론 노출 +4, 자금 보존","risk":"높음","reward":"최종일 위험 조절","character":"서윤재","memo":"엔딩 조건과 직결"},
+  {"id":"EVT_D7_001","day":7,"name":"최종 감사와 결산","condition":"7일차","choiceA":"공개 신뢰 우선","effectA":"인간 신뢰 +10, 언론 노출 -8, 가문 만족 -5","choiceB":"가문 공급 우선","effectB":"가문 만족 +12, 가문 위신 +8, 언론 노출 +6","risk":"최종","reward":"엔딩 분기","character":"전체","memo":"MVP 최종 이벤트"}
+]
