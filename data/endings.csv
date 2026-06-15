@@ -1,0 +1,6 @@
+id,name,condition,required,forbidden,summary,unlock,priority,type,memo
+END_BALANCED,차가운 균형,"혈액 재고 40 이상, 인간 신뢰 45 이상, 언론 노출 50 미만, 가문 만족 45 이상","RES_BLOOD, RES_TRUST, RES_EXPOSURE, RES_FAMILY",언론 노출 80 이상,표면 조직과 가문 요구를 모두 유지한 안정 엔딩,2주차 운영 해금,1,일반 성공,MVP 기본 굿 엔딩
+END_FAMILY,가문의 충견,"가문 만족 75 이상, 가문 위신 70 이상","RES_FAMILY, RES_PRESTIGE",인간 신뢰 20 미만,가문은 만족하지만 표면 조직의 균열이 커지는 권력형 엔딩,원로 루트 해금,2,가문 성공,고위험 보상형
+END_PUBLIC,너무 깨끗한 얼굴,"인간 신뢰 75 이상, 언론 노출 25 미만","RES_TRUST, RES_EXPOSURE",가문 만족 25 미만,외부 평판은 좋지만 가문 내부 불만이 남는 표면 안정 엔딩,언론 대응 루트 해금,3,공개 성공,후속 내부 갈등 가능
+END_EXPOSED,붉은 장부 공개,언론 노출 80 이상 또는 인간 신뢰 10 이하,"RES_EXPOSURE, RES_TRUST",없음,외부 조사로 모든 위장 구조가 흔들리는 발각 엔딩,재도전 경고,99,실패,대표 배드 엔딩
+END_COLLAPSE,내부 붕괴,조직 불안 85 이상 또는 혈액 재고 5 이하,"RES_UNREST, RES_BLOOD",없음,조직 내부 실수와 이탈로 운영망이 무너지는 실패 엔딩,내부관리 튜토리얼 강조,100,실패,관리 실패형
