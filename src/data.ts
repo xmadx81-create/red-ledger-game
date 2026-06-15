@@ -1,0 +1,223 @@
+import resourcesRaw from '../data/resources.json';
+import charactersRaw from '../data/characters.json';
+import endingsRaw from '../data/endings.json';
+import type {
+  CharacterDefinition,
+  EndingDefinition,
+  GameEventDefinition,
+  ResourceDefinition,
+} from './types';
+
+export const resources = resourcesRaw as ResourceDefinition[];
+export const characters = charactersRaw as CharacterDefinition[];
+export const endings = endingsRaw as EndingDefinition[];
+
+export const events: GameEventDefinition[] = [
+  {
+    id: 'EVT_D1_001',
+    day: 1,
+    name: '첫날 운영 점검',
+    condition: '게임 시작',
+    risk: '낮음',
+    reward: '초기 방향성 결정',
+    character: '서윤재',
+    memo: '튜토리얼 이벤트',
+    choices: {
+      A: {
+        label: '공개 캠페인 강화',
+        textEffect: '인간 신뢰 +8, 자금 -20, 혈액 재고 +5',
+        effects: [
+          { resourceId: 'RES_TRUST', amount: 8 },
+          { resourceId: 'RES_FUNDS', amount: -20 },
+          { resourceId: 'RES_BLOOD', amount: 5 },
+        ],
+      },
+      B: {
+        label: '야간 물류 우선',
+        textEffect: '혈액 재고 +12, 언론 노출 +5, 조직 불안 +3',
+        effects: [
+          { resourceId: 'RES_BLOOD', amount: 12 },
+          { resourceId: 'RES_EXPOSURE', amount: 5 },
+          { resourceId: 'RES_UNREST', amount: 3 },
+        ],
+      },
+    },
+  },
+  {
+    id: 'EVT_D2_001',
+    day: 2,
+    name: '기록 누락 발견',
+    condition: '보안 등급 2 이하',
+    risk: '보통',
+    reward: '보안 개선 가능',
+    character: '김도현',
+    memo: '기록 시스템 소개',
+    choices: {
+      A: {
+        label: '직접 정리',
+        textEffect: '보안 +1, 자금 -15, 조직 불안 +2',
+        effects: [
+          { resourceId: 'RES_SECURITY', amount: 1 },
+          { resourceId: 'RES_FUNDS', amount: -15 },
+          { resourceId: 'RES_UNREST', amount: 2 },
+        ],
+      },
+      B: {
+        label: '조용히 덮기',
+        textEffect: '언론 노출 +6, 인간 신뢰 -4',
+        effects: [
+          { resourceId: 'RES_EXPOSURE', amount: 6 },
+          { resourceId: 'RES_TRUST', amount: -4 },
+        ],
+      },
+    },
+  },
+  {
+    id: 'EVT_D3_001',
+    day: 3,
+    name: '수상한 제보',
+    condition: '언론 노출 20 이상',
+    risk: '보통',
+    reward: '노출 관리',
+    character: '정하린',
+    memo: '외부 위협 첫 등장',
+    choices: {
+      A: {
+        label: '홍보자료 배포',
+        textEffect: '인간 신뢰 +6, 자금 -25, 언론 노출 -4',
+        effects: [
+          { resourceId: 'RES_TRUST', amount: 6 },
+          { resourceId: 'RES_FUNDS', amount: -25 },
+          { resourceId: 'RES_EXPOSURE', amount: -4 },
+        ],
+      },
+      B: {
+        label: '제보자 추적',
+        textEffect: '보안 +1, 조직 불안 +8, 인간 신뢰 -3',
+        effects: [
+          { resourceId: 'RES_SECURITY', amount: 1 },
+          { resourceId: 'RES_UNREST', amount: 8 },
+          { resourceId: 'RES_TRUST', amount: -3 },
+        ],
+      },
+    },
+  },
+  {
+    id: 'EVT_D4_001',
+    day: 4,
+    name: '가문 원로의 추가 요청',
+    condition: '혈액 재고 50 이상',
+    risk: '높음',
+    reward: '가문 평가 변화',
+    character: '엘리엇 카르테인',
+    memo: '중반 압박 이벤트',
+    choices: {
+      A: {
+        label: '요청 수락',
+        textEffect: '혈액 재고 -18, 가문 만족 +12, 가문 위신 +6',
+        effects: [
+          { resourceId: 'RES_BLOOD', amount: -18 },
+          { resourceId: 'RES_FAMILY', amount: 12 },
+          { resourceId: 'RES_PRESTIGE', amount: 6 },
+        ],
+      },
+      B: {
+        label: '부분 거절',
+        textEffect: '혈액 재고 -6, 가문 만족 -8, 조직 불안 -3',
+        effects: [
+          { resourceId: 'RES_BLOOD', amount: -6 },
+          { resourceId: 'RES_FAMILY', amount: -8 },
+          { resourceId: 'RES_UNREST', amount: -3 },
+        ],
+      },
+    },
+  },
+  {
+    id: 'EVT_D5_001',
+    day: 5,
+    name: '물류 협력자 지연',
+    condition: '박세연 관계도 보통 이하',
+    risk: '보통',
+    reward: '물류 안정화',
+    character: '박세연',
+    memo: '협력자 관리',
+    choices: {
+      A: {
+        label: '추가 보상 지급',
+        textEffect: '자금 -30, 혈액 재고 +10, 조직 불안 -4',
+        effects: [
+          { resourceId: 'RES_FUNDS', amount: -30 },
+          { resourceId: 'RES_BLOOD', amount: 10 },
+          { resourceId: 'RES_UNREST', amount: -4 },
+        ],
+      },
+      B: {
+        label: '압박',
+        textEffect: '혈액 재고 +6, 조직 불안 +10',
+        effects: [
+          { resourceId: 'RES_BLOOD', amount: 6 },
+          { resourceId: 'RES_UNREST', amount: 10 },
+        ],
+      },
+    },
+  },
+  {
+    id: 'EVT_D6_001',
+    day: 6,
+    name: '내부 스파이 의심',
+    condition: '조직 불안 45 이상',
+    risk: '높음',
+    reward: '최종일 위험 조절',
+    character: '서윤재',
+    memo: '엔딩 조건과 직결',
+    choices: {
+      A: {
+        label: '내부 감사',
+        textEffect: '조직 불안 -10, 보안 +1, 인간 신뢰 -4',
+        effects: [
+          { resourceId: 'RES_UNREST', amount: -10 },
+          { resourceId: 'RES_SECURITY', amount: 1 },
+          { resourceId: 'RES_TRUST', amount: -4 },
+        ],
+      },
+      B: {
+        label: '조용히 관찰',
+        textEffect: '조직 불안 +5, 언론 노출 +4, 자금 보존',
+        effects: [
+          { resourceId: 'RES_UNREST', amount: 5 },
+          { resourceId: 'RES_EXPOSURE', amount: 4 },
+        ],
+      },
+    },
+  },
+  {
+    id: 'EVT_D7_001',
+    day: 7,
+    name: '최종 감사와 결산',
+    condition: '7일차',
+    risk: '최종',
+    reward: '엔딩 분기',
+    character: '전체',
+    memo: 'MVP 최종 이벤트',
+    choices: {
+      A: {
+        label: '공개 신뢰 우선',
+        textEffect: '인간 신뢰 +10, 언론 노출 -8, 가문 만족 -5',
+        effects: [
+          { resourceId: 'RES_TRUST', amount: 10 },
+          { resourceId: 'RES_EXPOSURE', amount: -8 },
+          { resourceId: 'RES_FAMILY', amount: -5 },
+        ],
+      },
+      B: {
+        label: '가문 공급 우선',
+        textEffect: '가문 만족 +12, 가문 위신 +8, 언론 노출 +6',
+        effects: [
+          { resourceId: 'RES_FAMILY', amount: 12 },
+          { resourceId: 'RES_PRESTIGE', amount: 8 },
+          { resourceId: 'RES_EXPOSURE', amount: 6 },
+        ],
+      },
+    },
+  },
+];
