@@ -151,3 +151,46 @@
 1. Google Sheets `Resources`, `Events`, `Characters`에 실제 게임 데이터 입력
 2. Figma 화면별 상세 UI 확정
 3. GitHub에 기획 문서 `docs/game-design/` 생성
+
+---
+
+### 2026-06-16 5차 기록
+
+작업자: ChatGPT + 백무결  
+작업 구분: MVP 게임 데이터 1차 입력 / 기획 문서 생성  
+작업 내용:
+- Google Sheets `Red_Ledger_Development_Master`에 MVP 1차 데이터를 입력했다.
+- `Resources` 탭에 핵심 자원 8개를 입력했다.
+  - 혈액 재고
+  - 가문 자금
+  - 가문 위신
+  - 인간 신뢰
+  - 언론 노출
+  - 조직 불안
+  - 보안 등급
+  - 가문 만족도
+- `Events` 탭에 7일 운영 이벤트 7개를 입력했다.
+- `Characters` 탭에 주요 인물 5명을 입력했다.
+  - 서윤재
+  - 김도현
+  - 박세연
+  - 정하린
+  - 엘리엇 카르테인
+- `Endings` 탭에 MVP 엔딩 5개를 입력했다.
+- GitHub `docs/game-design/`에 기획 문서를 생성했다.
+  - `00_game-design-index.md`
+  - `01_core-loop.md`
+  - `02_resources.md`
+  - `03_events.md`
+  - `04_characters.md`
+  - `05_endings.md`
+
+결과:
+- MVP의 기본 데이터 구조와 1차 게임 설계 문서가 생성되었다.
+- 이제 전처리 단계에서 실제 기획/데이터 단계로 진입할 수 있다.
+
+다음 조치:
+1. Google Sheets 데이터 밸런스 검토
+2. Figma 화면과 실제 자원/이벤트 데이터 연결 구조 정의
+3. GitHub `data/` 폴더에 CSV/JSON 데이터 파일 생성
+4. MVP 코드 구조 설계
