@@ -2,7 +2,7 @@ import { endings, events, resources } from './data';
 import type { EndingDefinition, GameState, ResourceDefinition, ResourceDelta, ResourceId, ResourceState } from './types';
 
 const resourceMap = new Map<ResourceId, ResourceDefinition>(
-  resources.map((resource) => [resource.id, resource]),
+  resources.map((resource) => [resource.id, resource] as const),
 );
 
 export function createInitialState(): GameState {
