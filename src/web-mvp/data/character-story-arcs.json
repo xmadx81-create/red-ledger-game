@@ -1,0 +1,214 @@
+{
+  "version": "0.1.0",
+  "description": "주요 캐릭터 개인 서사, 등장 장, 이벤트 연결, 성장/전환 조건을 정의하는 스토리 아크 데이터",
+  "arcRules": {
+    "arcTypes": ["직원 성장", "영웅 각성", "적대 전환", "회유 가능", "전설 퀘스트", "센터 운영", "종족 갈등"],
+    "progressStages": ["등장", "갈등", "선택", "성장", "분기", "시즌 지속"],
+    "continuityPrinciple": "모든 캐릭터는 헌혈센터 운영, 공생 협약, 종족 갈등, 방해 세력 대응 중 하나 이상의 축과 연결되어야 한다."
+  },
+  "mainStoryChapters": [
+    {
+      "chapterId": "CH-001",
+      "title": "센터의 얼굴",
+      "coreTheme": "밝은 헌혈센터 운영과 직원 관계 안정화",
+      "featuredCharacters": ["한서연", "윤하늘", "배미나", "강지윤", "오유리", "정다은", "유나린", "문태식"],
+      "coreEvents": ["신입 교육 성공", "근무표 불공정 논란", "대기실 소동 진정 작전", "밝은 응대 뒤의 번아웃"],
+      "unlockCondition": "기본 시작",
+      "clearGoal": "시민 신뢰 60 이상, 직원 불안 50 이하"
+    },
+    {
+      "chapterId": "CH-002",
+      "title": "방해 단서",
+      "coreTheme": "혈액 보관 기록 이상과 암거래망의 흔적",
+      "featuredCharacters": ["윤하늘", "문소라", "최보라", "김세아", "소문택", "핍 스케르스"],
+      "coreEvents": ["보관실 침투 대응", "시스템 침투 해킹", "정보상 거래", "SNS 소문 확산"],
+      "unlockCondition": "Day 2 이후 또는 방해 단서 10 이상",
+      "clearGoal": "방해 단서 20 이상 확보, 비밀 노출도 40 이하"
+    },
+    {
+      "chapterId": "CH-003",
+      "title": "종족별 영웅 합류",
+      "coreTheme": "각 종족 영웅의 특화 직업군과 성장 루트 해금",
+      "featuredCharacters": ["서윤", "카멜리아", "세라엘", "브록", "이든", "루나", "피프", "리비아", "아르고스"],
+      "coreEvents": ["종족 영웅 영입", "상시 던전 해금", "첫 전직", "아우라 튜토리얼"],
+      "unlockCondition": "튜토리얼 스테이지 클리어",
+      "clearGoal": "종족별 영웅 3종 이상 영입"
+    },
+    {
+      "chapterId": "CH-004",
+      "title": "오해한 사람들",
+      "coreTheme": "악인이 아닌 적과 공생 선택지",
+      "featuredCharacters": ["정다은", "민서", "카엘 다크크", "셀린 그린셰이드", "미라 스펙트롬"],
+      "coreEvents": ["오해한 인간 세력 설득전", "실종자 가족 연대", "정령계 오염", "보라 아우라 분기"],
+      "unlockCondition": "시민 신뢰 55 이상 또는 비밀 노출도 35 이상",
+      "clearGoal": "처치 없이 1개 세력 설득 성공"
+    },
+    {
+      "chapterId": "CH-005",
+      "title": "적 영웅 진영",
+      "coreTheme": "공생 협약을 거부하는 종족별 적 영웅 연합",
+      "featuredCharacters": ["릴리아 벨로어", "그록 아이언헤일", "베르나 나이트혼", "루카르 블러드하울", "핍 스케르스"],
+      "coreEvents": ["적 영웅 연합 선언", "시설 파괴 보스전", "하이브리드 암살자", "팩 전투"],
+      "unlockCondition": "방해 단서 30 이상 또는 적 영웅 조우 2회",
+      "clearGoal": "적 영웅 1명 제압 또는 회유"
+    },
+    {
+      "chapterId": "CH-006",
+      "title": "초고대 혈통의 개입",
+      "coreTheme": "협약 원본과 고대 종족의 진실",
+      "featuredCharacters": ["릴리스", "발터스", "누아르", "세레나", "가르문", "유나이", "카이라", "라에벨", "옵시디언 센티널"],
+      "coreEvents": ["고대 협약 원본", "전설 아우라 각성", "초고대 보스전", "협약 복원"],
+      "unlockCondition": "전설 조각 3개 이상 또는 시즌 5 클리어",
+      "clearGoal": "협약 원본 복원 또는 고대 전쟁 재발 방지"
+    }
+  ],
+  "characterArcs": [
+    {
+      "characterId": "NPC-HAN-SEoyeon",
+      "name": "한서연",
+      "type": "간호사 NPC",
+      "arcType": "직원 성장",
+      "startingRole": "상냥한 베테랑 간호사",
+      "personalConflict": "모든 갈등을 혼자 떠안아 번아웃 위험이 높다.",
+      "growthGoal": "팀에 도움을 요청하고 신입 교육 시스템을 정착시킨다.",
+      "keyEvents": ["신입 교육 성공", "밝은 응대 뒤의 번아웃", "대기실 소동 진정 작전"],
+      "aura": "AURA-GOOD-BLUE",
+      "gameFunction": ["방문자 만족도 증가", "갈등 완화", "신입 성장 보조"]
+    },
+    {
+      "characterId": "NPC-YOON-Haneul",
+      "name": "윤하늘",
+      "type": "간호사 NPC",
+      "arcType": "센터 운영",
+      "startingRole": "차분한 기록 담당 간호사",
+      "personalConflict": "이상 기록을 발견하지만 자신의 판단을 확신하지 못한다.",
+      "growthGoal": "문서 오류와 암거래 단서를 연결해 첫 번째 방해 세력 추적을 연다.",
+      "keyEvents": ["문서 오류", "보관실 침입 전조", "암거래 단서 발견"],
+      "aura": "AURA-GOOD-BLUE",
+      "gameFunction": ["문서 정확도 증가", "퍼즐 이벤트 해금", "보관실 위험 조기 경보"]
+    },
+    {
+      "characterId": "NPC-OH-Yuri",
+      "name": "오유리",
+      "type": "간호사 NPC",
+      "arcType": "직원 성장",
+      "startingRole": "빠른 현장 대응 간호사",
+      "personalConflict": "직설적인 말투로 동료와 오해가 생긴다.",
+      "growthGoal": "빠른 대응력에 배려를 더해 야간조 핵심 리더로 성장한다.",
+      "keyEvents": ["응급 대응", "감정적 충돌", "대기실 소동 진정 작전"],
+      "aura": "AURA-GOOD-BLUE",
+      "gameFunction": ["돌발 이벤트 초기 피해 감소", "센터 방어전 지원", "응급 처치 보정"]
+    },
+    {
+      "characterId": "NPC-MOON-Sora",
+      "name": "문소라",
+      "type": "간호사 NPC",
+      "arcType": "센터 운영",
+      "startingRole": "분석형 혈액관리 간호사",
+      "personalConflict": "사람보다 데이터에 집중한다는 오해를 받는다.",
+      "growthGoal": "데이터 분석으로 방문자를 보호하고 동료 신뢰를 얻는다.",
+      "keyEvents": ["이상 수치 발견", "퍼즐 던전", "암거래 단서 추적"],
+      "aura": "AURA-GOOD-BLUE",
+      "gameFunction": ["이상 수치 발견", "데이터 퍼즐 성공률 증가", "증거 회수 보정"]
+    },
+    {
+      "characterId": "HERO-ELF-SERAEL",
+      "name": "세라엘",
+      "type": "아군 영웅",
+      "arcType": "영웅 각성",
+      "startingRole": "센터 검진 담당 엘프",
+      "personalConflict": "평범한 치유 담당으로 남을지, 아케인 힐러로 각성할지 선택해야 한다.",
+      "growthGoal": "공생 선택지를 반복 성공해 전설 치유사 루트를 개방한다.",
+      "keyEvents": ["검진실 이상 반응", "정화 던전", "전설 치유 각성"],
+      "aura": "AURA-GOOD-BLUE",
+      "possibleAuraTransition": "AURA-LEGEND-GOLD",
+      "gameFunction": ["치유", "상태 이상 정화", "공생 점수 보정"]
+    },
+    {
+      "characterId": "HERO-VMP-RIAS",
+      "name": "리아스",
+      "type": "적/아군 분기 영웅",
+      "arcType": "회유 가능",
+      "startingRole": "위험한 정신계 정보 수집자",
+      "personalConflict": "비밀을 팔아 살아남을지, 공생 질서를 지킬지 갈등한다.",
+      "growthGoal": "처치가 아닌 제압/협상 루트로 보라 아우라에서 푸른 아우라로 전환한다.",
+      "keyEvents": ["침투형 정보 수집자", "보라 아우라 분기", "정신계 동료화"],
+      "aura": "AURA-AMBIGUOUS-PURPLE",
+      "possibleAuraTransition": "AURA-GOOD-BLUE",
+      "gameFunction": ["정신계 제어", "정보전", "은폐/협상 보정"]
+    },
+    {
+      "characterId": "ENM-HUM-KAEL",
+      "name": "카엘 다크크",
+      "type": "적 영웅",
+      "arcType": "회유 가능",
+      "startingRole": "인간 전략 지휘관",
+      "personalConflict": "공생 협약이 인간을 속인다고 믿는다.",
+      "growthGoal": "무고한 시민을 보호하는 플레이를 통해 자신의 오해를 깨닫는다.",
+      "keyEvents": ["센터 앞 시위", "오해한 인간 세력 설득전", "민간 추적자 습격"],
+      "aura": "AURA-EVIL-DARKRED",
+      "possibleAuraTransition": "AURA-AMBIGUOUS-PURPLE",
+      "gameFunction": ["적 지휘관", "설득 분기", "인간 신뢰 테스트"]
+    },
+    {
+      "characterId": "ENM-HYB-BERNA",
+      "name": "베르나 나이트혼",
+      "type": "적 영웅",
+      "arcType": "회유 가능",
+      "startingRole": "혼혈 암살자",
+      "personalConflict": "두 혈통 모두에게 버림받았다는 상처로 공생을 믿지 않는다.",
+      "growthGoal": "하이브리드 보호 루트를 통해 적대에서 동맹 후보로 변화한다.",
+      "keyEvents": ["암살 예고", "하이브리드 실험 기록", "보라 아우라 분기"],
+      "aura": "AURA-AMBIGUOUS-PURPLE",
+      "possibleAuraTransition": "AURA-GOOD-BLUE",
+      "gameFunction": ["은신 전투", "하이브리드 각성 재료", "동료화 분기"]
+    },
+    {
+      "characterId": "LEGEND-AVP-LILITH",
+      "name": "릴리스",
+      "type": "전설 영웅",
+      "arcType": "전설 퀘스트",
+      "startingRole": "블러드 오라클",
+      "personalConflict": "미래를 알지만 직접 개입할 수 없는 예언자다.",
+      "growthGoal": "플레이어가 공생 루트를 증명하면 협약 원본의 위치를 알려준다.",
+      "keyEvents": ["붉은 예언", "협약 원본", "전설 아우라 각성"],
+      "aura": "AURA-LEGEND-GOLD",
+      "gameFunction": ["전설 퀘스트 개방", "스토리 분기 예고", "고대 진실 해금"]
+    },
+    {
+      "characterId": "ENM-GLM-OBSIDIAN",
+      "name": "옵시디언 센티널",
+      "type": "적/수호자 분기 보스",
+      "arcType": "전설 퀘스트",
+      "startingRole": "고대 방어 시스템",
+      "personalConflict": "악의가 아니라 낡은 명령 때문에 모두를 차단한다.",
+      "growthGoal": "기록 복원 후 적이 아닌 수호 골렘으로 재정의된다.",
+      "keyEvents": ["고대 보관소 봉쇄", "전설 골렘 시험", "명령문 재해석"],
+      "aura": "AURA-LEGEND-GOLD",
+      "possibleAuraTransition": "AURA-GOOD-BLUE",
+      "gameFunction": ["전설 보스", "기록 보관소 수호", "협약 원본 루트"]
+    }
+  ],
+  "eventPlacementRules": [
+    {
+      "ruleId": "RULE-STAFF-FIRST",
+      "description": "초반에는 영웅보다 직원 NPC와 센터 운영 갈등을 먼저 보여준다.",
+      "recommendedChapters": ["CH-001", "CH-002"]
+    },
+    {
+      "ruleId": "RULE-HERO-AFTER-OPERATION",
+      "description": "종족별 영웅은 센터 운영 구조를 이해한 뒤 합류해야 개연성이 생긴다.",
+      "recommendedChapters": ["CH-003"]
+    },
+    {
+      "ruleId": "RULE-ENEMY-WITH-MOTIVE",
+      "description": "적 영웅은 등장 전 반드시 개인 동기 또는 피해 서사를 암시한다.",
+      "recommendedChapters": ["CH-004", "CH-005"]
+    },
+    {
+      "ruleId": "RULE-LEGEND-LATE",
+      "description": "전설급 캐릭터는 시즌 후반에 등장해 세계관 법칙을 흔든다.",
+      "recommendedChapters": ["CH-006"]
+    }
+  ]
+}
