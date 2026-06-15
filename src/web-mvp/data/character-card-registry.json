@@ -1,0 +1,132 @@
+{
+  "version": "0.1.0",
+  "description": "도감 카드 제작 진행 상태를 characterId 기준으로 추적하는 레지스트리. 생성 이미지가 부정확해도 카드 데이터는 이 레지스트리와 원본 캐릭터 데이터 기준으로 유지한다.",
+  "productionRules": {
+    "oneCharacterOneCard": true,
+    "rejectSheetImages": true,
+    "rejectGridImages": true,
+    "templateId": "CARD-TEMPLATE-E",
+    "textSource": "gameData",
+    "imageSource": "singleCharacterIllustration",
+    "imageTextPolicy": "AI 이미지 안의 텍스트는 신뢰하지 않고, 인게임 카드는 JSON 데이터로 텍스트를 출력한다."
+  },
+  "statusTypes": [
+    "planned",
+    "illustrationNeeded",
+    "illustrationReady",
+    "cardReady",
+    "rejected",
+    "needsReview"
+  ],
+  "cards": [
+    {
+      "characterId": "HUM-001",
+      "name": "서윤",
+      "race": "인간",
+      "alignment": "GOOD",
+      "rarity": "L",
+      "status": "cardReady",
+      "acceptedImageLocalName": "서윤_헌혈의_집_전설_카드.png",
+      "note": "후보 E 기반 전설 카드. 공식 카드 템플릿 기준 샘플로 사용."
+    },
+    {
+      "characterId": "HUM-002",
+      "name": "지호",
+      "race": "인간",
+      "alignment": "GOOD",
+      "rarity": "N",
+      "status": "needsReview",
+      "acceptedImageLocalName": "a_detailed_high_quality_illustrated_character_car.png",
+      "note": "카드 분위기는 좋으나 후보 E 공식 템플릿과 다름. 코드 기반 카드로 재렌더 필요."
+    },
+    {
+      "characterId": "HUM-003",
+      "name": "민서",
+      "race": "인간",
+      "alignment": "GOOD",
+      "rarity": "SR",
+      "status": "rejected",
+      "acceptedImageLocalName": null,
+      "rejectedReason": "생성 이미지가 정보 분석관으로 나와 원래 설정인 구조대원/여성 장년/보호형 영웅과 불일치."
+    },
+    {
+      "characterId": "HUM-004",
+      "name": "현우",
+      "race": "인간",
+      "alignment": "NEUTRAL",
+      "rarity": "EP",
+      "status": "needsReview",
+      "acceptedImageLocalName": "a_highly_detailed_game_character_card_ui_panel_i.png",
+      "note": "전략가로 생성되어 원래 설정인 무에타이/고화력 근접과 불일치. 캐릭터 일러스트만 일부 참고 가능."
+    },
+    {
+      "characterId": "HUM-005",
+      "name": "하린",
+      "race": "인간",
+      "alignment": "GOOD",
+      "rarity": "R",
+      "status": "illustrationNeeded",
+      "acceptedImageLocalName": null,
+      "note": "여성 노년 방호 전문가. 아직 공식 후보 E 기준 개별 카드 필요."
+    },
+    {
+      "characterId": "VMP-001",
+      "name": "카멜리아",
+      "race": "뱀프",
+      "alignment": "GOOD",
+      "rarity": "EP",
+      "status": "illustrationNeeded",
+      "acceptedImageLocalName": null,
+      "note": "혈액술사. 뱀프지만 공생 수호 성향. 푸른/보라 혼합 아우라 가능."
+    },
+    {
+      "characterId": "VMP-002",
+      "name": "발렌",
+      "race": "뱀프",
+      "alignment": "NEUTRAL",
+      "rarity": "SR",
+      "status": "illustrationNeeded",
+      "acceptedImageLocalName": null,
+      "note": "환영술사. 보라 아우라. 회유/정보전 캐릭터."
+    },
+    {
+      "characterId": "VMP-003",
+      "name": "리아스",
+      "race": "뱀프",
+      "alignment": "NEUTRAL",
+      "rarity": "EP",
+      "status": "illustrationNeeded",
+      "acceptedImageLocalName": null,
+      "note": "정신 지배자. 위험하지만 동료화 가능."
+    },
+    {
+      "characterId": "VMP-004",
+      "name": "그라프",
+      "race": "뱀프",
+      "alignment": "GOOD",
+      "rarity": "R",
+      "status": "illustrationNeeded",
+      "acceptedImageLocalName": null,
+      "note": "혈향 감지자. 추적/분석형 노년 뱀프."
+    },
+    {
+      "characterId": "VMP-005",
+      "name": "태오",
+      "race": "뱀프",
+      "alignment": "NEUTRAL",
+      "rarity": "SR",
+      "status": "illustrationNeeded",
+      "acceptedImageLocalName": null,
+      "note": "박쥐 하이브리드/뱀프 혈통 각성. 폭발형 전투와 수송 담당."
+    }
+  ],
+  "nextProductionQueue": [
+    "HUM-003",
+    "HUM-005",
+    "VMP-001",
+    "VMP-002",
+    "VMP-003",
+    "VMP-004",
+    "VMP-005"
+  ]
+}
