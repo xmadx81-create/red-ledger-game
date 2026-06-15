@@ -150,8 +150,23 @@ select {
   letter-spacing: -0.04em;
 }
 
+.card-uid {
+  display: inline-flex;
+  width: fit-content;
+  margin-top: 12px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--rarity-accent) 36%, transparent);
+  background: color-mix(in srgb, var(--rarity-accent) 10%, #fff);
+  color: color-mix(in srgb, var(--rarity-accent) 84%, #111);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+}
+
 .card-id {
-  margin-top: 18px;
+  margin-top: 10px;
   color: var(--muted);
   font-size: 14px;
   font-weight: 900;
