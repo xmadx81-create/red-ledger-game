@@ -23,7 +23,7 @@ GitHub JSON = 게임 코드 연동용
 | `data/characters.csv` | 캐릭터 데이터 검토용 |
 | `data/characters.json` | 캐릭터 데이터 코드 연동용 |
 | `data/endings.csv` | 엔딩 데이터 검토용 |
-| `data/endings.json` | 엔딩 데이터 코드 연동용 |
+| `data/endings.json` | 엔딩 데이터 코드 연동용, 구조화된 판정 조건 포함 |
 
 ## 3. Resources 스키마
 
@@ -73,27 +73,6 @@ GitHub JSON = 게임 코드 연동용
 }
 ```
 
-예시:
-
-```json
-{
-  "id": "EVT_D1_001",
-  "day": 1,
-  "name": "첫날 운영 점검",
-  "choices": {
-    "A": {
-      "label": "공개 캠페인 강화",
-      "textEffect": "인간 신뢰 +8, 자금 -20, 혈액 재고 +5",
-      "effects": [
-        { "resourceId": "RES_TRUST", "amount": 8 },
-        { "resourceId": "RES_FUNDS", "amount": -20 },
-        { "resourceId": "RES_BLOOD", "amount": 5 }
-      ]
-    }
-  }
-}
-```
-
 ## 5. Events CSV 스키마
 
 `data/events.csv`는 검토와 사람이 읽는 용도다. 코드 연동 기준은 JSON이다.
@@ -130,23 +109,63 @@ GitHub JSON = 게임 코드 연동용
 | `unlock` | 해금 조건 |
 | `memo` | 메모 |
 
-## 7. Endings 스키마
+## 7. Endings JSON 스키마
+
+`data/endings.json`은 실제 엔딩 판정 기준 데이터다.
 
 | 필드 | 의미 |
 |---|---|
 | `id` | 엔딩 고유 ID |
 | `name` | 엔딩명 |
-| `condition` | 조건 |
-| `required` | 필요 자원 |
-| `forbidden` | 금지 조건 |
+| `condition` | 사람이 읽는 조건 설명 |
+| `required` | 사람이 읽는 필요 자원 설명 |
+| `forbidden` | 사람이 읽는 금지 조건 설명 |
 | `summary` | 결과 요약 |
 | `unlock` | 후속 해금 |
-| `priority` | 판정 우선순위 |
+| `priority` | 판정 우선순위. 숫자가 높을수록 먼저 판정 |
 | `type` | 엔딩 타입 |
 | `memo` | 메모 |
+| `conditions` | 실제 판정 조건 묶음 |
+| `conditions.all` | 모두 만족해야 하는 조건 배열 |
+| `conditions.any` | 하나 이상 만족하면 되는 조건 배열 |
+
+조건 구조:
+
+```json
+{
+  "resourceId": "RES_EXPOSURE",
+  "operator": "gte",
+  "value": 80
+}
+```
+
+지원 연산자:
+
+| 연산자 | 의미 |
+|---|---|
+| `gt` | 초과 |
+| `gte` | 이상 |
+| `lt` | 미만 |
+| `lte` | 이하 |
+| `eq` | 같음 |
+
+엔딩 예시:
+
+```json
+{
+  "id": "END_COLLAPSE",
+  "priority": 100,
+  "conditions": {
+    "any": [
+      { "resourceId": "RES_UNREST", "operator": "gte", "value": 85 },
+      { "resourceId": "RES_BLOOD", "operator": "lte", "value": 5 }
+    ]
+  }
+}
+```
 
 ## 8. 다음 작업
 
-- 엔딩 조건도 문자열에서 구조화된 조건 배열로 바꾼다.
-- `pickEnding` 함수가 `endings.json`의 구조화 조건을 읽도록 개선한다.
 - Google Sheets 원본 탭도 JSON 구조와 맞춰 확장한다.
+- 이벤트 발생 조건도 문자열에서 구조화 조건으로 바꾼다.
+- 저장/불러오기 기능을 추가한다.
