@@ -33,10 +33,11 @@ data/
 | `resources.json` | `src/data.ts`에서 직접 import |
 | `events.json` | `src/data.ts`에서 직접 import, 선택지 효과 구조화 완료 |
 | `characters.json` | `src/data.ts`에서 직접 import |
-| `endings.json` | `src/data.ts`에서 직접 import, 조건은 아직 문자열 |
+| `endings.json` | `src/data.ts`에서 직접 import, 엔딩 판정 조건 구조화 완료 |
 
 ## 주의사항
 
 - `events.json`은 `choices.A.effects`, `choices.B.effects` 배열을 가진다.
-- `events.csv`는 사람이 검토하기 쉬운 문자열 효과를 유지한다.
-- 다음 단계에서는 `endings.json`의 조건도 구조화해야 한다.
+- `endings.json`은 `conditions.all`, `conditions.any` 배열을 가진다.
+- `events.csv`와 `endings.csv`는 사람이 검토하기 쉬운 문자열 설명을 유지한다.
+- 다음 단계에서는 이벤트 발생 조건도 구조화할 수 있다.
