@@ -1,0 +1,69 @@
+.codex-thumb {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  min-height: 92px;
+  margin-bottom: 14px;
+  padding: 10px;
+  border-radius: 18px;
+  border: 1px dashed rgba(229, 57, 53, 0.22);
+  background: linear-gradient(135deg, rgba(255, 235, 238, 0.8), rgba(227, 242, 253, 0.76));
+}
+
+.codex-thumb img {
+  width: 92px;
+  height: 92px;
+  border-radius: 14px;
+  object-fit: cover;
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.codex-thumb.missing img {
+  display: none;
+}
+
+.codex-thumb.missing::before {
+  content: 'IMAGE MAP';
+  width: 92px;
+  height: 92px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.8);
+  color: #c62828;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+}
+
+.codex-thumb-label {
+  display: grid;
+  gap: 5px;
+}
+
+.codex-thumb-label strong {
+  color: var(--codex-text, #263238);
+  font-size: 14px;
+}
+
+.codex-thumb-label small {
+  color: var(--codex-muted, #607d8b);
+  font-size: 12px;
+  font-weight: 800;
+  word-break: break-all;
+}
+
+@media (max-width: 420px) {
+  .codex-thumb {
+    grid-template-columns: 1fr;
+  }
+
+  .codex-thumb img,
+  .codex-thumb.missing::before {
+    width: 100%;
+    height: 150px;
+  }
+}
