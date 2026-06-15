@@ -1,5 +1,5 @@
 {
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "도감 카드 제작 진행 상태를 characterId 기준으로 추적하는 레지스트리. 생성 이미지가 부정확해도 카드 데이터는 이 레지스트리와 원본 캐릭터 데이터 기준으로 유지한다.",
   "productionRules": {
     "oneCharacterOneCard": true,
@@ -76,9 +76,9 @@
       "alignment": "GOOD",
       "rarity": "R",
       "serial": 1,
-      "status": "needsReview",
-      "acceptedImageLocalName": "a_detailed_illustrated_fantasy_card_profile_sheet.png",
-      "note": "ID와 이름은 맞지만 여성 노년 방호 전문가가 아니라 젊은 간호사 이미지로 생성됨. 하린 최종 카드로는 재작업 필요."
+      "status": "cardReady",
+      "acceptedImageLocalName": "a_highly_detailed_character_card_game_ui_illustr.png",
+      "note": "노년 여성 방호 전문가, 보호 방패, 푸른 보호막 아우라, 고유 식별표 적용. 일부 UI 오탈자는 있으나 캐릭터 방향성 통과."
     },
     {
       "cardUid": "CARD-VMP-001-EP-0001",
@@ -142,7 +142,6 @@
     }
   ],
   "nextProductionQueue": [
-    "HUM-005",
     "VMP-001",
     "VMP-004",
     "VMP-005"
