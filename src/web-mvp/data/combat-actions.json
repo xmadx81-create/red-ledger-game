@@ -1,0 +1,92 @@
+[
+  {
+    "actionId": "ACT-PROTECT",
+    "name": "보호",
+    "category": "방어",
+    "description": "방문자 또는 동료를 보호하여 안전도 하락을 막습니다.",
+    "usableBy": ["간호사", "보안요원", "의무관"],
+    "effects": { "visitorSafety": 12, "teamSurvival": 6, "fatigue": 4 },
+    "bestAgainst": ["센터 방어전", "오해한 인간 세력 설득전"]
+  },
+  {
+    "actionId": "ACT-SUBDUE",
+    "name": "제압",
+    "category": "비살상 전투",
+    "description": "상대를 제거하지 않고 행동 불능 상태로 만듭니다.",
+    "usableBy": ["보안요원", "전투원", "수송원"],
+    "effects": { "threatControl": 15, "secretExposure": -3, "fatigue": 6 },
+    "bestAgainst": ["보관실 침투 대응", "암거래 조직 소탕전"]
+  },
+  {
+    "actionId": "ACT-NEGOTIATE",
+    "name": "협상",
+    "category": "비전투 해결",
+    "description": "대화로 오해를 풀거나 적대 수치를 낮춥니다.",
+    "usableBy": ["협상가", "간호사", "관리자"],
+    "effects": { "humanTrust": 10, "panicLevel": -12, "secretExposure": -2 },
+    "bestAgainst": ["오해한 인간 세력 설득전", "내부 갈등"]
+  },
+  {
+    "actionId": "ACT-CONCEAL",
+    "name": "은폐",
+    "category": "비밀 유지",
+    "description": "현장 흔적과 기록을 정리하여 비밀 노출을 낮춥니다.",
+    "usableBy": ["기록관", "관리자", "기술자"],
+    "effects": { "secretExposure": -14, "documentAccuracy": 4, "fatigue": 5 },
+    "bestAgainst": ["보관실 침투 대응", "센터 방어전"]
+  },
+  {
+    "actionId": "ACT-EVIDENCE",
+    "name": "증거 회수",
+    "category": "조사",
+    "description": "방해 세력의 흔적이나 문서를 회수해 다음 스테이지 해금 조건을 채웁니다.",
+    "usableBy": ["기록관", "정보원", "기술자"],
+    "effects": { "blackMarketClue": 12, "secretExposure": -1, "eventResolution": 5 },
+    "bestAgainst": ["암거래 조직 소탕전", "보관실 침투 대응"]
+  },
+  {
+    "actionId": "ACT-FIRST-AID",
+    "name": "응급 처치",
+    "category": "회복",
+    "description": "부상이나 패닉 상태를 빠르게 안정시킵니다.",
+    "usableBy": ["간호사", "의무관"],
+    "effects": { "visitorSafety": 10, "teamSurvival": 10, "humanTrust": 3 },
+    "bestAgainst": ["센터 방어전", "길드 던전 대규모 전투"]
+  },
+  {
+    "actionId": "ACT-LOCKDOWN",
+    "name": "보안 봉쇄",
+    "category": "시설 제어",
+    "description": "보안 셔터와 출입 통제를 사용해 위협 확산을 막습니다.",
+    "usableBy": ["보안요원", "기술자", "관리자"],
+    "effects": { "facilityStability": 14, "securityLevel": 8, "panicLevel": 4 },
+    "bestAgainst": ["센터 방어전", "보관실 침투 대응"]
+  },
+  {
+    "actionId": "ACT-EVADE",
+    "name": "회피 기동",
+    "category": "아케이드/수송",
+    "description": "추적을 피하고 수송 경로를 변경합니다.",
+    "usableBy": ["수송원", "기술자"],
+    "effects": { "pursuitRisk": -14, "transportIntegrity": 8, "fatigue": 7 },
+    "bestAgainst": ["야간 수송 추격전"]
+  },
+  {
+    "actionId": "ACT-CALM",
+    "name": "진정 안내",
+    "category": "서비스/심리",
+    "description": "방문자와 오해 세력의 불안을 낮추고 패닉 확산을 막습니다.",
+    "usableBy": ["간호사", "협상가", "의무관"],
+    "effects": { "panicLevel": -15, "humanTrust": 6, "serviceQuality": 5 },
+    "bestAgainst": ["오해한 인간 세력 설득전", "센터 방어전"]
+  },
+  {
+    "actionId": "ACT-RETREAT",
+    "name": "후퇴",
+    "category": "전략",
+    "description": "전투를 포기하고 피해를 최소화합니다. 보상은 줄지만 인명 피해를 줄입니다.",
+    "usableBy": ["전체"],
+    "effects": { "teamSurvival": 12, "clearRank": -1, "secretExposure": 3 },
+    "bestAgainst": ["모든 전투"]
+  }
+]
