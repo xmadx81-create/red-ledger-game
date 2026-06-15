@@ -17,7 +17,7 @@
 
 ## 로그
 
-### 2026-06-16
+### 2026-06-16 1차 기록
 
 작업자: ChatGPT + 백무결  
 작업 구분: 전처리 단계 시작 / 저장 구조 설계  
@@ -36,3 +36,34 @@
 1. 전처리 문서 전체 업로드 완료
 2. GitHub 이슈 `[PRE-0] 제작 환경 전처리` 생성
 3. Google Drive 폴더 구조 준비
+
+---
+
+### 2026-06-16 2차 기록
+
+작업자: ChatGPT + 백무결  
+작업 구분: GitHub 전처리 저장소 구축 완료  
+작업 내용:
+- `xmadx81-create/red-ledger-game` 저장소 접근을 확인했다.
+- `docs/preprocessing/` 경로에 전처리 문서를 생성했다.
+- 생성 파일:
+  - `00_preprocessing-index.md`
+  - `01_integration-checklist.md`
+  - `02_work-log.md`
+  - `03_storage-map.md`
+  - `04_decision-log.md`
+  - `05_next-actions.md`
+  - `integration-checklist.csv`
+- GitHub Issue #1 `[PRE-0] 제작 환경 전처리`를 생성했다.
+- 라벨 `preprocessing`, `docs`, `integration`을 적용했다.
+
+결과:
+- GitHub 전처리 저장 구조 구축 완료.
+- 이후 작업은 Issue #1과 전처리 문서에 이어서 기록한다.
+
+다음 조치:
+1. Google Drive 폴더 구조 생성
+2. Google Sheets 마스터 시트 설계
+3. Figma UI 파일 또는 링크 등록
+4. Google Calendar 개발 일정 생성
+5. Gmail 공유/요청 템플릿 작성
