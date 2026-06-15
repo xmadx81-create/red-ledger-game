@@ -1,0 +1,74 @@
+[
+  {
+    "jobId": "JOB-ADMIN",
+    "name": "관리자",
+    "roleType": "운영형",
+    "mainStats": ["humanTrust", "securityLevel"],
+    "specialties": ["운영 안정화", "보고서 처리", "위기 조율"],
+    "promotionPath": ["관리자", "혈액 전략가", "혈연센터 총괄관", "붉은 장부 관리자"],
+    "uniqueBuff": "운영 자원 손실 감소"
+  },
+  {
+    "jobId": "JOB-MEDIC",
+    "name": "의무관",
+    "roleType": "의료형",
+    "mainStats": ["bloodStock", "humanTrust"],
+    "specialties": ["채혈", "회복", "혈액 분석"],
+    "promotionPath": ["의무관", "야간 외과의", "혈액 연구관", "심야 생명 관리자"],
+    "uniqueBuff": "부상 및 실패 패널티 감소"
+  },
+  {
+    "jobId": "JOB-LOGISTICS",
+    "name": "수송원",
+    "roleType": "물류형",
+    "mainStats": ["bloodStock", "mediaExposure"],
+    "specialties": ["수송", "회피", "보급"],
+    "promotionPath": ["수송원", "야간 운송자", "그림자 물류장", "무혈 수송 지휘관"],
+    "uniqueBuff": "수송 스테이지 보상 증가"
+  },
+  {
+    "jobId": "JOB-ARCHIVIST",
+    "name": "기록관",
+    "roleType": "정보형",
+    "mainStats": ["blackMarketClue", "securityLevel"],
+    "specialties": ["문서 해독", "퍼즐", "기록 보존"],
+    "promotionPath": ["기록관", "봉인 기록관", "금서 해독자", "붉은 장부 사서"],
+    "uniqueBuff": "퍼즐/조사 성공률 증가"
+  },
+  {
+    "jobId": "JOB-GUARD",
+    "name": "보안요원",
+    "roleType": "방어형",
+    "mainStats": ["securityLevel", "organizationUnrest"],
+    "specialties": ["방어", "경비", "차단"],
+    "promotionPath": ["보안요원", "야간 경비장", "가문 집행관", "혈연 수호자"],
+    "uniqueBuff": "방어전 피해 감소"
+  },
+  {
+    "jobId": "JOB-FIGHTER",
+    "name": "전투원",
+    "roleType": "전투형",
+    "mainStats": ["familySatisfaction", "securityLevel"],
+    "specialties": ["근접전", "집단 전투", "보스전"],
+    "promotionPath": ["전투원", "혈연 기사", "가문 선봉장", "붉은 전장 지휘관"],
+    "uniqueBuff": "전투 스테이지 공격 보정"
+  },
+  {
+    "jobId": "JOB-NEGOTIATOR",
+    "name": "협상가",
+    "roleType": "교섭형",
+    "mainStats": ["humanTrust", "familySatisfaction"],
+    "specialties": ["협상", "언론 대응", "외교"],
+    "promotionPath": ["협상가", "언론 조율관", "세력 외교관", "가문 대변자"],
+    "uniqueBuff": "명성 손실 완화"
+  },
+  {
+    "jobId": "JOB-TECHNICIAN",
+    "name": "기술자",
+    "roleType": "기술형",
+    "mainStats": ["securityLevel", "blackMarketClue"],
+    "specialties": ["해킹", "장비 수리", "보안 해제"],
+    "promotionPath": ["기술자", "보안 해체자", "혈액 설비 장인", "금지 장비 설계자"],
+    "uniqueBuff": "장비 강화 비용 감소"
+  }
+]
