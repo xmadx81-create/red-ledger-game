@@ -1,6 +1,6 @@
 {
-  "version": "0.1.0",
-  "description": "캐릭터 도감 제작 시 등급, 성향, 색상, 종족, 상태 균형을 점검하기 위한 밸런스 체크 데이터.",
+  "version": "0.1.1",
+  "description": "캐릭터 도감 제작 시 등급, 성향, 색상, 종족, 상태, 비주얼 톤 균형을 점검하기 위한 밸런스 체크 데이터.",
   "globalTarget1000": {
     "rarity": {
       "N": 450,
@@ -16,6 +16,27 @@
       "LEGEND": 50
     },
     "note": "1,000장 기준 장기 목표. 스토리 핵심 배치는 예외적으로 고등급 비율이 높을 수 있다."
+  },
+  "visualTonePolicy": {
+    "source": "VISUAL_TONE_GUIDE_001.md / visual-tone-rules.json",
+    "surfaceTone": "밝고 명랑한 헌혈의 집",
+    "hiddenTone": "은근한 이면 긴장감",
+    "hardRule": "밸런스표, 체크리스트, 대시보드, 제작 현황은 이미지 생성 대상이 아니라 데이터로만 관리한다.",
+    "imageOnlyTargets": [
+      "캐릭터 1명",
+      "카드 1장",
+      "배경 1장",
+      "아이콘 1개"
+    ],
+    "forbiddenImageTargets": [
+      "밸런스표",
+      "등급 분포표",
+      "색상 분포표",
+      "체크리스트",
+      "제작 현황 대시보드",
+      "MD 문서 내용",
+      "JSON 데이터 구조"
+    ]
   },
   "batchTargets": [
     {
@@ -38,7 +59,9 @@
       "raceTarget": {
         "인간": 5,
         "뱀프": 5
-      }
+      },
+      "textSpecRequired": true,
+      "visualToneRequired": true
     },
     {
       "batchId": "BATCH-002",
@@ -57,13 +80,16 @@
         "EVIL": 3,
         "LEGEND": 1
       },
-      "raceTargetPolicy": "인간/뱀프 외 엘프, 드워프, 골렘, 늑대인간, 하이브리드, 임프, 위자드 중 최소 4종족 포함"
+      "raceTargetPolicy": "인간/뱀프 외 엘프, 드워프, 골렘, 늑대인간, 하이브리드, 임프, 위자드 중 최소 4종족 포함",
+      "textSpecRequired": true,
+      "visualToneRequired": true
     }
   ],
   "batchActuals": [
     {
       "batchId": "BATCH-001",
       "actualCount": 10,
+      "textSpecActual": 10,
       "rarityActual": {
         "N": 1,
         "R": 2,
@@ -83,25 +109,54 @@
       },
       "statusActual": {
         "cardReady": 4,
-        "illustrationReady": 3,
+        "illustrationReady": 4,
         "needsReview": 2,
-        "illustrationNeeded": 1,
+        "illustrationNeeded": 0,
         "rejected": 0
+      },
+      "completionState": "batch-001-text-complete-and-illustration-pass-complete",
+      "visualToneActual": {
+        "brightToneLocked": true,
+        "needsToneCorrection": [
+          "HUM-005",
+          "VMP-004",
+          "VMP-005"
+        ],
+        "toneCorrectionReason": "일부 이미지가 폐허, 전쟁, 공포, 과도한 다크 판타지 톤으로 흐른 사례가 있어 최종 카드/후속 이미지에서는 밝고 명랑한 헌혈의 집 톤으로 보정 필요."
       },
       "balanceWarning": [
         "GOOD 성향이 목표보다 많다.",
         "EVIL 성향이 없다.",
         "Batch 002에서는 악/검붉은 계열을 보강해야 한다.",
-        "Batch 002에서는 인간/뱀프 외 종족을 늘려야 한다."
+        "Batch 002에서는 인간/뱀프 외 종족을 늘려야 한다.",
+        "Batch 002에서는 밝고 명랑한 기본 톤을 반드시 우선한다.",
+        "체크리스트/밸런스표/대시보드는 이미지 생성 대상에서 제외한다."
       ]
     }
   ],
+  "batch002PrePlanRequirements": {
+    "mustCreateTextSpecBeforeImages": true,
+    "mustPassBalanceCheckBeforeImages": true,
+    "mustPassVisualToneCheckBeforeImages": true,
+    "minimumEvilOrConflictCharacters": 2,
+    "minimumNonHumanNonVampRaceTypes": 4,
+    "legendaryCardsAllowed": 0,
+    "mustAvoid": [
+      "폐허 도시 중심 연출",
+      "전쟁터 중심 연출",
+      "고어/피범벅 표현",
+      "검은 고딕 마법진 반복",
+      "제작 현황 데이터의 이미지화"
+    ]
+  },
   "requiredPreProductionChecks": [
     "10명 단위 텍스트 명세가 먼저 작성되어 있는가",
     "cardUid가 중복되지 않는가",
     "등급 목표 대비 현재 수량을 확인했는가",
     "성향/아우라 색상 목표 대비 현재 수량을 확인했는가",
     "직전 2장과 실루엣이 겹치지 않는가",
+    "밝고 명랑한 헌혈의 집 기본 톤을 유지하는가",
+    "체크리스트/대시보드/밸런스표를 이미지화하지 않는가",
     "이미지 생성 전에 금지 요소를 명시했는가",
     "AI 이미지 안의 텍스트를 최종 데이터로 사용하지 않는가"
   ]
