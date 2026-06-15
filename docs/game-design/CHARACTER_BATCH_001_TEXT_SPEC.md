@@ -25,7 +25,7 @@
 | 7 | CARD-VMP-002-SR-0001 | 발렌 | 뱀프 | NEUTRAL | SR | illustrationReady |
 | 8 | CARD-VMP-003-EP-0001 | 리아스 | 뱀프 | NEUTRAL | EP | illustrationReady |
 | 9 | CARD-VMP-004-R-0001 | 그라프 | 뱀프 | GOOD | R | illustrationReady |
-| 10 | CARD-VMP-005-SR-0001 | 태오 | 뱀프 | NEUTRAL | SR | illustrationNeeded |
+| 10 | CARD-VMP-005-SR-0001 | 태오 | 뱀프 | NEUTRAL | SR | illustrationReady |
 
 ---
 
@@ -215,7 +215,7 @@
 주의: 발렌/리아스처럼 귀족 마법사형 금지. 근육형/야전형/수송형으로 차별화
 ```
 
-태오는 다음 제작 대상이다. 이전 뱀프 남성들과 겹치지 않게 박쥐 하이브리드, 수송 장비, 폭발형 전투 실루엣을 우선한다.
+태오는 박쥐 하이브리드 야전 수송 전투원으로 일러스트가 통과되어 `illustrationReady` 상태다(레지스트리 기준). 다만 일부 장면이 어두운 톤으로 흐른 사례가 있어, 최종 카드 및 후속 이미지에서는 밝고 명랑한 헌혈의 집 톤으로 보정한다(`needsToneCorrection` 대상). 이전 뱀프 남성들과 겹치지 않게 박쥐 하이브리드, 수송 장비, 폭발형 전투 실루엣을 우선한다.
 
 ---
 

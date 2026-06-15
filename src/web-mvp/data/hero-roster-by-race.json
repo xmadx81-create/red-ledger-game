@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "종족별 5인 아군 주역급 영웅 로스터. 종족 특화 직업군, 아우라, 등장 구간, 주요 서사 포함.",
   "races": [
     {
@@ -8,7 +8,7 @@
       "specialization": ["체술", "구조", "방어", "민원 대응"],
       "heroes": [
         { "id": "HUM-001", "name": "서윤", "genderAge": "여성 청년", "job": "격투가", "aura": "AURA-GOOD-BLUE", "role": "근접 체술 딜러", "storyArc": "평범한 인간의 한계를 의지와 체술로 넘는 정통파 영웅", "firstAppearance": "1장 후반" },
-        { "id": "HUM-002", "name": "지호", "genderAge": "남성 청년", "job": "특수요원", "aura": "AURA-AMBIGUOUS-PURPLE", "role": "제압/침투", "storyArc": "처음에는 센터를 의심하지만 내부 진실을 보고 협력자로 전환", "firstAppearance": "2장" },
+        { "id": "HUM-002", "name": "지호", "genderAge": "남성 청년", "job": "특수요원", "aura": "AURA-GOOD-BLUE", "role": "제압/침투", "storyArc": "처음에는 센터를 의심하지만 내부 진실을 보고 협력자로 전환", "firstAppearance": "2장" },
         { "id": "HUM-003", "name": "민서", "genderAge": "여성 장년", "job": "구조대원", "aura": "AURA-GOOD-BLUE", "role": "구조/보호", "storyArc": "사람을 구하는 일을 최우선으로 삼는 구조 전문가", "firstAppearance": "1장" },
         { "id": "HUM-004", "name": "현우", "genderAge": "남성 청년", "job": "무에타이 파이터", "aura": "AURA-AMBIGUOUS-PURPLE", "role": "고화력 근접", "storyArc": "강한 힘을 가졌지만 감정 조절을 배워야 하는 성장형 캐릭터", "firstAppearance": "3장" },
         { "id": "HUM-005", "name": "하린", "genderAge": "여성 노년", "job": "방호 전문가", "aura": "AURA-GOOD-BLUE", "role": "탱커/보호", "storyArc": "오랜 현장 경험으로 시민과 직원 모두를 지키는 방패", "firstAppearance": "2장" }
