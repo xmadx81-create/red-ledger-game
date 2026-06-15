@@ -1,0 +1,66 @@
+[
+  {
+    "dungeonTypeId": "DUN-EXP",
+    "name": "경험치 던전",
+    "availability": "상시",
+    "mainRewards": ["characterExp", "roleMastery"],
+    "missionTypes": ["전투", "아케이드"],
+    "description": "캐릭터 레벨링과 직업 숙련도 성장을 위한 반복 던전입니다."
+  },
+  {
+    "dungeonTypeId": "DUN-GOLD",
+    "name": "자금 던전",
+    "availability": "상시",
+    "mainRewards": ["gold", "familyFund"],
+    "missionTypes": ["운영", "전략"],
+    "description": "가문 자금과 운영 재화를 확보하는 던전입니다."
+  },
+  {
+    "dungeonTypeId": "DUN-ITEM",
+    "name": "아이템 던전",
+    "availability": "상시",
+    "mainRewards": ["equipment", "upgradeMaterial"],
+    "missionTypes": ["전투", "탐색"],
+    "description": "장비와 아이템 승급 재료를 획득하는 던전입니다."
+  },
+  {
+    "dungeonTypeId": "DUN-PROMOTION",
+    "name": "승급 재료 던전",
+    "availability": "상시",
+    "mainRewards": ["promotionMaterial", "raceCrystal", "jobInsignia"],
+    "missionTypes": ["전투", "퍼즐", "전략"],
+    "description": "캐릭터 승급과 전직에 필요한 핵심 재료를 얻는 던전입니다."
+  },
+  {
+    "dungeonTypeId": "DUN-PUZZLE",
+    "name": "봉인 문서 퍼즐 던전",
+    "availability": "상시",
+    "mainRewards": ["rareDocument", "blackMarketClue", "knowledgeReputation"],
+    "missionTypes": ["퍼즐", "해독", "조사"],
+    "description": "문서 해독과 기록관 계열 캐릭터 성장에 특화된 던전입니다."
+  },
+  {
+    "dungeonTypeId": "DUN-ARCADE",
+    "name": "야간 수송 아케이드 던전",
+    "availability": "상시",
+    "mainRewards": ["logisticsReputation", "vehiclePart", "bloodStock"],
+    "missionTypes": ["아케이드", "수송", "회피"],
+    "description": "추적을 피하며 혈액 수송을 성공시키는 반응형 던전입니다."
+  },
+  {
+    "dungeonTypeId": "DUN-GUILD-WEEKLY",
+    "name": "주간 길드 던전",
+    "availability": "주 1회",
+    "mainRewards": ["guildReputation", "raidToken", "legendaryMaterial"],
+    "missionTypes": ["대규모 전투", "보스전", "협동"],
+    "description": "길드 단위로 공략하는 주간 대형 협동 던전입니다."
+  },
+  {
+    "dungeonTypeId": "DUN-FORBIDDEN",
+    "name": "금지 구역 던전",
+    "availability": "조건부",
+    "mainRewards": ["forbiddenRelic", "mythicMaterial", "specialCharacterShard"],
+    "missionTypes": ["전투", "퍼즐", "전략", "위기 대응"],
+    "description": "고위 위험도와 희귀 보상을 가진 엔드리스 성장형 고난도 던전입니다."
+  }
+]
