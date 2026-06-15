@@ -1,0 +1,7 @@
+[
+  {"id":"END_BALANCED","name":"차가운 균형","condition":"혈액 재고 40 이상, 인간 신뢰 45 이상, 언론 노출 50 미만, 가문 만족 45 이상","required":"RES_BLOOD, RES_TRUST, RES_EXPOSURE, RES_FAMILY","forbidden":"언론 노출 80 이상","summary":"표면 조직과 가문 요구를 모두 유지한 안정 엔딩","unlock":"2주차 운영 해금","priority":1,"type":"일반 성공","memo":"MVP 기본 굿 엔딩"},
+  {"id":"END_FAMILY","name":"가문의 충견","condition":"가문 만족 75 이상, 가문 위신 70 이상","required":"RES_FAMILY, RES_PRESTIGE","forbidden":"인간 신뢰 20 미만","summary":"가문은 만족하지만 표면 조직의 균열이 커지는 권력형 엔딩","unlock":"원로 루트 해금","priority":2,"type":"가문 성공","memo":"고위험 보상형"},
+  {"id":"END_PUBLIC","name":"너무 깨끗한 얼굴","condition":"인간 신뢰 75 이상, 언론 노출 25 미만","required":"RES_TRUST, RES_EXPOSURE","forbidden":"가문 만족 25 미만","summary":"외부 평판은 좋지만 가문 내부 불만이 남는 표면 안정 엔딩","unlock":"언론 대응 루트 해금","priority":3,"type":"공개 성공","memo":"후속 내부 갈등 가능"},
+  {"id":"END_EXPOSED","name":"붉은 장부 공개","condition":"언론 노출 80 이상 또는 인간 신뢰 10 이하","required":"RES_EXPOSURE, RES_TRUST","forbidden":"없음","summary":"외부 조사로 모든 위장 구조가 흔들리는 발각 엔딩","unlock":"재도전 경고","priority":99,"type":"실패","memo":"대표 배드 엔딩"},
+  {"id":"END_COLLAPSE","name":"내부 붕괴","condition":"조직 불안 85 이상 또는 혈액 재고 5 이하","required":"RES_UNREST, RES_BLOOD","forbidden":"없음","summary":"조직 내부 실수와 이탈로 운영망이 무너지는 실패 엔딩","unlock":"내부관리 튜토리얼 강조","priority":100,"type":"실패","memo":"관리 실패형"}
+]
