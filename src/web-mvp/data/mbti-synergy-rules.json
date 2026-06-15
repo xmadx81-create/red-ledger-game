@@ -1,0 +1,110 @@
+{
+  "version": "0.1.0",
+  "note": "MBTI는 게임 내 상호작용 태그이며 실제 사람을 단정하는 도구가 아니다.",
+  "pairRules": [
+    {
+      "ruleId": "MBTI-EI-BALANCE",
+      "condition": "E와 I가 같은 조에 배치",
+      "positiveSynergy": ["응대와 집중 업무 분업", "방문자 응대 안정", "문서 업무 집중도 증가"],
+      "risk": ["소통 빈도 차이", "휴식 방식 충돌"],
+      "bestTasks": ["접수", "문서", "상담"],
+      "effect": { "serviceQuality": 4, "documentAccuracy": 3, "conflictRisk": -2 }
+    },
+    {
+      "ruleId": "MBTI-SN-BALANCE",
+      "condition": "S와 N이 같은 조에 배치",
+      "positiveSynergy": ["현실 처리와 아이디어 균형", "돌발 이벤트 대응 폭 증가"],
+      "risk": ["뜬구름 잡는다는 불만", "지나치게 보수적이라는 불만"],
+      "bestTasks": ["이벤트 대응", "퍼즐", "운영 개선"],
+      "effect": { "eventResolution": 5, "puzzleSuccess": 3, "conflictRisk": 1 }
+    },
+    {
+      "ruleId": "MBTI-TF-BALANCE",
+      "condition": "T와 F가 같은 조에 배치",
+      "positiveSynergy": ["규정 판단과 감정 케어 균형", "민원 대응 안정"],
+      "risk": ["냉정하다는 불만", "감정적이라는 불만"],
+      "bestTasks": ["민원", "상담", "위기 대응"],
+      "effect": { "humanTrust": 4, "serviceQuality": 4, "conflictRisk": 2 }
+    },
+    {
+      "ruleId": "MBTI-JP-BALANCE",
+      "condition": "J와 P가 같은 조에 배치",
+      "positiveSynergy": ["계획성과 유연성 균형", "돌발 일정 대응 가능"],
+      "risk": ["근무표 준수 갈등", "마감 방식 충돌"],
+      "bestTasks": ["근무표", "수송", "돌발 이벤트"],
+      "effect": { "shiftStability": 3, "eventResolution": 3, "conflictRisk": 3 }
+    }
+  ],
+  "highSynergyPairs": [
+    {
+      "pairId": "PAIR-ESFJ-ISFJ",
+      "description": "상냥한 응대와 꼼꼼한 기록의 안정 조합",
+      "recommendedTasks": ["접수", "신입 교육", "방문자 케어"],
+      "effect": { "serviceQuality": 8, "teamTrust": 5, "documentAccuracy": 3 }
+    },
+    {
+      "pairId": "PAIR-ENTJ-ISFJ",
+      "description": "강한 운영 지휘와 세심한 현장 보조 조합",
+      "recommendedTasks": ["혼잡 시간 운영", "감사 대응", "근무표 조정"],
+      "effect": { "shiftStability": 7, "serviceQuality": 3, "conflictRisk": 2 }
+    },
+    {
+      "pairId": "PAIR-INFJ-ESTP",
+      "description": "감정 케어와 즉시 대응의 위기 처리 조합",
+      "recommendedTasks": ["돌발 실신", "감정 민원", "응급 대응"],
+      "effect": { "eventResolution": 8, "humanTrust": 5, "fatigue": 2 }
+    },
+    {
+      "pairId": "PAIR-INTP-ENFP",
+      "description": "분석과 홍보 아이디어가 만나는 캠페인 조합",
+      "recommendedTasks": ["캠페인 기획", "이상 수치 분석", "홍보 이벤트"],
+      "effect": { "campaignSuccess": 7, "blackMarketClue": 3, "documentAccuracy": 2 }
+    }
+  ],
+  "conflictPairs": [
+    {
+      "pairId": "CONFLICT-ENTJ-INFP",
+      "description": "강한 지시와 섬세한 감정선이 충돌할 수 있음",
+      "trigger": ["고압적 지시", "업무 몰아주기", "피로도 상승"],
+      "effect": { "conflictRisk": 10, "morale": -5 }
+    },
+    {
+      "pairId": "CONFLICT-ISTJ-ENFP",
+      "description": "규정 중심과 자유로운 진행 방식이 충돌할 수 있음",
+      "trigger": ["마감 지연", "문서 누락", "이벤트 준비 방식 차이"],
+      "effect": { "conflictRisk": 8, "documentAccuracy": -3, "campaignSuccess": 2 }
+    },
+    {
+      "pairId": "CONFLICT-ESTP-INTP",
+      "description": "즉시 행동과 분석 대기가 충돌할 수 있음",
+      "trigger": ["응급 대응", "현장 판단", "자료 검증 지연"],
+      "effect": { "eventResolution": -2, "conflictRisk": 7 }
+    }
+  ],
+  "teamBonusRules": [
+    {
+      "teamRuleId": "TEAM-SERVICE-BALANCED",
+      "condition": "E/I, T/F, J/P가 모두 섞인 3인 이상 조",
+      "name": "균형 잡힌 서비스 조",
+      "effect": { "serviceQuality": 10, "conflictRisk": -5, "humanTrust": 4 }
+    },
+    {
+      "teamRuleId": "TEAM-DOCUMENT-FOCUSED",
+      "condition": "I, S, J 성향이 2명 이상",
+      "name": "정밀 문서 조",
+      "effect": { "documentAccuracy": 12, "serviceQuality": -2, "fatigue": 2 }
+    },
+    {
+      "teamRuleId": "TEAM-CAMPAIGN-BOOST",
+      "condition": "E, N, F 성향이 2명 이상",
+      "name": "활기찬 캠페인 조",
+      "effect": { "campaignSuccess": 12, "humanTrust": 5, "documentAccuracy": -2 }
+    },
+    {
+      "teamRuleId": "TEAM-NIGHT-STABLE",
+      "condition": "I 또는 J 성향이 포함되고 stressResistance 평균 75 이상",
+      "name": "야간 안정 조",
+      "effect": { "nightShiftRisk": -10, "securityLevel": 5, "fatigue": -3 }
+    }
+  ]
+}
