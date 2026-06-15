@@ -1,0 +1,103 @@
+{
+  "version": "0.1.0",
+  "description": "오늘 생성한 캐릭터 디자인 이미지와 캐릭터 도감 ID를 연결하기 위한 이미지 매핑표. plannedWebPath에 이미지 파일이 업로드되면 도감 카드에 자동 표시된다.",
+  "imageAssetGroups": [
+    {
+      "assetGroupId": "IMG-HERO-ROSTER-001",
+      "title": "아군 영웅 종족별 로스터",
+      "sourceFileName": "헌혈의_집_영웅_명단.png",
+      "plannedWebPath": "./assets/characters/hero_roster_sheet.png",
+      "category": "allyHero",
+      "description": "인간, 뱀프, 엘프, 드워프, 하이브리드, 늑대인간, 초고대 종족, 호빗, 정령, 골렘 영웅 디자인 시트"
+    },
+    {
+      "assetGroupId": "IMG-ENEMY-HERO-001",
+      "title": "적 영웅 진영 카드 목록",
+      "sourceFileName": "적_영웅_진영_카드_목록.png",
+      "plannedWebPath": "./assets/characters/enemy_hero_sheet.png",
+      "category": "enemyHero",
+      "description": "검붉은/보라/골드 아우라가 적용된 적 영웅 진영 디자인 시트"
+    },
+    {
+      "assetGroupId": "IMG-STAFF-NPC-001",
+      "title": "센터 직원 캐릭터 디자인",
+      "sourceFileName": "헌혈의_집_직원_캐릭터_디자인.png",
+      "plannedWebPath": "./assets/characters/staff_npc_sheet.png",
+      "category": "staffNpc",
+      "description": "헌혈센터 직원, 간호사, 접수, 기록, 물류 담당 NPC 디자인 시트"
+    },
+    {
+      "assetGroupId": "IMG-SUPPORT-NPC-001",
+      "title": "추가 NPC 캐릭터 디자인",
+      "sourceFileName": "헌혈의_집_npc_캐릭터_디자인.png",
+      "plannedWebPath": "./assets/characters/support_npc_sheet.png",
+      "category": "supportNpc",
+      "description": "지원 NPC, 기록 보조원, 심부름꾼, 보조 캐릭터 디자인 시트"
+    },
+    {
+      "assetGroupId": "IMG-VILLAIN-NPC-001",
+      "title": "악당 NPC 디자인",
+      "sourceFileName": "헌혈의_집_악당_npc_디자인.png",
+      "plannedWebPath": "./assets/characters/villain_npc_sheet.png",
+      "category": "villainNpc",
+      "description": "소문 유포자, 암거래 브로커, 해커, 공학 파괴자 등 빌런 NPC 디자인 시트"
+    },
+    {
+      "assetGroupId": "IMG-VAMPIRE-VILLAIN-001",
+      "title": "뱀파이어 빌런 NPC 디자인",
+      "sourceFileName": "헌혈의_집_뱀파이어_빌런_npc_디자인.png",
+      "plannedWebPath": "./assets/characters/vampire_villain_sheet.png",
+      "category": "villainNpc",
+      "description": "뱀파이어 귀족, 야간 연구자, 정신계 정보 수집자 등 뱀프 계열 빌런 디자인 시트"
+    },
+    {
+      "assetGroupId": "IMG-GOLEM-HERO-001",
+      "title": "골렘 진영 영웅들",
+      "sourceFileName": "헌혈의_집_골렘_진영_영웅들.png",
+      "plannedWebPath": "./assets/characters/golem_hero_sheet.png",
+      "category": "allyHero",
+      "description": "골렘 진영 영웅과 수호자 캐릭터 디자인 시트"
+    }
+  ],
+  "raceImageDefaults": {
+    "인간": "IMG-HERO-ROSTER-001",
+    "뱀프": "IMG-HERO-ROSTER-001",
+    "엘프": "IMG-HERO-ROSTER-001",
+    "드워프": "IMG-HERO-ROSTER-001",
+    "하이브리드": "IMG-HERO-ROSTER-001",
+    "늑대인간": "IMG-HERO-ROSTER-001",
+    "초고대뱀프": "IMG-HERO-ROSTER-001",
+    "초고대늑대인간": "IMG-HERO-ROSTER-001",
+    "호빗": "IMG-HERO-ROSTER-001",
+    "정령": "IMG-HERO-ROSTER-001",
+    "골렘": "IMG-GOLEM-HERO-001"
+  },
+  "viewImageDefaults": {
+    "hero": "IMG-HERO-ROSTER-001",
+    "enemy": "IMG-ENEMY-HERO-001",
+    "arc": "IMG-STAFF-NPC-001"
+  },
+  "characterImageMap": {
+    "NPC-HAN-SEoyeon": "IMG-STAFF-NPC-001",
+    "NPC-YOON-Haneul": "IMG-STAFF-NPC-001",
+    "NPC-OH-Yuri": "IMG-STAFF-NPC-001",
+    "NPC-MOON-Sora": "IMG-STAFF-NPC-001",
+    "HERO-ELF-SERAEL": "IMG-HERO-ROSTER-001",
+    "HERO-VMP-RIAS": "IMG-VAMPIRE-VILLAIN-001",
+    "ENM-HUM-KAEL": "IMG-ENEMY-HERO-001",
+    "ENM-HYB-BERNA": "IMG-ENEMY-HERO-001",
+    "LEGEND-AVP-LILITH": "IMG-HERO-ROSTER-001",
+    "ENM-GLM-OBSIDIAN": "IMG-ENEMY-HERO-001",
+    "ENM-HUM-001": "IMG-ENEMY-HERO-001",
+    "ENM-VMP-001": "IMG-VAMPIRE-VILLAIN-001",
+    "ENM-ELF-001": "IMG-ENEMY-HERO-001",
+    "ENM-DWF-001": "IMG-ENEMY-HERO-001",
+    "ENM-HYB-001": "IMG-ENEMY-HERO-001",
+    "ENM-WRW-001": "IMG-ENEMY-HERO-001",
+    "ENM-AVP-001": "IMG-ENEMY-HERO-001",
+    "ENM-AWR-001": "IMG-ENEMY-HERO-001",
+    "ENM-HOB-001": "IMG-ENEMY-HERO-001",
+    "ENM-SPR-001": "IMG-ENEMY-HERO-001",
+    "ENM-GLM-001": "IMG-ENEMY-HERO-001"
+  }
+}
