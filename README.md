@@ -15,6 +15,7 @@
 - 핵심 시스템: 혈액 재고, 가문 자금, 가문 위신, 인간 신뢰, 언론 노출, 조직 불안, 보안 등급, 가문 만족도
 - 데이터 방식: Google Sheets 원본 + GitHub CSV/JSON 배포 데이터
 - 현재 프로토타입: Vite + React + TypeScript
+- 저장 방식: 브라우저 localStorage 자동 저장
 
 ## 실행 방법
 
@@ -28,6 +29,24 @@ npm run dev
 ```text
 http://localhost:5173
 ```
+
+빌드 확인:
+
+```bash
+npm run build
+```
+
+## 현재 플레이 가능 기능
+
+- 핵심 자원 8개 표시
+- Day 1~7 이벤트 진행
+- 선택지 A/B 적용
+- 선택 결과에 따른 자원 변화
+- 7일차 이후 엔딩 판정
+- 진행 기록 표시
+- localStorage 자동 저장
+- 새로고침 후 이어하기
+- 새 운영 시작 / 다시 운영하기
 
 ## 주요 폴더 구조
 
@@ -44,12 +63,14 @@ red-ledger-game/
 │  └─ endings.json
 ├─ docs/
 │  ├─ preprocessing/
+│  ├─ development/
 │  └─ game-design/
 ├─ src/
 │  ├─ App.tsx
 │  ├─ data.ts
 │  ├─ gameEngine.ts
 │  ├─ main.tsx
+│  ├─ storage.ts
 │  ├─ styles.css
 │  └─ types.ts
 ├─ index.html
@@ -67,14 +88,17 @@ red-ledger-game/
 - [x] Gmail 템플릿 생성
 - [x] Calendar 핵심 일정 일부 등록
 - [x] MVP 데이터 CSV/JSON 생성
+- [x] 이벤트 선택지 효과 구조화
+- [x] 엔딩 조건 구조화
 - [x] Vite React TypeScript 코드 뼈대 생성
 - [x] 7일 운영 선택지 적용 로직 생성
 - [x] 엔딩 판정 로직 생성
+- [x] localStorage 저장/불러오기 기능 추가
 
 ## 다음 작업
 
-1. 선택지 효과를 완전한 구조화 데이터로 분리
-2. 저장/불러오기 기능 추가
-3. Figma 화면 기준 UI 세부 정리
+1. 로컬/Actions 빌드 결과 확인
+2. 이벤트 발생 조건 구조화
+3. Figma 후보E 카드형 UI 정교화
 4. 카드/인물 도감 시스템 설계
 5. 첫 플레이어블 빌드 테스트
