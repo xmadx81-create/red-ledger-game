@@ -33,11 +33,13 @@ let database = {
   choices: [],
   combatBriefings: [],
   combatActions: [],
-  combatTypes: []
+  combatTypes: [],
+  combatResultRules: null
 };
 
 let gameState = null;
 let lastResult = null;
+let lastCombatResult = null;
 
 async function loadJson(fileName) {
   const response = await fetch(`${DATA_PATH}${fileName}`);
@@ -55,7 +57,8 @@ async function loadData() {
     choices,
     combatBriefings,
     combatActions,
-    combatTypes
+    combatTypes,
+    combatResultRules
   ] = await Promise.all([
     loadJson('resources.json'),
     loadJson('characters.json'),
@@ -63,10 +66,11 @@ async function loadData() {
     loadJson('choices.json'),
     loadJson('combat-briefings.json'),
     loadJson('combat-actions.json'),
-    loadJson('combat-scene-types.json')
+    loadJson('combat-scene-types.json'),
+    loadJson('combat-result-rules.json')
   ]);
 
-  database = { resources, characters, events, choices, combatBriefings, combatActions, combatTypes };
+  database = { resources, characters, events, choices, combatBriefings, combatActions, combatTypes, combatResultRules };
 }
 
 function clamp(value, min = 0, max = 100) {
@@ -92,8 +96,8 @@ function createInitialResources() {
   return resources;
 }
 
-function startNewGame() {
-  gameState = {
+function createRuntimeGameState(screen = 'dayStart') {
+  return {
     currentDay: 1,
     currentStage: 1,
     stageName: '튜토리얼 운영 구간',
@@ -101,10 +105,21 @@ function startNewGame() {
     selectedChoices: [],
     progressionFlags: {},
     lastChoice: null,
-    currentScreen: 'dayStart'
+    currentScreen: screen
   };
+}
+
+function startNewGame() {
+  gameState = createRuntimeGameState('dayStart');
   lastResult = null;
+  lastCombatResult = null;
   renderDayStartScreen();
+}
+
+function ensureGameState(screen = 'combat') {
+  if (!gameState) {
+    gameState = createRuntimeGameState(screen);
+  }
 }
 
 function addProgressionFlag(flag) {
@@ -134,6 +149,10 @@ function getCombatType(combatTypeId) {
 
 function getActionByName(name) {
   return database.combatActions.find((action) => action.name === name);
+}
+
+function getCombatAction(actionId) {
+  return database.combatActions.find((action) => action.actionId === actionId);
 }
 
 function getResourceStatus(resource) {
@@ -169,6 +188,34 @@ function applyChoice(choiceId) {
   };
 
   renderResultScreen();
+}
+
+function applyCombatAction(actionId) {
+  ensureGameState('combatResult');
+  const action = getCombatAction(actionId);
+  if (!action) return;
+
+  const briefing = getCombatBriefing();
+  lastCombatResult = buildCombatResult(action, briefing);
+  applyCombatResultToResources(lastCombatResult);
+  renderCombatResultScreen();
+}
+
+function applyCombatResultToResources(result) {
+  if (!gameState || !result) return;
+  const resourceEffects = {
+    humanTrust: Math.round((result.meters.humanTrust - 60) / 5),
+    mediaExposure: Math.round((result.meters.secretExposure - 25) / 6),
+    securityLevel: Math.round((result.meters.facilityStability - 70) / 6),
+    blackMarketClue: result.action.name === '증거 회수' ? 6 : 0,
+    organizationUnrest: result.rank === 'D' ? 5 : result.rank === 'S' ? -3 : 0
+  };
+
+  Object.entries(resourceEffects).forEach(([key, delta]) => {
+    const resource = gameState.resources[key];
+    if (!resource || !delta) return;
+    resource.value = clamp(resource.value + delta, resource.min, resource.max);
+  });
 }
 
 function snapshotResources() {
@@ -232,6 +279,90 @@ function getClearRank() {
   if (stabilityScore >= 190) return 'B';
   if (stabilityScore >= 150) return 'C';
   return 'D';
+}
+
+function buildCombatResult(action, briefing) {
+  const effects = action.effects || {};
+  const isSupportive = ['보호', '협상', '응급 처치', '진정 안내'].includes(action.name);
+  const isConcealment = ['은폐', '증거 회수', '보안 봉쇄'].includes(action.name);
+  const isRetreat = action.name === '후퇴';
+
+  const visitorSafety = clamp(74 + (effects.visitorSafety || 0) + Math.round((effects.teamSurvival || 0) / 2) + (isSupportive ? 8 : 0) + (isRetreat ? 5 : 0));
+  const secretExposure = clamp(28 + (effects.secretExposure || 0) + (isConcealment ? -8 : 0) + (isRetreat ? 6 : 0));
+  const facilityStability = clamp(70 + (effects.facilityStability || 0) + Math.round((effects.securityLevel || 0) / 2) + (action.name === '보안 봉쇄' ? 6 : 0));
+  const humanTrust = clamp(62 + (effects.humanTrust || 0) + (isSupportive ? 5 : 0) - (action.name === '은폐' ? 2 : 0));
+  const coexistenceScore = clamp(62 + (effects.coexistenceScore || 0) + (isSupportive ? 14 : 0) + (action.category.includes('비살상') ? 12 : 0) + (isRetreat ? 4 : 0) - (secretExposure > 45 ? 8 : 0));
+
+  const rank = getCombatRank({ visitorSafety, secretExposure, coexistenceScore });
+  const rankLabel = getCombatRankLabel(rank);
+
+  return {
+    action,
+    briefing,
+    rank,
+    rankLabel,
+    meters: {
+      visitorSafety,
+      secretExposure,
+      facilityStability,
+      humanTrust,
+      coexistenceScore
+    },
+    goals: buildCombatGoalResults(briefing, rank),
+    rewards: buildCombatRewards(action, rank),
+    nextImpact: buildCombatNextImpact(action, rank)
+  };
+}
+
+function getCombatRank({ visitorSafety, secretExposure, coexistenceScore }) {
+  if (visitorSafety >= 90 && secretExposure <= 15 && coexistenceScore >= 85) return 'S';
+  if (visitorSafety >= 80 && secretExposure <= 25 && coexistenceScore >= 70) return 'A';
+  if (visitorSafety >= 65 && secretExposure <= 40) return 'B';
+  if (visitorSafety >= 50 && secretExposure <= 60) return 'C';
+  return 'D';
+}
+
+function getCombatRankLabel(rank) {
+  const labels = {
+    S: '완벽한 공생 방어',
+    A: '안정적 해결',
+    B: '부분 해결',
+    C: '위험한 해결',
+    D: '운영 리스크 발생'
+  };
+  return labels[rank] || '미분류 결과';
+}
+
+function buildCombatGoalResults(briefing, rank) {
+  const successCount = rank === 'S' ? 3 : rank === 'A' ? 3 : rank === 'B' ? 2 : rank === 'C' ? 1 : 0;
+  return briefing.winConditions.map((condition, index) => ({
+    condition,
+    achieved: index < successCount
+  }));
+}
+
+function buildCombatRewards(action, rank) {
+  const rankBonus = { S: 1.5, A: 1.25, B: 1, C: 0.75, D: 0.5 }[rank] || 1;
+  const baseExp = Math.round(100 * rankBonus);
+  const baseCoin = Math.round(120 * rankBonus);
+  const rewards = [`캐릭터 경험치 +${baseExp}`, `운영 자금 +${baseCoin}`];
+
+  if (['증거 회수', '은폐'].includes(action.name)) rewards.push('방해 단서 +6');
+  if (['보호', '응급 처치', '진정 안내', '협상'].includes(action.name)) rewards.push('시민 신뢰 상승');
+  if (rank === 'S' || rank === 'A') rewards.push('직원 사기 상승');
+  if (rank === 'D') rewards.push('위험도 관리 필요');
+
+  return rewards;
+}
+
+function buildCombatNextImpact(action, rank) {
+  const impacts = [];
+  if (rank === 'S' || rank === 'A') impacts.push('다음 이벤트에서 협상/보호 선택지 강화');
+  if (rank === 'B') impacts.push('다음 구간에서 추가 점검 이벤트 발생 가능');
+  if (rank === 'C' || rank === 'D') impacts.push('방해 세력 활동도 상승 가능');
+  if (action.name === '증거 회수') impacts.push('암거래 관련 스테이지 해금 조건 진전');
+  if (action.name === '후퇴') impacts.push('보상 감소, 인명 피해 최소화');
+  return impacts.length ? impacts : ['센터 운영 안정 유지'];
 }
 
 function html(strings, ...values) {
@@ -466,8 +597,69 @@ function renderCombatBriefingScreen() {
         </div>
       </div>
       <div class="actions">
-        <button class="primary-button" data-action="main">운영 본부로</button>
+        <button class="secondary-button" data-action="main">운영 본부로</button>
         <button class="secondary-button" data-action="event">현재 미션 보기</button>
+      </div>
+    </section>
+  `);
+}
+
+function renderCombatResultScreen() {
+  const result = lastCombatResult;
+  if (!result) {
+    renderCombatBriefingScreen();
+    return;
+  }
+
+  setScreen(html`
+    <section class="screen final-screen">
+      ${gameState ? renderDayHeader() : ''}
+      <p class="eyebrow">combat result</p>
+      <h2>작전 정산</h2>
+      <div class="card document warning">
+        <div class="card-title">
+          <h3>${result.rankLabel}</h3>
+          <span class="tag">RANK ${result.rank}</span>
+        </div>
+        <p class="subtle">${result.briefing.title}에서 <strong>${result.action.name}</strong> 행동을 선택했습니다. 전투는 처치가 아니라 센터 운영 보호와 공생 질서 유지를 기준으로 평가됩니다.</p>
+      </div>
+      <div class="resource-grid">
+        ${renderCombatMeterCard('방문자 안전도', result.meters.visitorSafety, 'good')}
+        ${renderCombatMeterCard('비밀 노출도', result.meters.secretExposure, result.meters.secretExposure > 45 ? 'danger' : 'warn')}
+        ${renderCombatMeterCard('시설 안정도', result.meters.facilityStability, 'good')}
+        ${renderCombatMeterCard('시민 신뢰', result.meters.humanTrust, 'good')}
+        ${renderCombatMeterCard('공생 점수', result.meters.coexistenceScore, 'good')}
+      </div>
+      <div class="card compact-card">
+        <div class="card-title">
+          <h3>목표 달성</h3>
+          <span class="tag">${result.goals.filter((goal) => goal.achieved).length}/${result.goals.length}</span>
+        </div>
+        <div class="history-list full">
+          ${result.goals.map((goal, index) => renderSimpleHistoryItem(index + 1, `${goal.achieved ? '완료' : '미달'} · ${goal.condition}`, '작전 목표')).join('')}
+        </div>
+      </div>
+      <div class="card compact-card">
+        <div class="card-title">
+          <h3>획득 보상</h3>
+          <span class="tag">보상</span>
+        </div>
+        <div class="person-list">
+          ${result.rewards.map((item) => `<span class="relationship-chip">${item}</span>`).join('')}
+        </div>
+      </div>
+      <div class="card compact-card">
+        <div class="card-title">
+          <h3>다음 영향</h3>
+          <span class="tag">연결 이벤트</span>
+        </div>
+        <div class="history-list full">
+          ${result.nextImpact.map((item, index) => renderSimpleHistoryItem(index + 1, item, '다음 구간 영향')).join('')}
+        </div>
+      </div>
+      <div class="actions">
+        <button class="primary-button" data-action="main">운영 본부로 반영</button>
+        <button class="secondary-button" data-action="combat">다른 전투 브리핑 보기</button>
       </div>
     </section>
   `);
@@ -544,6 +736,15 @@ function renderResourceGrid(keys) {
   `;
 }
 
+function renderCombatMeterCard(label, value, status = 'good') {
+  return html`
+    <div class="resource-card ${status}">
+      <span class="resource-label">${label}</span>
+      <strong class="resource-value">${value}</strong>
+    </div>
+  `;
+}
+
 function renderChoiceButton(choice, primary = false) {
   return html`
     <button class="choice-button ${primary ? 'primary' : ''}" data-choice-id="${choice.id}">
@@ -556,7 +757,7 @@ function renderChoiceButton(choice, primary = false) {
 
 function renderCombatActionButton(action) {
   return html`
-    <button class="choice-button">
+    <button class="choice-button" data-combat-action-id="${action.actionId}">
       <span class="choice-code">${action.category}</span>
       ${action.name}
       <span class="choice-tone">${action.description}</span>
@@ -656,14 +857,20 @@ function renderResultItem(item) {
 }
 
 app.addEventListener('click', (event) => {
-  const target = event.target.closest('[data-action], [data-choice-id]');
+  const target = event.target.closest('[data-action], [data-choice-id], [data-combat-action-id]');
   if (!target || !app.contains(target)) return;
 
   const action = target.dataset.action;
   const choiceId = target.dataset.choiceId;
+  const combatActionId = target.dataset.combatActionId;
 
   if (choiceId) {
     applyChoice(choiceId);
+    return;
+  }
+
+  if (combatActionId) {
+    applyCombatAction(combatActionId);
     return;
   }
 
@@ -676,18 +883,7 @@ app.addEventListener('click', (event) => {
     event: renderEventScreen,
     main: renderMainOperationScreen,
     combat: () => {
-      if (!gameState) {
-        gameState = {
-          currentDay: 1,
-          currentStage: 1,
-          stageName: '튜토리얼 운영 구간',
-          resources: createInitialResources(),
-          selectedChoices: [],
-          progressionFlags: {},
-          lastChoice: null,
-          currentScreen: 'combat'
-        };
-      }
+      ensureGameState('combat');
       renderCombatBriefingScreen();
     },
     'next-day': advanceDay
