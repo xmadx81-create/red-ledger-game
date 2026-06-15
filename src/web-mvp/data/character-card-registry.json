@@ -1,5 +1,5 @@
 {
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "도감 카드 제작 진행 상태를 characterId 기준으로 추적하는 레지스트리. 생성 이미지가 부정확해도 카드 데이터는 이 레지스트리와 원본 캐릭터 데이터 기준으로 유지한다.",
   "productionRules": {
     "oneCharacterOneCard": true,
@@ -9,10 +9,13 @@
     "textSource": "gameData",
     "imageSource": "singleCharacterIllustration",
     "cardUidFormat": "CARD-{CHARACTER_ID}-{RARITY}-{SERIAL}",
+    "batchUnit": 10,
+    "preImageRule": "10명 단위 텍스트 명세와 밸런스 체크를 먼저 완료한 뒤 이미지 생성을 진행한다.",
     "imageTextPolicy": "AI 이미지 안의 텍스트는 신뢰하지 않고, 인게임 카드는 JSON 데이터로 텍스트를 출력한다."
   },
   "statusTypes": [
     "planned",
+    "textReady",
     "illustrationNeeded",
     "illustrationReady",
     "cardReady",
@@ -21,6 +24,7 @@
   ],
   "cards": [
     {
+      "batchId": "BATCH-001",
       "cardUid": "CARD-HUM-001-L-0001",
       "characterId": "HUM-001",
       "name": "서윤",
@@ -28,11 +32,13 @@
       "alignment": "GOOD",
       "rarity": "L",
       "serial": 1,
+      "textSpecStatus": "textReady",
       "status": "cardReady",
       "acceptedImageLocalName": "서윤_헌혈의_집_전설_카드.png",
       "note": "후보 E 기반 전설 카드. 공식 카드 템플릿 기준 샘플로 사용."
     },
     {
+      "batchId": "BATCH-001",
       "cardUid": "CARD-HUM-002-N-0001",
       "characterId": "HUM-002",
       "name": "지호",
@@ -40,11 +46,13 @@
       "alignment": "GOOD",
       "rarity": "N",
       "serial": 1,
+      "textSpecStatus": "textReady",
       "status": "needsReview",
       "acceptedImageLocalName": "a_detailed_high_quality_illustrated_character_car.png",
       "note": "카드 분위기는 좋으나 후보 E 공식 템플릿과 다름. 코드 기반 카드로 재렌더 필요."
     },
     {
+      "batchId": "BATCH-001",
       "cardUid": "CARD-HUM-003-SR-0001",
       "characterId": "HUM-003",
       "name": "민서",
@@ -52,11 +60,13 @@
       "alignment": "GOOD",
       "rarity": "SR",
       "serial": 1,
+      "textSpecStatus": "textReady",
       "status": "cardReady",
       "acceptedImageLocalName": "헌혈의_집_구조대원_카드.png",
       "note": "후보 E 카드폼 기준 통과. 구조/보호형 캐릭터로 사용 가능."
     },
     {
+      "batchId": "BATCH-001",
       "cardUid": "CARD-HUM-004-EP-0001",
       "characterId": "HUM-004",
       "name": "현우",
@@ -64,11 +74,13 @@
       "alignment": "NEUTRAL",
       "rarity": "EP",
       "serial": 1,
+      "textSpecStatus": "textReady",
       "status": "needsReview",
       "acceptedImageLocalName": "a_highly_detailed_game_character_card_ui_panel_i.png",
       "note": "전략가로 생성되어 원래 설정인 무에타이/고화력 근접과 불일치. 캐릭터 일러스트만 일부 참고 가능."
     },
     {
+      "batchId": "BATCH-001",
       "cardUid": "CARD-HUM-005-R-0001",
       "characterId": "HUM-005",
       "name": "하린",
@@ -76,11 +88,13 @@
       "alignment": "GOOD",
       "rarity": "R",
       "serial": 1,
+      "textSpecStatus": "textReady",
       "status": "cardReady",
       "acceptedImageLocalName": "CARD-HUM-005-R-0001_하린.png",
       "note": "노년 여성 방호 전문가, 보호 방패, 푸른 보호막 아우라, 고유 식별표 적용. 일부 UI 오탈자는 있으나 캐릭터 방향성 통과."
     },
     {
+      "batchId": "BATCH-001",
       "cardUid": "CARD-VMP-001-EP-0001",
       "characterId": "VMP-001",
       "name": "카멜리아",
@@ -88,11 +102,13 @@
       "alignment": "GOOD",
       "rarity": "EP",
       "serial": 1,
+      "textSpecStatus": "textReady",
       "status": "cardReady",
       "acceptedImageLocalName": "CARD-VMP-001-EP-0001_카멜리아.png",
       "note": "고유 식별표, 이름, ID, 뱀프 여성 혈액술 연구자 방향 통과. 붉은 혈액술 요소가 다소 강하므로 최종 코드 카드에서는 선/푸른 아우라 설정을 데이터 기준으로 보정."
     },
     {
+      "batchId": "BATCH-001",
       "cardUid": "CARD-VMP-002-SR-0001",
       "characterId": "VMP-002",
       "name": "발렌",
@@ -100,11 +116,13 @@
       "alignment": "NEUTRAL",
       "rarity": "SR",
       "serial": 1,
+      "textSpecStatus": "textReady",
       "status": "illustrationReady",
       "acceptedImageLocalName": "a_highly_detailed_fantasy_vampiric_portrait_scene.png",
       "note": "남성 성인 뱀프 환영술사 분위기와 보라 아우라 통과. 카드 스튜디오 일러스트 슬롯용으로 사용."
     },
     {
+      "batchId": "BATCH-001",
       "cardUid": "CARD-VMP-003-EP-0001",
       "characterId": "VMP-003",
       "name": "리아스",
@@ -112,11 +130,13 @@
       "alignment": "NEUTRAL",
       "rarity": "EP",
       "serial": 1,
+      "textSpecStatus": "textReady",
       "status": "illustrationReady",
       "acceptedImageLocalName": "a_highly_detailed_cinematic_fantasy_portrait_scen.png",
       "note": "남성 청년 뱀프, 정신계/정보 캐릭터, 보라 아우라, 단일 일러스트 기준 통과."
     },
     {
+      "batchId": "BATCH-001",
       "cardUid": "CARD-VMP-004-R-0001",
       "characterId": "VMP-004",
       "name": "그라프",
@@ -124,11 +144,13 @@
       "alignment": "GOOD",
       "rarity": "R",
       "serial": 1,
+      "textSpecStatus": "textReady",
       "status": "illustrationReady",
       "acceptedImageLocalName": "CARD-VMP-004-R-0001_그라프.png",
       "note": "노년 남성 추적/분석형, 냉장 보관실, 샘플 탐지 장비, 푸른 추적 아우라 기준 통과. 이미지 내 일부 표식은 최종 카드에서 데이터 출력 기준으로 무시."
     },
     {
+      "batchId": "BATCH-001",
       "cardUid": "CARD-VMP-005-SR-0001",
       "characterId": "VMP-005",
       "name": "태오",
@@ -136,6 +158,7 @@
       "alignment": "NEUTRAL",
       "rarity": "SR",
       "serial": 1,
+      "textSpecStatus": "textReady",
       "status": "illustrationNeeded",
       "acceptedImageLocalName": null,
       "note": "박쥐 하이브리드/뱀프 혈통 각성. 폭발형 전투와 수송 담당."
