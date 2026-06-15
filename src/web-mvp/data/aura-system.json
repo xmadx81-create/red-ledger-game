@@ -1,0 +1,74 @@
+{
+  "version": "0.1.0",
+  "description": "캐릭터 후광/아우라 색상으로 선악 성향, 중립성, 전설 등급을 구분하는 시스템",
+  "auraTypes": [
+    {
+      "auraId": "AURA-GOOD-BLUE",
+      "name": "푸른 아우라",
+      "alignment": "선 / 공생 수호",
+      "color": "blue",
+      "visualDirection": "부드러운 푸른빛, 깨끗한 후광, 신뢰감 있는 빛 번짐",
+      "storyMeaning": "인간과 비인간 종족의 공생 질서를 지키는 캐릭터",
+      "gameEffect": ["시민 신뢰 보정", "보호/협상 선택지 강화", "방문자 안전도 상승"]
+    },
+    {
+      "auraId": "AURA-EVIL-DARKRED",
+      "name": "검붉은 아우라",
+      "alignment": "악 / 명확한 적대",
+      "color": "darkRed",
+      "visualDirection": "짙은 붉은 연기, 날카로운 그림자, 위협적인 후광",
+      "storyMeaning": "공생 질서를 깨뜨리고 센터 운영을 방해하는 캐릭터",
+      "gameEffect": ["전투 위험도 상승", "비밀 노출도 상승", "방해 이벤트 발생률 증가"]
+    },
+    {
+      "auraId": "AURA-AMBIGUOUS-PURPLE",
+      "name": "보라 아우라",
+      "alignment": "중립 / 애매모호",
+      "color": "purple",
+      "visualDirection": "보랏빛 안개, 이중적인 빛, 선택에 따라 변하는 후광",
+      "storyMeaning": "선악이 확정되지 않았고 회유, 배신, 동맹 분기가 가능한 캐릭터",
+      "gameEffect": ["분기 이벤트 개방", "설득 성공 시 동료화 가능", "방치 시 적대화 가능"]
+    },
+    {
+      "auraId": "AURA-LEGEND-GOLD",
+      "name": "골드 아우라",
+      "alignment": "전설 / 핵심 서사",
+      "color": "gold",
+      "visualDirection": "금빛 후광, 고대 문양, 강한 존재감과 신성한 광채",
+      "storyMeaning": "세계관 법칙, 고대 협약, 시즌 핵심 스토리에 직접 연결된 전설급 캐릭터",
+      "gameEffect": ["전설 퀘스트 개방", "고난도 던전 조건", "종족 스토리 핵심 분기"]
+    }
+  ],
+  "transitionRules": [
+    {
+      "from": "AURA-AMBIGUOUS-PURPLE",
+      "to": "AURA-GOOD-BLUE",
+      "condition": "설득/보호/공생 선택지를 반복 성공",
+      "meaning": "애매한 캐릭터가 공생 진영으로 전환"
+    },
+    {
+      "from": "AURA-AMBIGUOUS-PURPLE",
+      "to": "AURA-EVIL-DARKRED",
+      "condition": "방치, 배신 이벤트 실패, 강압 선택 반복",
+      "meaning": "중립 캐릭터가 적대 진영으로 고정"
+    },
+    {
+      "from": "AURA-GOOD-BLUE",
+      "to": "AURA-LEGEND-GOLD",
+      "condition": "전설 각성 퀘스트 완료",
+      "meaning": "공생 진영 핵심 캐릭터가 전설급으로 각성"
+    },
+    {
+      "from": "AURA-EVIL-DARKRED",
+      "to": "AURA-AMBIGUOUS-PURPLE",
+      "condition": "보스전 이후 처치 대신 제압/구조 선택",
+      "meaning": "명확한 적대자가 회유 가능 상태로 변화"
+    }
+  ],
+  "displayRules": {
+    "characterCard": "캐릭터 전신 뒤에 후광으로 표시",
+    "battleScreen": "스킬 선택 전 캐릭터 실루엣 뒤에 색상 표시",
+    "rosterFilter": "아우라 색상별 필터 제공",
+    "storyEvent": "분기 이벤트 발생 시 아우라 변화 애니메이션 표시"
+  }
+}
