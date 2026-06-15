@@ -6,8 +6,8 @@
 
 | 순서 | 앱 | 목적 | 상태 | 다음 조치 |
 |---:|---|---|---|---|
-| 0 | 전처리 저장소 | 기록/체크리스트 저장 구조 확정 | 진행 중 | GitHub에 전처리 파일 업로드 |
-| 1 | GitHub | 코드, 문서, 작업로그의 기준 저장소 | 진행 중 | 전처리 문서 생성 및 이슈 등록 |
+| 0 | 전처리 저장소 | 기록/체크리스트 저장 구조 확정 | 완료 | Google Drive 보조 폴더 생성 |
+| 1 | GitHub | 코드, 문서, 작업로그의 기준 저장소 | 완료 | 이후 작업은 이슈/문서에 계속 기록 |
 | 2 | Google Drive | 기획서/자료/이미지/외부문서 보관 | 대기 | 폴더 구조 생성 |
 | 3 | Google Sheets | 밸런스표, 이벤트표, 작업현황표 관리 | 대기 | 마스터 시트 설계 |
 | 4 | Figma | 게임 UI/UX 화면 설계 | 대기 | 파일 생성 및 링크 등록 |
@@ -24,8 +24,8 @@
 | [x] | 저장 기준 제안 | GitHub `docs/preprocessing/` |
 | [x] | 기본 파일 구조 작성 | 인덱스, 체크리스트, 작업로그, 저장맵, 결정로그, 다음작업 |
 | [x] | GitHub 저장소 접근 확인 | `xmadx81-create/red-ledger-game` 확인 |
-| [ ] | GitHub에 파일 업로드 | 순차 진행 중 |
-| [ ] | Google Drive 보조 폴더 생성 | 추후 진행 |
+| [x] | GitHub에 파일 업로드 | 전처리 문서 6개 및 CSV 업로드 완료 |
+| [ ] | Google Drive 보조 폴더 생성 | 다음 단계 |
 
 ## 1. GitHub 준비
 
@@ -34,11 +34,11 @@
 | [x] | GitHub 앱 연결 확인 | 설치 계정 `xmadx81-create` 확인 |
 | [x] | 저장소 접근 확인 | `xmadx81-create/red-ledger-game` 확인 |
 | [x] | 저장소명 확정 | `red-ledger-game` |
-| [ ] | 기본 브랜치 확인 | main 또는 master |
-| [x] | `docs/preprocessing/` 폴더 생성 | 전처리 문서 저장 시작 |
-| [ ] | 첫 커밋 묶음 생성 | 현재 파일별 커밋으로 기록 중 |
-| [ ] | 전처리 이슈 생성 | `[PRE-0] 제작 환경 전처리` |
-| [ ] | 라벨 생성 | `preprocessing`, `docs`, `integration`, `mvp` |
+| [x] | 기본 브랜치 확인 | 기본 브랜치에 파일 생성 성공 |
+| [x] | `docs/preprocessing/` 폴더 생성 | 전처리 문서 저장 완료 |
+| [x] | 첫 커밋 기록 생성 | 파일별 커밋으로 기록 완료 |
+| [x] | 전처리 이슈 생성 | Issue #1 `[PRE-0] 제작 환경 전처리` |
+| [x] | 라벨 생성/적용 | `preprocessing`, `docs`, `integration` 적용 완료 |
 
 ## 2. Google Drive 준비
 
