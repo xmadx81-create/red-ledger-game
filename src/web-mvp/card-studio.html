@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>헌혈의 집 · 카드 스튜디오</title>
+    <link rel="stylesheet" href="./card-studio.css" />
+  </head>
+  <body>
+    <main class="studio-shell">
+      <header class="studio-header">
+        <p class="eyebrow">card production studio</p>
+        <h1>카드 스튜디오</h1>
+        <p>후보 E 기반 공식 카드 템플릿으로 캐릭터 ID, 이름, 종족, 직업, 등급, 아우라를 코드로 렌더링합니다.</p>
+        <nav class="studio-nav">
+          <a href="./index.html">운영 본부</a>
+          <a href="./characters.html">캐릭터 도감</a>
+        </nav>
+      </header>
+
+      <section class="studio-controls">
+        <label>
+          캐릭터 선택
+          <select id="character-select"></select>
+        </label>
+        <label>
+          등급 선택
+          <select id="rarity-select"></select>
+        </label>
+      </section>
+
+      <section id="card-preview" class="card-preview"></section>
+    </main>
+    <script src="./card-studio.js"></script>
+  </body>
+</html>
