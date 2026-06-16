@@ -20,6 +20,41 @@ let mode = 'battle'; // 'battle' | 'negotiate'
 
 const AUTO_DELAY = 600;
 const PARTY_KEY = 'hbh.party.v1';
+const INV_KEY = 'hbh.inventory.v1';
+let acquisition = null;
+
+function loadInv() {
+  try { const v = JSON.parse(localStorage.getItem(INV_KEY)); if (v && v.counts) return v; } catch (e) { /* noop */ }
+  return { counts: { N: 30, R: 4, SR: 3, EP: 0, L: 0 }, pity: {}, attempts: 0, success: 0, madeL: 0 };
+}
+function saveInv(v) { localStorage.setItem(INV_KEY, JSON.stringify(v)); }
+
+function grantRewards() {
+  if (state.rewardsGranted) return;
+  state.rewardsGranted = true;
+  if (!acquisition || !acquisition.huntDrops) return;
+  const hd = acquisition.huntDrops;
+  const inv = loadInv();
+  const got = [];
+  let jackpot = false;
+  if (Math.random() < hd.baseDrop.dropChance) {
+    const [a, b] = hd.baseDrop.countRange;
+    const n = a + Math.floor(Math.random() * (b - a + 1));
+    inv.counts.N = (inv.counts.N || 0) + n; got.push(`N ×${n}`);
+  }
+  if (Math.random() < hd.midDrop.dropChance) {
+    inv.counts.R = (inv.counts.R || 0) + hd.midDrop.count; got.push(`R ×${hd.midDrop.count}`);
+  }
+  if (Math.random() < hd.jackpotDrop.dropChance) {
+    const w = hd.rarityWeightWhenJackpot || { SR: 1 };
+    const r = Math.random(); let g = 'SR', acc = 0;
+    for (const k of Object.keys(w)) { acc += w[k]; if (r < acc) { g = k; break; } }
+    inv.counts[g] = (inv.counts[g] || 0) + 1; got.push(`★잭팟 ${g} ×1`); jackpot = true;
+  }
+  saveInv(inv);
+  if (got.length) addLog(`전투 보상: ${got.join(', ')} → 인벤토리 적립`, jackpot ? 'win' : 'heal');
+  else addLog('전투 보상: 이번엔 카드 드랍 없음.', 'sys');
+}
 
 function loadLabParty() {
   try { return JSON.parse(localStorage.getItem(PARTY_KEY)) || []; } catch (e) { return []; }
@@ -110,6 +145,7 @@ function initState() {
     mode,
     empathy: 0,
     panic: mode === 'negotiate' ? setup.negotiation.panicStart : 0,
+    rewardsGranted: false,
     over: false
   };
   state.synergy = computeSynergy(state.party);
@@ -437,14 +473,14 @@ function autoStep() {
 function checkEnd() {
   if (state.mode === 'negotiate') {
     const neg = setup.negotiation;
-    if (state.empathy >= neg.empathyTarget) { state.over = true; addLog('설득 성공! 공감을 모두 얻었습니다.', 'win'); render(); return true; }
+    if (state.empathy >= neg.empathyTarget) { state.over = true; addLog('설득 성공! 공감을 모두 얻었습니다.', 'win'); grantRewards(); render(); return true; }
     if (state.panic >= neg.panicMax) { state.over = true; addLog('설득 실패... 군중이 패닉에 빠졌습니다.', 'lose'); render(); return true; }
     if (livingParty().length === 0) { state.over = true; addLog('패배... 파티가 전멸했습니다.', 'lose'); render(); return true; }
     if (state.turn > neg.turnLimit) { state.over = true; addLog('설득 실패... 시간이 초과되었습니다.', 'lose'); render(); return true; }
     return false;
   }
   if (livingEnemies().length === 0) {
-    state.over = true; addLog('승리! 모든 적을 제압했습니다.', 'win'); render(); return true;
+    state.over = true; addLog('승리! 모든 적을 제압했습니다.', 'win'); grantRewards(); render(); return true;
   }
   if (livingParty().length === 0) {
     state.over = true; addLog('패배... 파티가 전멸했습니다.', 'lose'); render(); return true;
@@ -582,9 +618,14 @@ function renderPartySource() {
   els.partySource.appendChild(btn);
 }
 
-loadSetup()
-  .then((data) => {
+function loadAcquisition() {
+  return fetch(`${DATA_PATH}card-acquisition.json`).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+}
+
+Promise.all([loadSetup(), loadAcquisition()])
+  .then(([data, acq]) => {
     setup = data;
+    acquisition = acq;
     labParty = loadLabParty();
     useLab = labParty.length > 0;
     renderPartySource();
