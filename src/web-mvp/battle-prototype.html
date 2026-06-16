@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>헌혈의 집 · 전투 프로토타입</title>
+    <link rel="stylesheet" href="./battle-prototype.css" />
+  </head>
+  <body>
+    <main class="battle-shell">
+      <header class="battle-header">
+        <p class="eyebrow">battle prototype</p>
+        <h1>전투 프로토타입</h1>
+        <p>1차 스탯 → 파생 전투 스탯 → 행동 카드 → 혈액 코스트가 실제로 어떻게 도는지 돌려봅니다.</p>
+        <nav class="battle-nav">
+          <a href="./hub.html">🏠 홈</a>
+          <a href="./world-map.html">🗺 월드맵</a>
+          <a href="./card-studio.html">카드 스튜디오</a>
+          <a href="./job-lab.html">배치 육성소</a>
+        </nav>
+      </header>
+
+      <div class="mode-select">
+        <button id="mode-battle" class="mode-btn">⚔ 섬멸전</button>
+        <button id="mode-negotiate" class="mode-btn">🕊 설득전</button>
+        <button id="mode-infiltrate" class="mode-btn">🥷 잠입전</button>
+        <button id="mode-defend" class="mode-btn">🛡 방어전</button>
+        <button id="mode-transport" class="mode-btn">🏍 수송전</button>
+      </div>
+      <div id="objective" class="objective"></div>
+      <div id="party-source" class="party-source"></div>
+
+      <section class="battle-field">
+        <div class="side enemy-side">
+          <h2>적</h2>
+          <div id="enemy-units" class="units"></div>
+        </div>
+        <div class="side party-side">
+          <h2>파티</h2>
+          <div id="party-units" class="units"></div>
+        </div>
+      </section>
+
+      <section class="battle-control">
+        <div class="blood-bar">
+          <span class="blood-label">혈액</span>
+          <div id="blood-pips" class="blood-pips"></div>
+          <span id="blood-count" class="blood-count"></span>
+        </div>
+        <div id="turn-info" class="turn-info"></div>
+        <div id="action-panel" class="action-panel"></div>
+        <div class="control-buttons">
+          <button id="auto-toggle" class="btn-ghost">오토: 꺼짐</button>
+          <button id="end-turn" class="btn-primary">턴 종료</button>
+          <button id="restart" class="btn-ghost">다시 시작</button>
+        </div>
+      </section>
+
+      <section class="battle-log">
+        <h2>전투 로그</h2>
+        <div id="log" class="log"></div>
+      </section>
+    </main>
+    <script src="./battle-prototype.js"></script>
+  </body>
+</html>

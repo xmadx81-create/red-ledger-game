@@ -1,0 +1,55 @@
+{
+  "version": "0.1.0",
+  "description": "월드맵 지리 계층 스켈레톤. 월드 > 대륙 > 섬 > 거점(기존 STG/DUN/LOC/HUB 재사용). 개념 고정용이며 실제 대륙/섬 콘텐츠는 추후 확정.",
+  "status": "concept-skeleton",
+  "hierarchy": ["world", "continent", "island", "site"],
+  "difficultyBands": ["Normal", "Hard", "Elite", "Nightmare", "Abyss"],
+  "idScheme": {
+    "continent": "CONT-001",
+    "island": "ISL-{대륙번호}-{섬번호}",
+    "site": "기존 ID 재사용: STG-*, DUN-*, LOC-*, HUB"
+  },
+  "continents": [
+    {
+      "continentId": "CONT-001",
+      "name": "(예시) 센터 본토",
+      "theme": "시작 권역 · 인간권",
+      "difficultyBand": ["Normal", "Hard"],
+      "unlock": [],
+      "islands": [
+        {
+          "islandId": "ISL-001-01",
+          "name": "(예시) 센터 본부 군도",
+          "unlock": [],
+          "sites": ["HUB", "STG-001", "LOC-CLINIC", "LOC-TRAINING", "LOC-ARCHIVE"]
+        },
+        {
+          "islandId": "ISL-001-02",
+          "name": "(예시) 도심 외곽",
+          "unlock": ["STG-001"],
+          "sites": ["STG-002", "DUN-ARCADE", "LOC-GARAGE"]
+        },
+        {
+          "islandId": "ISL-001-03",
+          "name": "(예시) 지하·폐창고 지대",
+          "unlock": ["STG-002", "STG-003"],
+          "sites": ["STG-003", "STG-004", "DUN-PUZZLE", "LOC-INFIL"]
+        }
+      ]
+    },
+    {
+      "continentId": "CONT-002",
+      "name": "(미정) 이종족 군도",
+      "theme": "이종족권 · 고난도",
+      "difficultyBand": ["Elite", "Nightmare"],
+      "unlock": ["CONT-001 주요 섬 클리어"],
+      "islands": []
+    }
+  ],
+  "todo": [
+    "대륙/섬 목록·테마 확정",
+    "섬별 거점 배치와 개방 조건 수치화(명성/클리어)",
+    "맵 화면 UI·이동/탐험 연출",
+    "시즌별 대륙 추가 로드맵"
+  ]
+}

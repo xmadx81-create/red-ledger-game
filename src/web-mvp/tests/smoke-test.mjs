@@ -1,10 +1,11 @@
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const DATA_DIR = path.resolve(__dirname, '../data');
+const WEB_DIR = path.resolve(__dirname, '..');
 
 const EXPECTED = {
   resources: 9,
@@ -178,6 +179,107 @@ function simulateRoute(route, resources, choices) {
   return { resourceState, flags };
 }
 
+// ---- 전체 데이터 JSON 파싱 (문법 회귀 방지) ----
+async function checkAllJson() {
+  const files = (await readdir(DATA_DIR)).filter((f) => f.endsWith('.json'));
+  for (const f of files) await loadJson(f);
+  console.log(`데이터 JSON ${files.length}개 파싱 통과.`);
+}
+
+// ---- 카드게임 데이터 정합성 ----
+const CARD_UID_RE = /^CARD-(.+)-(N|R|SR|EP|L)-(\d{4})$/;
+async function checkCardGameData() {
+  const style = await loadJson('card-style-system.json');
+  const grades = style.rarityTiers.map((t) => t.rarityId);
+  assert(grades.join(',') === 'N,R,SR,EP,L', `등급 사다리 불일치: ${grades}`);
+  const validRar = new Set(grades);
+
+  const reg = await loadJson('character-card-registry.json');
+  const seen = new Set();
+  for (const c of reg.cards) {
+    assert(CARD_UID_RE.test(c.cardUid), `cardUid 형식 오류 ${c.cardUid}`);
+    assert(!seen.has(c.cardUid), `cardUid 중복 ${c.cardUid}`);
+    seen.add(c.cardUid);
+    assert(validRar.has(c.rarity), `rarity 무효 ${c.cardUid}`);
+    assert(reg.statusTypes.includes(c.status), `status 무효 ${c.cardUid}`);
+  }
+
+  const tree = await loadJson('fusion-recipe-tree.json');
+  assert(tree.tierOrder.join(',') === 'N,R,SR,EP,L', 'fusion tierOrder 불일치');
+  tree.jumps.forEach((j, i) => {
+    assert(j.from === tree.tierOrder[i] && j.to === tree.tierOrder[i + 1], `fusion jump 체인 어긋남 ${j.from}->${j.to}`);
+  });
+
+  const stat = await loadJson('card-stat-schema.json');
+  const statIds = new Set(stat.primaryStats.map((s) => s.statId));
+  assert(stat.statBudget.byGrade.map((g) => g.grade).join(',') === 'N,R,SR,EP,L', 'stat budget 등급 불일치');
+
+  const locs = await loadJson('placement-locations.json');
+  const locIds = new Set(locs.locations.map((l) => l.locationId));
+  for (const l of locs.locations) for (const s of (l.raise || [])) assert(statIds.has(s), `장소 raise 스탯 무효 ${l.locationId}:${s}`);
+
+  const jobs = await loadJson('job-stat-profiles.json');
+  const covered = new Set();
+  for (const j of jobs.jobs) {
+    for (const s of j.dominantStats) { assert(statIds.has(s), `직업 dominant 무효 ${j.jobId}:${s}`); covered.add(s); }
+    for (const lid of (j.viaLocations || [])) assert(locIds.has(lid), `직업 viaLocation 무효 ${j.jobId}:${lid}`);
+  }
+  for (const s of statIds) assert(covered.has(s), `스탯 ${s}에 직업 경로 없음(막다른 빌드)`);
+
+  const leg = await loadJson('legendary-anchor-set.json');
+  const roster = await loadJson('hero-roster-by-race.json');
+  const enemy = await loadJson('enemy-hero-roster.json');
+  const rmap = new Map();
+  for (const r of roster.races) for (const h of r.heroes) rmap.set(h.id, { race: r.raceName });
+  for (const e of (enemy.enemyHeroes || [])) rmap.set(e.id, { race: e.race });
+  for (const l of leg.legends) {
+    assert(CARD_UID_RE.test(l.cardUid), `전설 cardUid 형식 ${l.cardUid}`);
+    const h = rmap.get(l.characterId);
+    assert(h, `전설 characterId 로스터 없음 ${l.characterId}`);
+    assert(h.race === l.race, `전설 race 불일치 ${l.characterId}(${l.race}/${h.race})`);
+  }
+
+  const bp = await loadJson('battle-prototype.json');
+  for (const m of ['negotiate', 'infiltrate', 'defend', 'transport']) {
+    const c = bp.objectiveModes[m];
+    assert(c && c.goalTarget && Array.isArray(c.actions) && c.actions.length, `objectiveMode 결손 ${m}`);
+  }
+
+  const w = await loadJson('world-map.json');
+  for (const cont of w.continents) for (const isl of (cont.islands || [])) for (const sid of (isl.sites || [])) {
+    assert(/^(HUB|STG|DUN|LOC)/.test(sid), `world-map site 형식 ${sid}`);
+  }
+
+  // 히든 합성 체인: cardUid 형식 + characterId 로스터 존재 + 전설 타깃 정합
+  const hidden = await loadJson('hidden-fusion-recipes.json');
+  const legendUids = new Set(leg.legends.map((l) => l.cardUid));
+  for (const ch of hidden.chains) {
+    const cardIds = new Set();
+    for (const s of ch.steps) { s.inputs.forEach((i) => cardIds.add(i)); cardIds.add(s.result); }
+    for (const cid of cardIds) {
+      const m = CARD_UID_RE.exec(cid);
+      assert(m, `히든 cardUid 형식 ${cid}`);
+      assert(rmap.has(m[1]), `히든 카드 characterId 로스터 없음 ${cid}`);
+    }
+    if (ch.targetLegend) assert(legendUids.has(ch.targetLegend), `히든 체인 전설 타깃 불일치 ${ch.targetLegend}`);
+    // 체인 연결성: 각 단계 결과가 다음 단계 입력에 포함
+    for (let i = 0; i < ch.steps.length - 1; i++) {
+      assert(ch.steps[i + 1].inputs.includes(ch.steps[i].result), `히든 체인 연결 끊김 step${i + 1}→${i + 2}`);
+    }
+  }
+  console.log('카드게임 데이터 정합성 통과.');
+}
+
+// ---- 프로토타입 JS 구문 (회귀 방지) ----
+async function checkPrototypeSyntax() {
+  const protos = ['hub.js', 'world-map.js', 'fusion-lab.js', 'job-lab.js', 'battle-prototype.js', 'collection.js', 'hidden-lab.js', 'card-studio.js'];
+  for (const f of protos) {
+    const src = await readFile(path.join(WEB_DIR, f), 'utf8');
+    try { new Function(src); } catch (e) { throw new Error(`${f} 구문 오류: ${e.message}`); }
+  }
+  console.log(`프로토타입 JS ${protos.length}개 구문 통과.`);
+}
+
 async function main() {
   const data = {
     resources: await loadJson('resources.json'),
@@ -201,6 +303,10 @@ async function main() {
     console.log(`  supply diff: ${diff}`);
     console.log(`  flags: ${JSON.stringify(result.flags)}`);
   }
+
+  await checkAllJson();
+  await checkCardGameData();
+  await checkPrototypeSyntax();
 
   console.log('Web MVP smoke test passed.');
 }

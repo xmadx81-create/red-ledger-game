@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>헌혈의 집 · 홈</title>
+    <link rel="stylesheet" href="./hub.css" />
+  </head>
+  <body>
+    <main class="hub-shell">
+      <header class="hub-header">
+        <p class="eyebrow">blood donation card rpg</p>
+        <h1>헌혈의 집</h1>
+        <p>밝은 헌혈센터를 거점으로, 혈맹 카드를 모아 레벨업·합성·강화로 끝없이 더 강한 카드를 만들어 가는 수집형 카드 RPG.</p>
+      </header>
+
+      <section class="hub-status">
+        <h2>내 현황</h2>
+        <div class="status-grid">
+          <div class="status-box">
+            <div class="status-label">보유 카드 (합성소·육성소 공유)</div>
+            <div id="inv-summary" class="inv-summary"></div>
+          </div>
+          <div class="status-box">
+            <div class="status-label">전투 파티</div>
+            <div id="party-summary" class="party-summary"></div>
+          </div>
+        </div>
+        <div id="hint" class="hub-hint"></div>
+      </section>
+
+      <section class="hub-flow">
+        <h2>플레이 흐름</h2>
+        <div class="flow-grid">
+          <a class="flow-card fc-fuse" href="./fusion-lab.html">
+            <div class="fc-step">STEP 1</div>
+            <div class="fc-icon">⚗</div>
+            <div class="fc-title">합성소</div>
+            <div class="fc-desc">일반 카드를 모아 합성으로 상위 등급 카드를 노립니다. (대부분 실패, 천장으로 도달 보장)</div>
+          </a>
+          <a class="flow-card fc-lab" href="./job-lab.html">
+            <div class="fc-step">STEP 2</div>
+            <div class="fc-icon">🧪</div>
+            <div class="fc-title">배치 육성소</div>
+            <div class="fc-desc">카드를 장소에 배치해 스탯을 키우고 직업을 부여, 파티에 담습니다. (종족 무관 자유 직업)</div>
+          </a>
+          <a class="flow-card fc-battle" href="./battle-prototype.html">
+            <div class="fc-step">STEP 3</div>
+            <div class="fc-icon">⚔</div>
+            <div class="fc-title">전투</div>
+            <div class="fc-desc">파티로 출전. 섬멸전·설득전 등 스테이지 유형에 맞는 직업 구성이 승패를 가릅니다.</div>
+          </a>
+        </div>
+        <nav class="hub-extra">
+          <a href="./world-map.html">🗺 월드맵</a>
+          <a href="./collection.html">🗂 내 컬렉션</a>
+          <a href="./hidden-lab.html">🔒 히든 합성(데모)</a>
+          <a href="./card-studio.html">🎴 카드 스튜디오</a>
+          <a href="./characters.html">📖 캐릭터 도감</a>
+          <a href="./index.html">🏛 (구) 운영 시뮬</a>
+        </nav>
+      </section>
+    </main>
+    <script src="./hub.js"></script>
+  </body>
+</html>

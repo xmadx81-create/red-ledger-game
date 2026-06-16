@@ -1,0 +1,205 @@
+{
+  "version": "0.1.0",
+  "description": "일반 확률 합성(fusion-recipe-tree.json)의 예외로 동작하는 비공개 히든 레시피 트리. 특정 카드 조합을 정확히 맞추면 일반보다 훨씬 높은 확률(기본 50%)로 한 등급 상위 카드로 합성되고, 이를 연쇄해 전설까지 가는 '최단 비공개 루트'를 만든다. 카드 식별자는 미정(추후 확정).",
+  "status": "cards-proposed",
+  "concept": {
+    "isExceptionToGenericFusion": true,
+    "hidden": true,
+    "shortestRouteToLegend": true,
+    "note": "일반 합성은 등급별 낮은 확률+천장으로 매우 오래 걸린다. 히든 루트는 '정확한 비밀 조합'을 알아야만 열리며, 알면 훨씬 빠르게 전설에 도달한다."
+  },
+  "rules": {
+    "matchBy": "specificCardPair",
+    "defaultSuccessRate": 0.5,
+    "onSuccess": "지정된 상위 결과 카드 1장 생성(새 cardUid 발급), 입력 카드 소비",
+    "onFail": "입력 카드 소비(또는 일부 환원 — 추후 결정). 일반 합성과 달리 천장(pity)은 적용하지 않거나 별도 정책으로 둔다",
+    "visibility": "UI에 표시하지 않음. 힌트/로어/이벤트/커뮤니티 발견으로만 알게 됨",
+    "discoveryFlagPerRecipe": true,
+    "antiAbuse": [
+      "확정이 아니라 50% RNG라 양산 방지",
+      "입력에 희귀/특정 카드가 끼어 무한 반복 불가하게 설계 가능",
+      "체인 단계별로 입력 난도를 올려 최단 루트라도 비용이 들게 함"
+    ]
+  },
+  "cardPolicy": {
+    "confirmedCards": true,
+    "note": "히든 루트 전용 카드는 기존 캐릭터(roster)의 특수 변종으로, SERIAL 9001번대를 사용해 일반 카드(0001)와 구분한다.",
+    "serialBand": "9001+",
+    "idFormatRef": "CARD-{CHARACTER_ID}-{RARITY}-{SERIAL} (CARD_PRODUCTION_PIPELINE_001.md)"
+  },
+  "cardLabels": {
+    "CARD-VMP-005-N-9001": "태오 (미각성)",
+    "CARD-HUM-002-N-9001": "지호 (제보)",
+    "CARD-VMP-002-R-9001": "발렌 (각성)",
+    "CARD-VMP-004-R-9001": "그라프 (혈향)",
+    "CARD-VMP-003-SR-9001": "리아스 (정신각성)",
+    "CARD-VMP-001-EP-9001": "카멜리아 (혈액술)",
+    "CARD-AVP-003-EP-9001": "누아르 (섀도우 노블)",
+    "CARD-AVP-002-EP-9001": "발터스 (기억 군주)",
+    "CARD-AVP-001-L-0001": "릴리스 (블러드 오라클·전설)",
+
+    "CARD-HUM-001-N-9001": "서윤 (미각성)",
+    "CARD-HUM-001-R-9001": "서윤 (각성)",
+    "CARD-HUM-001-SR-9001": "서윤 (단련)",
+    "CARD-HUM-001-EP-9001": "서윤 (투혼)",
+    "CARD-HUM-001-L-0001": "서윤 (인간 전설)",
+    "CARD-HUM-004-R-9001": "현우 (투지)",
+    "CARD-HUM-003-SR-9001": "민서 (구조)",
+    "CARD-HUM-005-EP-9001": "하린 (방패)",
+
+    "CARD-ELF-004-N-9001": "에일론 (미각성)",
+    "CARD-ELF-004-R-9001": "에일론 (룬 입문)",
+    "CARD-ELF-004-SR-9001": "에일론 (룬 학자)",
+    "CARD-ELF-004-EP-9001": "에일론 (해독자)",
+    "CARD-ELF-004-L-0001": "에일론 (엘프 전설)",
+    "CARD-ELF-001-N-9001": "세라엘 (치유)",
+    "CARD-ELF-005-R-9001": "아이리 (정령가)",
+    "CARD-ELF-003-SR-9001": "루나리 (의식)",
+    "CARD-ELF-002-EP-9001": "리아 (바람활)",
+
+    "CARD-WRW-005-N-9001": "알드릭 (미각성)",
+    "CARD-WRW-005-R-9001": "알드릭 (각성)",
+    "CARD-WRW-005-SR-9001": "알드릭 (추적자)",
+    "CARD-WRW-005-EP-9001": "알드릭 (가디언)",
+    "CARD-WRW-005-L-0001": "알드릭 (늑대인간 전설)",
+    "CARD-WRW-001-N-9001": "루나 (문 추적)",
+    "CARD-WRW-003-R-9001": "하울 (센트 헌터)",
+    "CARD-WRW-002-SR-9001": "브란 (팩 가디언)",
+    "CARD-WRW-004-EP-9001": "바이론 (버서커)",
+
+    "CARD-GLM-005-N-9001": "모니토르 (미가동)",
+    "CARD-GLM-005-R-9001": "모니토르 (기동)",
+    "CARD-GLM-005-SR-9001": "모니토르 (분석)",
+    "CARD-GLM-005-EP-9001": "모니토르 (예측체)",
+    "CARD-GLM-005-L-0001": "모니토르 (골렘 전설)",
+    "CARD-GLM-001-N-9001": "아르고스 (성벽)",
+    "CARD-GLM-002-R-9001": "볼키온 (대장간)",
+    "CARD-GLM-003-SR-9001": "세레스 (수정)",
+    "CARD-GLM-004-EP-9001": "바실리스크 (포격체)",
+
+    "CARD-ENM-AVP-001-N-9001": "발테른 (잠든 저주)",
+    "CARD-ENM-AVP-001-R-9001": "발테른 (각성)",
+    "CARD-ENM-AVP-001-SR-9001": "발테른 (혈주)",
+    "CARD-ENM-AVP-001-EP-9001": "발테른 (군주)",
+    "CARD-ENM-AVP-001-L-0001": "발테른 드라큘 (적대 전설)",
+    "CARD-ENM-VMP-001-N-9001": "릴리아 (밤의 귀족)",
+    "CARD-ENM-HUM-001-R-9001": "카엘 (선동가)",
+    "CARD-ENM-WRW-001-SR-9001": "루카르 (광폭)",
+    "CARD-ENM-AWR-001-EP-9001": "리칸 (폭풍의 왕)"
+  },
+  "chains": [
+    {
+      "chainId": "HIDDEN-CHAIN-001",
+      "name": "붉은 예언 각성",
+      "discovered": false,
+      "targetLegend": "CARD-AVP-001-L-0001",
+      "lore": "잊혀진 혈맹의 조각들을 정확한 순서로 합치면 초고대 예언자 릴리스가 깨어난다는 비공개 전승.",
+      "steps": [
+        {
+          "step": 1,
+          "fromGrade": "N",
+          "toGrade": "R",
+          "inputs": ["CARD-VMP-005-N-9001", "CARD-HUM-002-N-9001"],
+          "result": "CARD-VMP-002-R-9001",
+          "successRate": 0.5
+        },
+        {
+          "step": 2,
+          "fromGrade": "R",
+          "toGrade": "SR",
+          "inputs": ["CARD-VMP-002-R-9001", "CARD-VMP-004-R-9001"],
+          "result": "CARD-VMP-003-SR-9001",
+          "successRate": 0.5
+        },
+        {
+          "step": 3,
+          "fromGrade": "SR",
+          "toGrade": "EP",
+          "inputs": ["CARD-VMP-003-SR-9001", "CARD-VMP-001-EP-9001"],
+          "result": "CARD-AVP-003-EP-9001",
+          "successRate": 0.5
+        },
+        {
+          "step": 4,
+          "fromGrade": "EP",
+          "toGrade": "L",
+          "inputs": ["CARD-AVP-003-EP-9001", "CARD-AVP-002-EP-9001"],
+          "result": "CARD-AVP-001-L-0001",
+          "successRate": 0.5
+        }
+      ]
+    },
+    {
+      "chainId": "HIDDEN-CHAIN-002",
+      "name": "강철 의지 각성",
+      "discovered": false,
+      "targetLegend": "CARD-HUM-001-L-0001",
+      "lore": "동료들의 의지를 모아 평범한 인간이 한계를 넘어 전설 서윤으로 단련된다.",
+      "steps": [
+        { "step": 1, "fromGrade": "N", "toGrade": "R", "inputs": ["CARD-HUM-001-N-9001", "CARD-HUM-002-N-9001"], "result": "CARD-HUM-001-R-9001", "successRate": 0.5 },
+        { "step": 2, "fromGrade": "R", "toGrade": "SR", "inputs": ["CARD-HUM-001-R-9001", "CARD-HUM-004-R-9001"], "result": "CARD-HUM-001-SR-9001", "successRate": 0.5 },
+        { "step": 3, "fromGrade": "SR", "toGrade": "EP", "inputs": ["CARD-HUM-001-SR-9001", "CARD-HUM-003-SR-9001"], "result": "CARD-HUM-001-EP-9001", "successRate": 0.5 },
+        { "step": 4, "fromGrade": "EP", "toGrade": "L", "inputs": ["CARD-HUM-001-EP-9001", "CARD-HUM-005-EP-9001"], "result": "CARD-HUM-001-L-0001", "successRate": 0.5 }
+      ]
+    },
+    {
+      "chainId": "HIDDEN-CHAIN-003",
+      "name": "고대 룬 해독",
+      "discovered": false,
+      "targetLegend": "CARD-ELF-004-L-0001",
+      "lore": "흩어진 룬 조각을 정확한 순서로 해독하면 협약 원본의 전설 해독자 에일론이 깨어난다.",
+      "steps": [
+        { "step": 1, "fromGrade": "N", "toGrade": "R", "inputs": ["CARD-ELF-004-N-9001", "CARD-ELF-001-N-9001"], "result": "CARD-ELF-004-R-9001", "successRate": 0.5 },
+        { "step": 2, "fromGrade": "R", "toGrade": "SR", "inputs": ["CARD-ELF-004-R-9001", "CARD-ELF-005-R-9001"], "result": "CARD-ELF-004-SR-9001", "successRate": 0.5 },
+        { "step": 3, "fromGrade": "SR", "toGrade": "EP", "inputs": ["CARD-ELF-004-SR-9001", "CARD-ELF-003-SR-9001"], "result": "CARD-ELF-004-EP-9001", "successRate": 0.5 },
+        { "step": 4, "fromGrade": "EP", "toGrade": "L", "inputs": ["CARD-ELF-004-EP-9001", "CARD-ELF-002-EP-9001"], "result": "CARD-ELF-004-L-0001", "successRate": 0.5 }
+      ]
+    },
+    {
+      "chainId": "HIDDEN-CHAIN-004",
+      "name": "달의 군주 각성",
+      "discovered": false,
+      "targetLegend": "CARD-WRW-005-L-0001",
+      "lore": "무리의 유대를 모아 알파 센티널 알드릭이 전설급 수호자로 각성한다.",
+      "steps": [
+        { "step": 1, "fromGrade": "N", "toGrade": "R", "inputs": ["CARD-WRW-005-N-9001", "CARD-WRW-001-N-9001"], "result": "CARD-WRW-005-R-9001", "successRate": 0.5 },
+        { "step": 2, "fromGrade": "R", "toGrade": "SR", "inputs": ["CARD-WRW-005-R-9001", "CARD-WRW-003-R-9001"], "result": "CARD-WRW-005-SR-9001", "successRate": 0.5 },
+        { "step": 3, "fromGrade": "SR", "toGrade": "EP", "inputs": ["CARD-WRW-005-SR-9001", "CARD-WRW-002-SR-9001"], "result": "CARD-WRW-005-EP-9001", "successRate": 0.5 },
+        { "step": 4, "fromGrade": "EP", "toGrade": "L", "inputs": ["CARD-WRW-005-EP-9001", "CARD-WRW-004-EP-9001"], "result": "CARD-WRW-005-L-0001", "successRate": 0.5 }
+      ]
+    },
+    {
+      "chainId": "HIDDEN-CHAIN-005",
+      "name": "기록의 정점",
+      "discovered": false,
+      "targetLegend": "CARD-GLM-005-L-0001",
+      "lore": "고대 데이터 조각을 정렬하면 기록 보관자 모니토르가 미래를 예측하는 전설로 가동된다.",
+      "steps": [
+        { "step": 1, "fromGrade": "N", "toGrade": "R", "inputs": ["CARD-GLM-005-N-9001", "CARD-GLM-001-N-9001"], "result": "CARD-GLM-005-R-9001", "successRate": 0.5 },
+        { "step": 2, "fromGrade": "R", "toGrade": "SR", "inputs": ["CARD-GLM-005-R-9001", "CARD-GLM-002-R-9001"], "result": "CARD-GLM-005-SR-9001", "successRate": 0.5 },
+        { "step": 3, "fromGrade": "SR", "toGrade": "EP", "inputs": ["CARD-GLM-005-SR-9001", "CARD-GLM-003-SR-9001"], "result": "CARD-GLM-005-EP-9001", "successRate": 0.5 },
+        { "step": 4, "fromGrade": "EP", "toGrade": "L", "inputs": ["CARD-GLM-005-EP-9001", "CARD-GLM-004-EP-9001"], "result": "CARD-GLM-005-L-0001", "successRate": 0.5 }
+      ]
+    },
+    {
+      "chainId": "HIDDEN-CHAIN-006",
+      "name": "피의 계승 (적대)",
+      "discovered": false,
+      "targetLegend": "CARD-ENM-AVP-001-L-0001",
+      "lore": "빌런 연합이 잠든 저주를 일깨워 피의 계승자 발테른 드라큘을 적대 전설로 부활시킨다. 릴리스 루트의 어둠의 거울.",
+      "steps": [
+        { "step": 1, "fromGrade": "N", "toGrade": "R", "inputs": ["CARD-ENM-AVP-001-N-9001", "CARD-ENM-VMP-001-N-9001"], "result": "CARD-ENM-AVP-001-R-9001", "successRate": 0.5 },
+        { "step": 2, "fromGrade": "R", "toGrade": "SR", "inputs": ["CARD-ENM-AVP-001-R-9001", "CARD-ENM-HUM-001-R-9001"], "result": "CARD-ENM-AVP-001-SR-9001", "successRate": 0.5 },
+        { "step": 3, "fromGrade": "SR", "toGrade": "EP", "inputs": ["CARD-ENM-AVP-001-SR-9001", "CARD-ENM-WRW-001-SR-9001"], "result": "CARD-ENM-AVP-001-EP-9001", "successRate": 0.5 },
+        { "step": 4, "fromGrade": "EP", "toGrade": "L", "inputs": ["CARD-ENM-AVP-001-EP-9001", "CARD-ENM-AWR-001-EP-9001"], "result": "CARD-ENM-AVP-001-L-0001", "successRate": 0.5 }
+      ]
+    }
+  ],
+  "todo": [
+    "히든 발견 트리거 설계(힌트/로어/이벤트)",
+    "실패 시 입력 처리·천장 정책 확정",
+    "fusion-lab은 현재 등급별 fungible 카운트라 카드 식별 기반 매칭 미지원 → 카드 인스턴스 식별 추가 후 본 합성소 통합",
+    "전설별 추가 비공개 체인(서윤/에일론/알드릭/모니토르 루트) 설계",
+    "EVIL 전설 슬롯 추가 시 적대 비공개 체인 검토"
+  ]
+}

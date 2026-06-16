@@ -1,0 +1,30 @@
+{
+  "version": "0.1.0",
+  "description": "맵 배치 육성 시스템. 카드를 장소에 배치하면 그 장소의 작업이 수행되어 스탯이 재분배된다(card-stat-schema.json의 활동 재분배 규칙 적용). 배치 방향이 곧 직업 육성 방향이 된다. 던전 파견도 배치의 한 형태다. 수치는 v0 초안.",
+  "placementRule": {
+    "appliesActivityRedistribution": true,
+    "redistributionRef": "card-stat-schema.json activityRedistribution",
+    "accrual": "배치 시간(상시/온라인 누적)에 따라 작업 틱이 쌓여 스탯이 점진적으로 이동한다.",
+    "raceAgnostic": true,
+    "note": "장소의 raise 스탯은 card-stat-schema 활동 프로필과 동일 의미. 어떤 종족이든 배치로 동일하게 육성된다."
+  },
+  "locations": [
+    { "locationId": "LOC-MANA-LAB", "name": "마법 연구실", "activity": "룬 해독", "raise": ["INT", "WIL"], "leadsTo": ["JOBX-MAGE"], "capacity": 4, "type": "육성" },
+    { "locationId": "LOC-TRAINING", "name": "훈련장", "activity": "전투 훈련", "raise": ["STR", "VIT"], "leadsTo": ["JOBX-WARRIOR", "JOBX-GUARDIAN"], "capacity": 6, "type": "육성" },
+    { "locationId": "LOC-RANGE", "name": "사격장", "activity": "정밀 사격", "raise": ["DEX", "ACC"], "leadsTo": ["JOBX-ARCHER"], "capacity": 4, "type": "육성" },
+    { "locationId": "LOC-INFIL", "name": "잠입 통로", "activity": "은밀 기동", "raise": ["DEX", "INT"], "leadsTo": ["JOBX-ROGUE"], "capacity": 3, "type": "육성" },
+    { "locationId": "LOC-CLINIC", "name": "채혈/의무실", "activity": "채혈·치료", "raise": ["INT", "CHA"], "leadsTo": ["JOBX-HEALER", "JOB-MEDIC"], "capacity": 5, "type": "육성" },
+    { "locationId": "LOC-SECURITY", "name": "보안실", "activity": "경비", "raise": ["STR", "VIT"], "leadsTo": ["JOBX-GUARDIAN", "JOB-GUARD"], "capacity": 5, "type": "육성" },
+    { "locationId": "LOC-LOBBY", "name": "상담 로비", "activity": "접수·상담", "raise": ["CHA", "ACC"], "leadsTo": ["JOB-NEGOTIATOR"], "capacity": 4, "type": "육성" },
+    { "locationId": "LOC-ARCHIVE", "name": "기록실", "activity": "문서·해독", "raise": ["INT", "ACC"], "leadsTo": ["JOB-ARCHIVIST"], "capacity": 4, "type": "육성" },
+    { "locationId": "LOC-GARAGE", "name": "수송 차고", "activity": "수송", "raise": ["DEX", "VIT"], "leadsTo": ["JOB-LOGISTICS"], "capacity": 4, "type": "육성" },
+    { "locationId": "LOC-MINE", "name": "광산", "activity": "채광(곡괭이질)", "raise": ["STR", "ACC"], "leadsTo": ["JOBX-WARRIOR", "JOBX-ARCHER"], "capacity": 6, "type": "자원/육성", "note": "사용자 예시 장소. 자원 생산 겸 STR/ACC 육성." },
+    { "locationId": "LOC-FORTUNE", "name": "행운의 방", "activity": "의식·점복", "raise": ["LUK", "WIL"], "leadsTo": ["JOBX-TRICKSTER"], "capacity": 2, "type": "육성", "note": "합성 행운 보정과 연계되는 특수 육성 장소." },
+    { "locationId": "LOC-DUNGEON-GATE", "name": "던전 게이트", "activity": "던전 파견", "raise": [], "leadsTo": [], "capacity": 8, "type": "던전", "note": "dungeon-types.json로 파견. 경험치/재료/드랍 + 던전별 가변 스탯 훈련." }
+  ],
+  "notes": [
+    "장소는 직업 아키타입으로 가는 '경로'다. leadsTo는 참고용이며 실제 직업 후보는 job-stat-profiles.json의 스탯 조건으로 판정한다.",
+    "한 카드를 여러 장소에 순차 배치해 복합 스탯(예: INT+CHA 힐러)을 만들 수 있다.",
+    "스탯이 유동적이므로 재배치로 전직(예: 전사→마법사)도 가능하다."
+  ]
+}

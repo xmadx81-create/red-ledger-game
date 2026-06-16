@@ -1,0 +1,134 @@
+{
+  "version": "0.1.0",
+  "description": "전투 프로토타입 셋업. card-stat-schema.json의 1차 스탯→파생 전투 스탯 공식을 실제로 돌려보기 위한 데이터. 파티/적의 1차 스탯은 등급 budget을 직업 성향대로 분배한 v0 값. 행동 효과는 combat-actions.json을 전투용으로 매핑.",
+  "blood": { "start": 4, "perTurn": 3, "max": 12 },
+  "derivedFormulas": {
+    "note": "card-stat-schema.json derivedCombatStats와 동일. JS에서 동일하게 구현.",
+    "HP": "VIT*8 + STR*2",
+    "PATK": "STR*2 + DEX*0.5",
+    "MATK": "INT*2 + ACC*0.5",
+    "DEF": "VIT*1.5 + STR*0.5",
+    "SPD": "DEX*2",
+    "HIT": "ACC*1.5 + DEX*0.5",
+    "EVA": "DEX*1.2",
+    "CRIT": "ACC*0.7 + LUK*0.8",
+    "PERSUADE": "CHA*1.5 + INT*0.5",
+    "RESIST": "WIL*1.5 + VIT*0.5"
+  },
+  "party": [
+    {
+      "id": "HUM-001", "name": "서윤", "race": "인간", "job": "전사", "grade": "SR",
+      "primary": { "STR": 60, "DEX": 22, "INT": 6, "VIT": 34, "ACC": 14, "CHA": 4, "WIL": 4, "LUK": 6 }
+    },
+    {
+      "id": "VMP-002", "name": "발렌", "race": "뱀파이어", "job": "마법사", "grade": "SR",
+      "primary": { "STR": 8, "DEX": 14, "INT": 64, "VIT": 18, "ACC": 22, "CHA": 6, "WIL": 14, "LUK": 4 }
+    },
+    {
+      "id": "HUM-003", "name": "민서", "race": "인간", "job": "힐러", "grade": "SR",
+      "primary": { "STR": 14, "DEX": 16, "INT": 30, "VIT": 28, "ACC": 16, "CHA": 38, "WIL": 4, "LUK": 4 }
+    }
+  ],
+  "enemies": [
+    {
+      "id": "ENM-HUM-001", "name": "카엘 다크크", "race": "인간", "job": "전략 지휘관", "grade": "SR",
+      "primary": { "STR": 52, "DEX": 20, "INT": 36, "VIT": 54, "ACC": 22, "CHA": 8, "WIL": 14, "LUK": 4 },
+      "attack": { "name": "지휘 일격", "kind": "damage", "scale": "PATK", "power": 26 }
+    },
+    {
+      "id": "ENM-VMP-001", "name": "그림자 사냥꾼", "race": "뱀파이어", "job": "추적자", "grade": "R",
+      "primary": { "STR": 34, "DEX": 46, "INT": 10, "VIT": 26, "ACC": 30, "CHA": 4, "WIL": 6, "LUK": 8 },
+      "attack": { "name": "기습", "kind": "damage", "scale": "PATK", "power": 18 }
+    }
+  ],
+  "actions": [
+    { "actionId": "ACT-SUBDUE",    "name": "제압",       "bloodCost": 2, "kind": "damage", "scale": "PATK", "power": 16, "target": "enemy", "desc": "물리 피해. 힘(STR) 비례." },
+    { "actionId": "ACT-MAGIC",     "name": "기술 일격",   "bloodCost": 3, "kind": "damage", "scale": "MATK", "power": 20, "target": "enemy", "desc": "기술 피해. 지능(INT) 비례. (프로토타입 전용)" },
+    { "actionId": "ACT-FIRST-AID", "name": "응급 처치",   "bloodCost": 2, "kind": "heal",   "scale": "PERSUADE", "power": 22, "target": "ally", "desc": "아군 회복. 친화(CHA) 비례." },
+    { "actionId": "ACT-PROTECT",   "name": "보호",       "bloodCost": 1, "kind": "shield", "scale": "DEF", "power": 14, "target": "ally", "desc": "아군에 보호막. 방어(DEF) 비례." },
+    { "actionId": "ACT-LOCKDOWN",  "name": "보안 봉쇄",   "bloodCost": 2, "kind": "debuff", "scale": "DEF", "power": 0, "target": "enemy", "desc": "적 다음 공격 위력 35% 감소(1턴)." }
+  ],
+  "jobSkills": {
+    "전사": { "skillId": "SK-WAR", "name": "혈투 강타", "kind": "damage", "scope": "single", "scale": "PATK", "power": 34, "bloodCost": 4, "cooldown": 2, "desc": "적 1체에 강력한 물리 일격(쿨2)." },
+    "마법사": { "skillId": "SK-MAGE", "name": "비전 폭발", "kind": "damage", "scope": "all", "scale": "MATK", "power": 16, "bloodCost": 5, "cooldown": 3, "desc": "적 전체에 기술 피해(쿨3)." },
+    "힐러": { "skillId": "SK-HEAL", "name": "치유의 빛", "kind": "heal", "scope": "all", "scale": "PERSUADE", "power": 16, "bloodCost": 4, "cooldown": 3, "desc": "아군 전체 회복(쿨3)." }
+  },
+  "synergies": [
+    { "id": "ROLE-TRINITY", "name": "역할 균형", "effect": { "dmgMult": 1.12, "healMult": 1.12, "defMult": 1.0 }, "desc": "전사·마법사·힐러를 모두 편성하면 피해·회복 +12%." },
+    { "id": "HUMAN-PACT", "name": "인간 연대", "effect": { "dmgMult": 1.0, "healMult": 1.0, "defMult": 1.1 }, "desc": "인간 2명 이상 편성 시 방어 +10%." }
+  ],
+  "objectiveModes": {
+    "negotiate": {
+      "title": "오해한 인간 세력 설득전",
+      "goalName": "공감",
+      "goalTarget": 130,
+      "riskName": "패닉",
+      "riskStart": 20,
+      "riskMax": 100,
+      "riskPerEnemyTurn": 16,
+      "turnLimit": 11,
+      "desc": "공감 게이지를 목표치까지 채우면 승리. 패닉이 가득 차거나 파티 전멸·턴 초과 시 패배. 설득력(협상가·힐러)이 핵심.",
+      "actions": [
+        { "actionId": "NG-PERSUADE", "name": "설득", "bloodCost": 2, "kind": "goalUp", "scale": "PERSUADE", "scaleFactor": 0.35, "power": 12, "target": "self", "desc": "공감 상승 (설득력 비례)." },
+        { "actionId": "NG-CALM", "name": "진정 안내", "bloodCost": 1, "kind": "riskDown", "scale": "CHA", "power": 10, "target": "self", "desc": "패닉 감소 (친화 비례)." },
+        { "actionId": "NG-AID", "name": "응급 처치", "bloodCost": 2, "kind": "heal", "scale": "PERSUADE", "power": 20, "target": "ally", "desc": "아군 회복." }
+      ]
+    },
+    "defend": {
+      "title": "센터 방어전",
+      "goalName": "격퇴 진행",
+      "goalTarget": 110,
+      "riskName": "시설 붕괴",
+      "riskStart": 10,
+      "riskMax": 100,
+      "riskPerEnemyTurn": 18,
+      "turnLimit": 11,
+      "desc": "방어 태세로 격퇴 진행을 채우면 승리. 시설 붕괴가 가득 차거나 전멸·턴 초과 시 패배. 방어력·체력(수호자)이 핵심.",
+      "actions": [
+        { "actionId": "DF-GUARD", "name": "방어 태세", "bloodCost": 2, "kind": "goalUp", "scale": "DEF", "scaleFactor": 0.30, "power": 12, "target": "self", "desc": "격퇴 진행 상승 (방어력 비례)." },
+        { "actionId": "DF-LOCK", "name": "보안 봉쇄", "bloodCost": 1, "kind": "riskDown", "scale": "VIT", "power": 14, "target": "self", "desc": "시설 붕괴 감소 (체력 비례)." },
+        { "actionId": "DF-AID", "name": "응급 처치", "bloodCost": 2, "kind": "heal", "scale": "PERSUADE", "power": 18, "target": "ally", "desc": "아군 회복." }
+      ]
+    },
+    "transport": {
+      "title": "야간 수송 아케이드",
+      "goalName": "수송 진행",
+      "goalTarget": 120,
+      "riskName": "추격 위험",
+      "riskStart": 15,
+      "riskMax": 100,
+      "riskPerEnemyTurn": 15,
+      "turnLimit": 11,
+      "desc": "회피 기동으로 수송 진행을 채우면 승리. 추격 위험이 가득 차거나 전멸·턴 초과 시 패배. 회피(도적)·행운(술사)이 핵심.",
+      "actions": [
+        { "actionId": "TR-EVADE", "name": "회피 기동", "bloodCost": 2, "kind": "goalUp", "scale": "EVA", "scaleFactor": 0.45, "power": 12, "target": "self", "desc": "수송 진행 상승 (회피 비례)." },
+        { "actionId": "TR-DECOY", "name": "교란 미끼", "bloodCost": 1, "kind": "riskDown", "scale": "LUK", "power": 12, "target": "self", "desc": "추격 위험 감소 (행운 비례)." },
+        { "actionId": "TR-DASH", "name": "가속 돌파", "bloodCost": 2, "kind": "goalUp", "scale": "LUK", "scaleFactor": 0.5, "power": 14, "selfRisk": 8, "target": "self", "desc": "수송 진행 크게 상승 (행운 비례), 추격 위험 증가." },
+        { "actionId": "TR-AID", "name": "응급 처치", "bloodCost": 2, "kind": "heal", "scale": "PERSUADE", "power": 18, "target": "ally", "desc": "아군 회복." }
+      ]
+    },
+    "infiltrate": {
+      "title": "봉인 구역 잠입전",
+      "goalName": "잠입 진행",
+      "goalTarget": 120,
+      "riskName": "발각도",
+      "riskStart": 15,
+      "riskMax": 100,
+      "riskPerEnemyTurn": 14,
+      "turnLimit": 11,
+      "desc": "잠입 진행을 목표치까지 채우면 승리. 발각도가 가득 차거나 파티 전멸·턴 초과 시 패배. 속도(도적)·지능(기록관)이 핵심.",
+      "actions": [
+        { "actionId": "IF-SNEAK", "name": "은밀 기동", "bloodCost": 2, "kind": "goalUp", "scale": "SPD", "scaleFactor": 0.30, "power": 14, "selfRisk": 4, "target": "self", "desc": "진행 상승 (속도 비례), 발각 약간 증가." },
+        { "actionId": "IF-ERASE", "name": "흔적 제거", "bloodCost": 1, "kind": "riskDown", "scale": "INT", "power": 12, "target": "self", "desc": "발각도 감소 (지능 비례)." },
+        { "actionId": "IF-EVIDENCE", "name": "증거 회수", "bloodCost": 2, "kind": "goalUp", "scale": "INT", "scaleFactor": 0.35, "power": 18, "selfRisk": 12, "target": "self", "desc": "진행 크게 상승 (지능 비례), 발각 위험 큼." },
+        { "actionId": "IF-AID", "name": "응급 처치", "bloodCost": 2, "kind": "heal", "scale": "PERSUADE", "power": 18, "target": "ally", "desc": "아군 회복." }
+      ]
+    }
+  },
+  "rules": {
+    "hitChance": "기본 0.9 + (공격 HIT - 대상 EVA)/200, 0.5~0.99 클램프",
+    "critChance": "공격 CRIT/300 (최대 0.6), 치명 시 1.8배",
+    "mitigation": "최종 피해 = max(1, 원피해 - 대상 DEF*0.35) (보호막 우선 차감)",
+    "variance": "±10% 난수"
+  }
+}

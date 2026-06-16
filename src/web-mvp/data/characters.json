@@ -40,7 +40,7 @@
     "initialRelation": "외부 위협",
     "rpgRole": "레인저/추적자/심문관",
     "ledgerRole": "언론 감시자/폭로 위험/잠재적 협력자",
-    "grade": "SSR",
+    "grade": "EP",
     "reactionDefault": "기록의 불일치를 집요하게 추적한다."
   },
   {
@@ -51,7 +51,7 @@
     "initialRelation": "상위 명령권자/압박자",
     "rpgRole": "군주/고위 보스/후원자",
     "ledgerRole": "가문 수요의 목소리/정치적 압박자",
-    "grade": "SSR 또는 EX",
+    "grade": "L",
     "reactionDefault": "가문의 수요와 질서를 우선한다."
   }
 ]

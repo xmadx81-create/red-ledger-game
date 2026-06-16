@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>헌혈의 집 · 컬렉션</title>
+    <link rel="stylesheet" href="./collection.css" />
+  </head>
+  <body>
+    <main class="col-shell">
+      <header class="col-header">
+        <p class="eyebrow">my collection</p>
+        <h1>내 컬렉션</h1>
+        <p>합성·잭팟으로 얻은 상위(R+) 카드가 도감처럼 쌓입니다. 일반(N) 카드는 합성 재료라 카운트로만 관리됩니다.</p>
+        <nav class="col-nav">
+          <a href="./hub.html">🏠 홈</a>
+          <a href="./fusion-lab.html">⚗ 합성소</a>
+          <a href="./world-map.html">🗺 월드맵</a>
+        </nav>
+      </header>
+      <section class="col-summary">
+        <h2>보유 등급 요약</h2>
+        <div id="grade-summary" class="grade-summary"></div>
+      </section>
+      <section class="col-cards">
+        <h2>획득한 상위 카드 <span id="col-count"></span></h2>
+        <div id="filter-row" class="filter-row"></div>
+        <div id="card-grid" class="card-grid"></div>
+      </section>
+    </main>
+    <script src="./collection.js"></script>
+  </body>
+</html>

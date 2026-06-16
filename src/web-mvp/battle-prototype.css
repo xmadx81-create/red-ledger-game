@@ -1,0 +1,110 @@
+:root {
+  color-scheme: light;
+  --bg: #fff8f7;
+  --panel: #ffffff;
+  --text: #263238;
+  --muted: #607d8b;
+  --line: rgba(229, 57, 53, 0.16);
+  --good: #2e91ff;
+  --bad: #e53935;
+  --heal: #2e9e6b;
+  --shield: #c79524;
+  --shadow: 0 18px 44px rgba(84, 42, 42, 0.12);
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background:
+    radial-gradient(circle at 12% 6%, rgba(255, 120, 120, 0.18), transparent 22rem),
+    radial-gradient(circle at 86% 12%, rgba(66, 165, 245, 0.16), transparent 22rem),
+    linear-gradient(180deg, #fff8f7, #f5fbff);
+  color: var(--text);
+}
+.battle-shell { width: min(100%, 880px); margin: 0 auto; padding: 24px 16px 48px; }
+.battle-header { display: grid; gap: 8px; margin-bottom: 16px; }
+.eyebrow { margin: 0; color: #c62828; font-size: 12px; font-weight: 900; letter-spacing: 0.15em; text-transform: uppercase; }
+h1 { margin: 0; color: #b71c1c; font-size: clamp(30px, 7vw, 46px); letter-spacing: -0.06em; }
+h2 { font-size: 15px; color: var(--muted); margin: 0 0 8px; }
+p { margin: 0; line-height: 1.55; color: var(--muted); }
+.battle-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+.battle-nav a { display: inline-flex; min-height: 34px; align-items: center; padding: 6px 12px; border-radius: 999px; background: #fff; color: #c62828; border: 1px solid var(--line); text-decoration: none; font-weight: 800; font-size: 13px; }
+
+.party-source { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; padding: 10px 12px; border-radius: 12px; background: #f3ecff; border: 1px solid rgba(122,53,216,.25); font-weight: 800; font-size: 13px; color: #5e2aa8; }
+.mode-select { display:flex; gap:8px; margin-bottom:12px; }
+.mode-btn { flex:1; border:1px solid var(--line); background:#fff; color:var(--muted); border-radius:12px; padding:10px; font:inherit; font-weight:900; cursor:pointer; }
+.mode-btn.on { background:linear-gradient(180deg,#ef5350,#c62828); color:#fff; border-color:#c62828; }
+#mode-negotiate.on { background:linear-gradient(180deg,#26a69a,#00796b); border-color:#00796b; }
+#mode-infiltrate.on { background:linear-gradient(180deg,#7e57c2,#4527a0); border-color:#4527a0; }
+#mode-defend.on { background:linear-gradient(180deg,#ffa726,#ef6c00); border-color:#ef6c00; }
+#mode-transport.on { background:linear-gradient(180deg,#26c6da,#00838f); border-color:#00838f; }
+.mode-select { flex-wrap:wrap; }
+.objective { display:none; }
+.objective.show { display:grid; gap:8px; margin-bottom:12px; padding:12px; border-radius:14px; background:#e0f2f1; border:1px solid rgba(0,121,107,.25); }
+.obj-title { font-weight:900; font-size:13px; color:#00695c; }
+.obj-bar-row { display:grid; gap:3px; }
+.obj-label { font-size:11px; font-weight:800; color:var(--muted); display:flex; justify-content:space-between; }
+.obj-bar { height:14px; border-radius:999px; background:#cfe8e5; overflow:hidden; }
+.obj-fill-empathy { height:100%; background:linear-gradient(90deg,#26a69a,#00897b); transition:width .25s; }
+.obj-fill-panic { height:100%; background:linear-gradient(90deg,#ffb300,#e53935); transition:width .25s; }
+.party-source button { margin-left: auto; border: 1px solid rgba(122,53,216,.35); background: #fff; color: #5e2aa8; border-radius: 9px; padding: 6px 12px; font: inherit; font-weight: 900; cursor: pointer; }
+.battle-field { display: grid; gap: 14px; margin-bottom: 16px; }
+.side { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 14px; box-shadow: var(--shadow); }
+.enemy-side { border-color: rgba(229,57,53,0.28); }
+.units { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+
+.unit { border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; background: linear-gradient(180deg,#fff, #fafdff); position: relative; transition: transform .1s, box-shadow .1s; }
+.unit.targetable { cursor: pointer; outline: 2px dashed var(--good); outline-offset: 2px; }
+.unit.targetable:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(46,145,255,0.25); }
+.unit.active { box-shadow: 0 0 0 2px var(--shield); }
+.unit.dead { opacity: 0.4; filter: grayscale(0.7); }
+.unit.selected { outline: 2px solid var(--bad); outline-offset: 2px; }
+.unit-top { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; }
+.unit-name { font-weight: 900; font-size: 16px; }
+.unit-job { font-size: 11px; color: var(--muted); font-weight: 800; }
+.unit-sub { font-size: 11px; color: var(--muted); margin: 2px 0 6px; }
+.hpbar { height: 12px; border-radius: 999px; background: #eceff1; overflow: hidden; position: relative; }
+.hpfill { height: 100%; background: linear-gradient(90deg,#43a047,#2e9e6b); transition: width .25s; }
+.enemy-side .hpfill { background: linear-gradient(90deg,#e53935,#b71c1c); }
+.hptext { font-size: 11px; font-weight: 800; margin-top: 3px; color: var(--text); }
+.shieldtag { position: absolute; top: 8px; right: 8px; font-size: 10px; font-weight: 900; color: #fff; background: var(--shield); border-radius: 999px; padding: 2px 6px; }
+.debufftag { position: absolute; top: 8px; left: 8px; font-size: 10px; font-weight: 900; color: #fff; background: #7b3dbb; border-radius: 999px; padding: 2px 6px; }
+.statline { display: flex; flex-wrap: wrap; gap: 4px 8px; margin-top: 6px; font-size: 10px; color: var(--muted); font-weight: 700; }
+
+.battle-control { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 14px; box-shadow: var(--shadow); margin-bottom: 16px; }
+.blood-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.blood-label { font-weight: 900; font-size: 13px; color: var(--bad); }
+.blood-pips { display: flex; gap: 3px; flex-wrap: wrap; }
+.pip { width: 13px; height: 13px; border-radius: 50%; background: #f0d4d4; border: 1px solid rgba(229,57,53,.3); }
+.pip.full { background: radial-gradient(circle at 35% 30%, #ff6f6f, #c62828); border-color: #c62828; }
+.blood-count { font-size: 12px; font-weight: 800; color: var(--muted); }
+.turn-info { font-size: 13px; font-weight: 800; color: var(--text); margin-bottom: 10px; min-height: 18px; }
+.action-panel { display: flex; flex-wrap: wrap; gap: 8px; min-height: 40px; }
+.action-btn { border: 1px solid var(--line); border-radius: 12px; background: #fff; padding: 8px 10px; cursor: pointer; font: inherit; font-weight: 800; font-size: 13px; display: grid; gap: 2px; min-width: 120px; text-align: left; }
+.action-btn small { font-weight: 700; color: var(--muted); font-size: 10px; }
+.action-btn .cost { color: var(--bad); font-weight: 900; font-size: 11px; }
+.action-btn:hover:not(:disabled) { border-color: var(--good); box-shadow: 0 4px 10px rgba(46,145,255,.2); }
+.action-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.action-btn.selected { outline: 2px solid var(--good); outline-offset: 1px; }
+.skill-btn { background: linear-gradient(180deg,#fff,#f3ecff); border-color: rgba(122,53,216,0.35); color: #5e2aa8; }
+.skill-btn:hover:not(:disabled) { border-color: #7a35d8; box-shadow: 0 4px 10px rgba(122,53,216,.22); }
+.synergy-chip { width: 100%; padding: 6px 10px; border-radius: 10px; background: #e8f5e9; color: #2e7d32; font-weight: 800; font-size: 12px; border: 1px solid rgba(46,125,50,.25); }
+
+.control-buttons { display: flex; gap: 8px; margin-top: 12px; }
+.btn-primary { background: linear-gradient(180deg,#ef5350,#c62828); color:#fff; border:none; border-radius: 12px; padding: 10px 18px; font: inherit; font-weight: 900; cursor: pointer; }
+.btn-ghost { background:#fff; color:#c62828; border:1px solid var(--line); border-radius: 12px; padding: 10px 18px; font: inherit; font-weight: 900; cursor: pointer; }
+#auto-toggle.on { background: linear-gradient(180deg,#43a047,#2e7d32); color:#fff; border-color:#2e7d32; }
+
+.battle-log { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 14px; box-shadow: var(--shadow); }
+.log { display: flex; flex-direction: column-reverse; gap: 5px; max-height: 220px; overflow-y: auto; font-size: 13px; }
+.log .line { padding: 5px 8px; border-radius: 8px; background: #f7f9fb; line-height: 1.4; }
+.log .line.dmg { background: #fdeced; }
+.log .line.heal { background: #eaf6f0; }
+.log .line.sys { background: #eef4fb; font-weight: 800; }
+.log .line.win { background: #e8f5e9; font-weight: 900; color: #2e7d32; }
+.log .line.lose { background: #ffebee; font-weight: 900; color: #c62828; }
+
+@media (max-width: 560px) {
+  .action-btn { min-width: 100%; }
+}
