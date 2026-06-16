@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>헌혈의 집 · 합성소</title>
+    <link rel="stylesheet" href="./fusion-lab.css" />
+  </head>
+  <body>
+    <main class="fl-shell">
+      <header class="fl-header">
+        <p class="eyebrow">fusion lab</p>
+        <h1>합성소</h1>
+        <p>같은 등급 카드를 합성해 상위 등급으로 도약합니다. 대부분 실패하지만 천장(연속 실패 보정)으로 노력하면 반드시 도달합니다. 카드 뽑기는 없습니다.</p>
+        <nav class="fl-nav">
+          <a href="./index.html">운영 본부</a>
+          <a href="./job-lab.html">배치 육성소</a>
+          <a href="./battle-prototype.html">전투 프로토타입</a>
+        </nav>
+      </header>
+
+      <section class="fl-inventory">
+        <h2>보유 카드</h2>
+        <div id="inv-row" class="inv-row"></div>
+        <div class="inv-actions">
+          <button id="grant-n" class="btn-good">＋ 일반(N) 카드 5장 받기 (출석/사냥 시뮬)</button>
+          <button id="reset-inv" class="btn-ghost">초기화</button>
+        </div>
+        <div id="stats-row" class="stats-row"></div>
+      </section>
+
+      <section class="fl-jumps">
+        <h2>합성 도약</h2>
+        <div id="jump-list" class="jump-list"></div>
+      </section>
+
+      <section class="fl-log">
+        <h2>합성 로그</h2>
+        <div id="log" class="log"></div>
+      </section>
+    </main>
+    <script src="./fusion-lab.js"></script>
+  </body>
+</html>
