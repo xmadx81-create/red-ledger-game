@@ -1,0 +1,12 @@
+{
+  "name": "openai-image-mcp",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "헌혈의 집(혈연센터) 프로젝트용 OpenAI Images MCP 서버. 게임 에셋 생성 + 저장 + 매니페스트 기록.",
+  "bin": { "openai-image-mcp": "server.mjs" },
+  "scripts": { "start": "node server.mjs" },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.6.0"
+  }
+}

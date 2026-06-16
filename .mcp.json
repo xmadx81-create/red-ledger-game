@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "openai-image": {
+      "command": "node",
+      "args": ["mcp/openai-image/server.mjs"],
+      "env": {
+        "OPENAI_API_KEY": "${OPENAI_API_KEY}",
+        "OPENAI_IMAGE_MODEL": "gpt-image-1"
+      }
+    }
+  }
+}
