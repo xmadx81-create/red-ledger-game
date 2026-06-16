@@ -74,6 +74,22 @@
         { "actionId": "NG-AID", "name": "응급 처치", "bloodCost": 2, "kind": "heal", "scale": "PERSUADE", "power": 20, "target": "ally", "desc": "아군 회복." }
       ]
     },
+    "defend": {
+      "title": "센터 방어전",
+      "goalName": "격퇴 진행",
+      "goalTarget": 110,
+      "riskName": "시설 붕괴",
+      "riskStart": 10,
+      "riskMax": 100,
+      "riskPerEnemyTurn": 18,
+      "turnLimit": 11,
+      "desc": "방어 태세로 격퇴 진행을 채우면 승리. 시설 붕괴가 가득 차거나 전멸·턴 초과 시 패배. 방어력·체력(수호자)이 핵심.",
+      "actions": [
+        { "actionId": "DF-GUARD", "name": "방어 태세", "bloodCost": 2, "kind": "goalUp", "scale": "DEF", "scaleFactor": 0.30, "power": 12, "target": "self", "desc": "격퇴 진행 상승 (방어력 비례)." },
+        { "actionId": "DF-LOCK", "name": "보안 봉쇄", "bloodCost": 1, "kind": "riskDown", "scale": "VIT", "power": 14, "target": "self", "desc": "시설 붕괴 감소 (체력 비례)." },
+        { "actionId": "DF-AID", "name": "응급 처치", "bloodCost": 2, "kind": "heal", "scale": "PERSUADE", "power": 18, "target": "ally", "desc": "아군 회복." }
+      ]
+    },
     "infiltrate": {
       "title": "봉인 구역 잠입전",
       "goalName": "잠입 진행",

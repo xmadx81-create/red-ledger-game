@@ -14,11 +14,13 @@ const els = {
   modeBattle: document.querySelector('#mode-battle'),
   modeNegotiate: document.querySelector('#mode-negotiate'),
   modeInfiltrate: document.querySelector('#mode-infiltrate'),
+  modeDefend: document.querySelector('#mode-defend'),
   objective: document.querySelector('#objective'),
   log: document.querySelector('#log')
 };
 let mode = 'battle'; // 'battle' | 'negotiate' | 'infiltrate'
-function modeLabel(m) { return ({ battle: '섬멸전', negotiate: '설득전', infiltrate: '잠입전' })[m] || m; }
+function modeLabel(m) { return ({ battle: '섬멸전', negotiate: '설득전', infiltrate: '잠입전', defend: '방어전' })[m] || m; }
+const OBJ_MODES = ['negotiate', 'infiltrate', 'defend'];
 
 const AUTO_DELAY = 600;
 const PARTY_KEY = 'hbh.party.v1';
@@ -160,7 +162,7 @@ function initState() {
     auto: keepAuto,
     mode,
     goal: 0,
-    risk: (mode === 'negotiate' || mode === 'infiltrate') ? setup.objectiveModes[mode].riskStart : 0,
+    risk: OBJ_MODES.includes(mode) ? setup.objectiveModes[mode].riskStart : 0,
     rewardsGranted: false,
     over: false
   };
@@ -264,7 +266,7 @@ function pickTarget(unit) {
   resolvePlayerAction(unit);
 }
 
-function isObjMode() { return state.mode === 'negotiate' || state.mode === 'infiltrate'; }
+function isObjMode() { return OBJ_MODES.includes(state.mode); }
 function objCfg() { return setup.objectiveModes[state.mode]; }
 function statVal(actor, key) {
   if (actor.derived && key in actor.derived) return actor.derived[key];
@@ -565,11 +567,12 @@ function render() {
   els.modeBattle.classList.toggle('on', state.mode === 'battle');
   els.modeNegotiate.classList.toggle('on', state.mode === 'negotiate');
   els.modeInfiltrate.classList.toggle('on', state.mode === 'infiltrate');
+  els.modeDefend.classList.toggle('on', state.mode === 'defend');
 
   // 목표 바 (설득전/잠입전)
   if (isObjMode()) {
     const c = objCfg();
-    const icon = state.mode === 'negotiate' ? '🕊' : '🥷';
+    const icon = ({ negotiate: '🕊', infiltrate: '🥷', defend: '🛡' })[state.mode] || '🎯';
     const gp = Math.round((state.goal / c.goalTarget) * 100);
     const rp = Math.round((state.risk / c.riskMax) * 100);
     els.objective.className = 'objective show';
@@ -650,6 +653,7 @@ els.autoToggle.addEventListener('click', () => {
 els.modeBattle.addEventListener('click', () => { if (mode !== 'battle') { mode = 'battle'; initState(); } });
 els.modeNegotiate.addEventListener('click', () => { if (mode !== 'negotiate') { mode = 'negotiate'; initState(); } });
 els.modeInfiltrate.addEventListener('click', () => { if (mode !== 'infiltrate') { mode = 'infiltrate'; initState(); } });
+els.modeDefend.addEventListener('click', () => { if (mode !== 'defend') { mode = 'defend'; initState(); } });
 
 function renderPartySource() {
   if (!labParty.length) {
