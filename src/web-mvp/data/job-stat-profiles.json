@@ -1,0 +1,33 @@
+{
+  "version": "0.1.0",
+  "description": "스탯 분포 → 직업군 후보 산출 규칙. 카드의 1차 스탯(card-stat-schema.json) 분포가 직업의 dominantStats 조건을 충족하면 그 직업이 '후보'로 떠오르고, 유저가 선택한다. 종족과 무관하게 스탯만으로 판정한다(자유 직업). 수치는 v0 초안.",
+  "candidacyRule": {
+    "method": "share-threshold",
+    "definition": "각 dominantStat의 값이 budget(스탯 총량) 대비 minShare 이상이면 해당 스탯 조건 충족. 직업의 모든 dominantStats 조건을 충족하면 후보로 등록.",
+    "raceAgnostic": true,
+    "multipleCandidates": true,
+    "playerSelectsOne": true,
+    "reclassable": "스탯이 유동적이므로 재배치로 스탯을 바꾸면 다른 직업 후보로 전직 가능."
+  },
+  "jobs": [
+    { "jobId": "JOBX-MAGE",      "name": "마법사",   "archetype": true,  "dominantStats": ["INT"],        "minShare": 0.30, "role": "기술공격 딜러", "grantsSkillTypes": ["active", "ultimate"], "viaLocations": ["LOC-MANA-LAB"] },
+    { "jobId": "JOBX-WARRIOR",   "name": "전사",     "archetype": true,  "dominantStats": ["STR"],        "minShare": 0.30, "role": "근접 딜러", "grantsSkillTypes": ["active", "passive"], "viaLocations": ["LOC-TRAINING", "LOC-MINE"] },
+    { "jobId": "JOBX-GUARDIAN",  "name": "수호자",   "archetype": true,  "dominantStats": ["VIT", "STR"], "minShare": 0.22, "role": "탱커/방어", "grantsSkillTypes": ["passive", "active"], "viaLocations": ["LOC-TRAINING", "LOC-SECURITY"] },
+    { "jobId": "JOBX-ARCHER",    "name": "궁수",     "archetype": true,  "dominantStats": ["DEX", "ACC"], "minShare": 0.22, "role": "원거리 딜러", "grantsSkillTypes": ["active", "passive"], "viaLocations": ["LOC-RANGE"] },
+    { "jobId": "JOBX-ROGUE",     "name": "도적",     "archetype": true,  "dominantStats": ["DEX"],        "minShare": 0.30, "role": "잠입/회피/치명", "grantsSkillTypes": ["active", "field"], "viaLocations": ["LOC-INFIL"] },
+    { "jobId": "JOBX-HEALER",    "name": "힐러",     "archetype": true,  "dominantStats": ["INT", "CHA"], "minShare": 0.20, "role": "회복/지원", "grantsSkillTypes": ["support", "active"], "viaLocations": ["LOC-CLINIC"] },
+    { "jobId": "JOBX-TRICKSTER", "name": "술사",     "archetype": true,  "dominantStats": ["LUK"],        "minShare": 0.25, "role": "변수/치명/드랍", "grantsSkillTypes": ["field", "passive"], "viaLocations": ["LOC-FORTUNE"] },
+    { "jobId": "JOBX-PSYCHIC",   "name": "정신술사", "archetype": true,  "dominantStats": ["WIL", "INT"], "minShare": 0.20, "role": "정신계 제어/디버프", "grantsSkillTypes": ["active", "passive"], "viaLocations": ["LOC-MANA-LAB"] },
+
+    { "jobId": "JOB-MEDIC",      "name": "의무관",   "archetype": false, "dominantStats": ["INT", "CHA"], "minShare": 0.18, "role": "의료형", "linksJobsJson": "JOB-MEDIC", "viaLocations": ["LOC-CLINIC"] },
+    { "jobId": "JOB-GUARD",      "name": "보안요원", "archetype": false, "dominantStats": ["VIT", "STR"], "minShare": 0.20, "role": "방어형", "linksJobsJson": "JOB-GUARD", "viaLocations": ["LOC-SECURITY"] },
+    { "jobId": "JOB-NEGOTIATOR", "name": "협상가",   "archetype": false, "dominantStats": ["CHA"],        "minShare": 0.30, "role": "교섭형", "linksJobsJson": "JOB-NEGOTIATOR", "viaLocations": ["LOC-LOBBY"] },
+    { "jobId": "JOB-ARCHIVIST",  "name": "기록관",   "archetype": false, "dominantStats": ["INT", "ACC"], "minShare": 0.20, "role": "정보형", "linksJobsJson": "JOB-ARCHIVIST", "viaLocations": ["LOC-ARCHIVE"] },
+    { "jobId": "JOB-LOGISTICS",  "name": "수송원",   "archetype": false, "dominantStats": ["DEX", "VIT"], "minShare": 0.20, "role": "물류형", "linksJobsJson": "JOB-LOGISTICS", "viaLocations": ["LOC-GARAGE"] }
+  ],
+  "notes": [
+    "JOBX-* = 전투 아키타입 직업(종족 무관, 마법사/전사 등). JOB-* = 기존 jobs.json 운영 직업과 연결.",
+    "jobs.json의 mainStats는 옛 시뮬 자원 기준이므로, 카드 스탯 기반 판정은 본 파일의 dominantStats를 사용한다.",
+    "minShare/스탯 축은 v0. 직업 수가 늘면 dominantStats 조합으로 무한 확장 가능(자유 직업 체계)."
+  ]
+}

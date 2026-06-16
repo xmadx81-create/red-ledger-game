@@ -60,7 +60,7 @@
       { "activityId": "던전 탐색", "raise": ["DEX", "INT"] },
       { "activityId": "전투 지휘", "raise": ["STR", "INT"] }
     ],
-    "activitySource": "character-growth-schema.json workTraits 재활용 + 생활 노동(채광) 추가"
+    "activitySource": "여기 목록은 추상 활동 예시다. 실제 게임 내 활동 인스턴스(장소별 작업)는 placement-locations.json이 권위 소스이며, 각 장소의 raise 프로필이 본 재분배 규칙을 적용받는다. (character-growth-schema.json workTraits 재활용 + 생활 노동(채광) 포함)"
   },
   "lockSystem": {
     "rule": "스탯을 잠그면 활동 재분배 시 감소하지 않는다(보호). 잠긴 스탯은 차감 풀에서 제외된다.",
