@@ -13,10 +13,12 @@ const els = {
   partySource: document.querySelector('#party-source'),
   modeBattle: document.querySelector('#mode-battle'),
   modeNegotiate: document.querySelector('#mode-negotiate'),
+  modeInfiltrate: document.querySelector('#mode-infiltrate'),
   objective: document.querySelector('#objective'),
   log: document.querySelector('#log')
 };
-let mode = 'battle'; // 'battle' | 'negotiate'
+let mode = 'battle'; // 'battle' | 'negotiate' | 'infiltrate'
+function modeLabel(m) { return ({ battle: '섬멸전', negotiate: '설득전', infiltrate: '잠입전' })[m] || m; }
 
 const AUTO_DELAY = 600;
 const PARTY_KEY = 'hbh.party.v1';
@@ -157,8 +159,8 @@ function initState() {
     pendingActor: null,
     auto: keepAuto,
     mode,
-    empathy: 0,
-    panic: mode === 'negotiate' ? setup.negotiation.panicStart : 0,
+    goal: 0,
+    risk: (mode === 'negotiate' || mode === 'infiltrate') ? setup.objectiveModes[mode].riskStart : 0,
     rewardsGranted: false,
     over: false
   };
@@ -168,7 +170,7 @@ function initState() {
     addLog(`시너지 발동: ${state.synergy.active.map((s) => s.name).join(', ')}`, 'sys');
   }
   addLog(`전투 시작! 파티 ${state.party.length}명 vs 적 ${state.enemies.length}명.`, 'sys');
-  if (stageId) addLog(`스테이지: ${stageName[stageId] || stageId} (${state.mode === 'negotiate' ? '설득전' : '섬멸전'})`, 'sys');
+  if (stageId) addLog(`스테이지: ${stageName[stageId] || stageId} (${modeLabel(state.mode)})`, 'sys');
   render();
   if (state.auto) scheduleAuto();
 }
@@ -262,8 +264,15 @@ function pickTarget(unit) {
   resolvePlayerAction(unit);
 }
 
+function isObjMode() { return state.mode === 'negotiate' || state.mode === 'infiltrate'; }
+function objCfg() { return setup.objectiveModes[state.mode]; }
+function statVal(actor, key) {
+  if (actor.derived && key in actor.derived) return actor.derived[key];
+  return actor.primary ? (actor.primary[key] || 0) : 0;
+}
+
 function currentActions() {
-  return state.mode === 'negotiate' ? setup.negotiation.actions : setup.actions;
+  return isObjMode() ? objCfg().actions : setup.actions;
 }
 
 function applyAction(a, actor, target) {
@@ -271,14 +280,17 @@ function applyAction(a, actor, target) {
   else if (a.kind === 'heal') heal(actor, target, a.scale, a.power);
   else if (a.kind === 'shield') shield(actor, target, a.scale, a.power);
   else if (a.kind === 'debuff') { target.atkDebuff = 1; addLog(`${actor.name} → ${target.name} 다음 공격 약화(봉쇄)`, 'sys'); }
-  else if (a.kind === 'empathy') {
-    const g = Math.round((a.power + actor.derived.PERSUADE * 0.35) * state.synergy.mult.healMult);
-    state.empathy = Math.min(setup.negotiation.empathyTarget, state.empathy + g);
-    addLog(`${actor.name}의 설득 → 공감 +${g}`, 'heal');
-  } else if (a.kind === 'calm') {
-    const r = Math.round(a.power + (actor.primary ? actor.primary.CHA : 0) * 0.8);
-    state.panic = Math.max(0, state.panic - r);
-    addLog(`${actor.name}의 진정 안내 → 패닉 -${r}`, 'heal');
+  else if (a.kind === 'goalUp') {
+    const c = objCfg();
+    const amt = Math.round((a.power + statVal(actor, a.scale) * (a.scaleFactor || 0.35)) * state.synergy.mult.healMult);
+    state.goal = Math.min(c.goalTarget, state.goal + amt);
+    if (a.selfRisk) state.risk = Math.min(c.riskMax, state.risk + a.selfRisk);
+    addLog(`${actor.name}의 ${a.name} → ${c.goalName} +${amt}${a.selfRisk ? ` (${c.riskName} +${a.selfRisk})` : ''}`, 'heal');
+  } else if (a.kind === 'riskDown') {
+    const c = objCfg();
+    const r = Math.round(a.power + statVal(actor, a.scale) * 0.6);
+    state.risk = Math.max(0, state.risk - r);
+    addLog(`${actor.name}의 ${a.name} → ${c.riskName} -${r}`, 'heal');
   }
 }
 
@@ -337,13 +349,14 @@ function enemyTurn() {
   render();
   let i = 0;
   const enemies = livingEnemies();
-  let panicAdded = false;
+  let riskAdded = false;
   const step = () => {
     if (state.over) return;
-    if (state.mode === 'negotiate' && !panicAdded) {
-      panicAdded = true;
-      state.panic = Math.min(setup.negotiation.panicMax, state.panic + setup.negotiation.panicPerEnemyTurn);
-      addLog(`군중 동요 → 패닉 +${setup.negotiation.panicPerEnemyTurn}`, 'sys');
+    if (isObjMode() && !riskAdded) {
+      riskAdded = true;
+      const c = objCfg();
+      state.risk = Math.min(c.riskMax, state.risk + c.riskPerEnemyTurn);
+      addLog(`적 행동 → ${c.riskName} +${c.riskPerEnemyTurn}`, 'sys');
       if (checkEnd()) return;
     }
     if (i >= enemies.length) { startPlayerTurn(); return; }
@@ -429,22 +442,36 @@ function autoChooseSkill() {
   return null;
 }
 
-function autoChooseNegotiate() {
+function bestActorFor(allies, scale) {
+  return allies.slice().sort((a, b) => statVal(b, scale) - statVal(a, scale))[0];
+}
+
+function autoChooseObjective() {
   const allies = livingParty();
   if (!allies.length) return null;
-  const acts = setup.negotiation.actions;
-  const calm = acts.find((a) => a.kind === 'calm');
-  const persuade = acts.find((a) => a.kind === 'empathy');
-  const aid = acts.find((a) => a.kind === 'heal');
-  const neg = setup.negotiation;
-  const bestP = allies.slice().sort((a, b) => b.derived.PERSUADE - a.derived.PERSUADE)[0];
-  if (state.panic > neg.panicMax * 0.55 && state.blood >= calm.bloodCost) {
-    const bestC = allies.slice().sort((a, b) => ((b.primary ? b.primary.CHA : 0) - (a.primary ? a.primary.CHA : 0)))[0];
-    return { action: calm, actor: bestC, target: bestC };
+  const c = objCfg();
+  const acts = c.actions;
+  const riskDown = acts.find((a) => a.kind === 'riskDown');
+  const heal = acts.find((a) => a.kind === 'heal');
+  const goalUps = acts.filter((a) => a.kind === 'goalUp');
+  // 1) 위험이 높으면 낮추기
+  if (riskDown && state.risk > c.riskMax * 0.55 && state.blood >= riskDown.bloodCost) {
+    const actor = bestActorFor(allies, riskDown.scale);
+    return { action: riskDown, actor, target: actor };
   }
-  const hurt = allies.filter((u) => u.hp / u.maxHp < 0.45).sort((a, b) => a.hp - b.hp)[0];
-  if (hurt && state.blood >= aid.bloodCost) return { action: aid, actor: bestP, target: hurt };
-  if (state.blood >= persuade.bloodCost) return { action: persuade, actor: bestP, target: bestP };
+  // 2) 위급 아군 회복
+  if (heal) {
+    const hurt = allies.filter((u) => u.hp / u.maxHp < 0.45).sort((a, b) => a.hp - b.hp)[0];
+    if (hurt && state.blood >= heal.bloodCost) return { action: heal, actor: bestActorFor(allies, heal.scale), target: hurt };
+  }
+  // 3) 목표 올리기 (위험이 낮으면 고위험·고효율, 높으면 저위험 우선)
+  const affordable = goalUps.filter((a) => state.blood >= a.bloodCost);
+  if (affordable.length) {
+    let pick;
+    if (state.risk < c.riskMax * 0.6) pick = affordable.slice().sort((a, b) => (b.power + (b.selfRisk || 0)) - (a.power + (a.selfRisk || 0)))[0];
+    else pick = affordable.slice().sort((a, b) => (a.selfRisk || 0) - (b.selfRisk || 0))[0];
+    return { action: pick, actor: bestActorFor(allies, pick.scale), target: bestActorFor(allies, pick.scale) };
+  }
   return null;
 }
 
@@ -456,8 +483,8 @@ function autoStep() {
   if (!state.auto || state.over || state.phase !== 'player') return;
   state.pendingAction = null;
   state.pendingActor = null;
-  if (state.mode === 'negotiate') {
-    const c = autoChooseNegotiate();
+  if (isObjMode()) {
+    const c = autoChooseObjective();
     if (!c) { endTurnClicked(); return; }
     state.blood -= c.action.bloodCost;
     applyAction(c.action, c.actor, c.target);
@@ -486,12 +513,12 @@ function autoStep() {
 }
 
 function checkEnd() {
-  if (state.mode === 'negotiate') {
-    const neg = setup.negotiation;
-    if (state.empathy >= neg.empathyTarget) { state.over = true; addLog('설득 성공! 공감을 모두 얻었습니다.', 'win'); grantRewards(); render(); return true; }
-    if (state.panic >= neg.panicMax) { state.over = true; addLog('설득 실패... 군중이 패닉에 빠졌습니다.', 'lose'); render(); return true; }
+  if (isObjMode()) {
+    const c = objCfg();
+    if (state.goal >= c.goalTarget) { state.over = true; addLog(`성공! ${c.goalName} 목표를 달성했습니다.`, 'win'); grantRewards(); render(); return true; }
+    if (state.risk >= c.riskMax) { state.over = true; addLog(`실패... ${c.riskName}이(가) 한계에 도달했습니다.`, 'lose'); render(); return true; }
     if (livingParty().length === 0) { state.over = true; addLog('패배... 파티가 전멸했습니다.', 'lose'); render(); return true; }
-    if (state.turn > neg.turnLimit) { state.over = true; addLog('설득 실패... 시간이 초과되었습니다.', 'lose'); render(); return true; }
+    if (state.turn > c.turnLimit) { state.over = true; addLog('실패... 시간이 초과되었습니다.', 'lose'); render(); return true; }
     return false;
   }
   if (livingEnemies().length === 0) {
@@ -537,17 +564,19 @@ function render() {
   // 모드 버튼
   els.modeBattle.classList.toggle('on', state.mode === 'battle');
   els.modeNegotiate.classList.toggle('on', state.mode === 'negotiate');
+  els.modeInfiltrate.classList.toggle('on', state.mode === 'infiltrate');
 
-  // 목표 바 (설득전)
-  if (state.mode === 'negotiate') {
-    const neg = setup.negotiation;
-    const ep = Math.round((state.empathy / neg.empathyTarget) * 100);
-    const pa = Math.round((state.panic / neg.panicMax) * 100);
+  // 목표 바 (설득전/잠입전)
+  if (isObjMode()) {
+    const c = objCfg();
+    const icon = state.mode === 'negotiate' ? '🕊' : '🥷';
+    const gp = Math.round((state.goal / c.goalTarget) * 100);
+    const rp = Math.round((state.risk / c.riskMax) * 100);
     els.objective.className = 'objective show';
     els.objective.innerHTML = `
-      <div class="obj-title">🕊 ${neg.title} · ${state.turn}/${neg.turnLimit}턴</div>
-      <div class="obj-bar-row"><div class="obj-label"><span>공감(목표 ${neg.empathyTarget})</span><span>${state.empathy}/${neg.empathyTarget}</span></div><div class="obj-bar"><div class="obj-fill-empathy" style="width:${ep}%"></div></div></div>
-      <div class="obj-bar-row"><div class="obj-label"><span>패닉(한계 ${neg.panicMax})</span><span>${state.panic}/${neg.panicMax}</span></div><div class="obj-bar"><div class="obj-fill-panic" style="width:${pa}%"></div></div></div>`;
+      <div class="obj-title">${icon} ${c.title} · ${state.turn}/${c.turnLimit}턴</div>
+      <div class="obj-bar-row"><div class="obj-label"><span>${c.goalName}(목표 ${c.goalTarget})</span><span>${state.goal}/${c.goalTarget}</span></div><div class="obj-bar"><div class="obj-fill-empathy" style="width:${gp}%"></div></div></div>
+      <div class="obj-bar-row"><div class="obj-label"><span>${c.riskName}(한계 ${c.riskMax})</span><span>${state.risk}/${c.riskMax}</span></div><div class="obj-bar"><div class="obj-fill-panic" style="width:${rp}%"></div></div></div>`;
   } else {
     els.objective.className = 'objective';
     els.objective.innerHTML = '';
@@ -620,6 +649,7 @@ els.autoToggle.addEventListener('click', () => {
 });
 els.modeBattle.addEventListener('click', () => { if (mode !== 'battle') { mode = 'battle'; initState(); } });
 els.modeNegotiate.addEventListener('click', () => { if (mode !== 'negotiate') { mode = 'negotiate'; initState(); } });
+els.modeInfiltrate.addEventListener('click', () => { if (mode !== 'infiltrate') { mode = 'infiltrate'; initState(); } });
 
 function renderPartySource() {
   if (!labParty.length) {

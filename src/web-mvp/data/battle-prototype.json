@@ -57,19 +57,40 @@
     { "id": "ROLE-TRINITY", "name": "역할 균형", "effect": { "dmgMult": 1.12, "healMult": 1.12, "defMult": 1.0 }, "desc": "전사·마법사·힐러를 모두 편성하면 피해·회복 +12%." },
     { "id": "HUMAN-PACT", "name": "인간 연대", "effect": { "dmgMult": 1.0, "healMult": 1.0, "defMult": 1.1 }, "desc": "인간 2명 이상 편성 시 방어 +10%." }
   ],
-  "negotiation": {
-    "title": "오해한 인간 세력 설득전",
-    "empathyTarget": 130,
-    "panicStart": 20,
-    "panicMax": 100,
-    "panicPerEnemyTurn": 16,
-    "turnLimit": 11,
-    "actions": [
-      { "actionId": "NG-PERSUADE", "name": "설득", "bloodCost": 2, "kind": "empathy", "scale": "PERSUADE", "power": 12, "target": "self", "desc": "공감 게이지 상승 (설득력 비례)." },
-      { "actionId": "NG-CALM", "name": "진정 안내", "bloodCost": 1, "kind": "calm", "scale": "CHA", "power": 10, "target": "self", "desc": "패닉 감소 (친화 비례)." },
-      { "actionId": "NG-AID", "name": "응급 처치", "bloodCost": 2, "kind": "heal", "scale": "PERSUADE", "power": 20, "target": "ally", "desc": "아군 회복 (피해 받을 때)." }
-    ],
-    "desc": "적을 쓰러뜨리는 대신 공감 게이지를 목표치까지 채우면 승리. 패닉이 가득 차거나 파티 전멸·턴 초과 시 패배."
+  "objectiveModes": {
+    "negotiate": {
+      "title": "오해한 인간 세력 설득전",
+      "goalName": "공감",
+      "goalTarget": 130,
+      "riskName": "패닉",
+      "riskStart": 20,
+      "riskMax": 100,
+      "riskPerEnemyTurn": 16,
+      "turnLimit": 11,
+      "desc": "공감 게이지를 목표치까지 채우면 승리. 패닉이 가득 차거나 파티 전멸·턴 초과 시 패배. 설득력(협상가·힐러)이 핵심.",
+      "actions": [
+        { "actionId": "NG-PERSUADE", "name": "설득", "bloodCost": 2, "kind": "goalUp", "scale": "PERSUADE", "scaleFactor": 0.35, "power": 12, "target": "self", "desc": "공감 상승 (설득력 비례)." },
+        { "actionId": "NG-CALM", "name": "진정 안내", "bloodCost": 1, "kind": "riskDown", "scale": "CHA", "power": 10, "target": "self", "desc": "패닉 감소 (친화 비례)." },
+        { "actionId": "NG-AID", "name": "응급 처치", "bloodCost": 2, "kind": "heal", "scale": "PERSUADE", "power": 20, "target": "ally", "desc": "아군 회복." }
+      ]
+    },
+    "infiltrate": {
+      "title": "봉인 구역 잠입전",
+      "goalName": "잠입 진행",
+      "goalTarget": 120,
+      "riskName": "발각도",
+      "riskStart": 15,
+      "riskMax": 100,
+      "riskPerEnemyTurn": 14,
+      "turnLimit": 11,
+      "desc": "잠입 진행을 목표치까지 채우면 승리. 발각도가 가득 차거나 파티 전멸·턴 초과 시 패배. 속도(도적)·지능(기록관)이 핵심.",
+      "actions": [
+        { "actionId": "IF-SNEAK", "name": "은밀 기동", "bloodCost": 2, "kind": "goalUp", "scale": "SPD", "scaleFactor": 0.30, "power": 14, "selfRisk": 4, "target": "self", "desc": "진행 상승 (속도 비례), 발각 약간 증가." },
+        { "actionId": "IF-ERASE", "name": "흔적 제거", "bloodCost": 1, "kind": "riskDown", "scale": "INT", "power": 12, "target": "self", "desc": "발각도 감소 (지능 비례)." },
+        { "actionId": "IF-EVIDENCE", "name": "증거 회수", "bloodCost": 2, "kind": "goalUp", "scale": "INT", "scaleFactor": 0.35, "power": 18, "selfRisk": 12, "target": "self", "desc": "진행 크게 상승 (지능 비례), 발각 위험 큼." },
+        { "actionId": "IF-AID", "name": "응급 처치", "bloodCost": 2, "kind": "heal", "scale": "PERSUADE", "power": 18, "target": "ally", "desc": "아군 회복." }
+      ]
+    }
   },
   "rules": {
     "hitChance": "기본 0.9 + (공격 HIT - 대상 EVA)/200, 0.5~0.99 클램프",
