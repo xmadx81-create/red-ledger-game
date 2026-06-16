@@ -38,6 +38,7 @@ p { margin: 0; line-height: 1.55; color: var(--muted); }
 #mode-negotiate.on { background:linear-gradient(180deg,#26a69a,#00796b); border-color:#00796b; }
 #mode-infiltrate.on { background:linear-gradient(180deg,#7e57c2,#4527a0); border-color:#4527a0; }
 #mode-defend.on { background:linear-gradient(180deg,#ffa726,#ef6c00); border-color:#ef6c00; }
+#mode-transport.on { background:linear-gradient(180deg,#26c6da,#00838f); border-color:#00838f; }
 .mode-select { flex-wrap:wrap; }
 .objective { display:none; }
 .objective.show { display:grid; gap:8px; margin-bottom:12px; padding:12px; border-radius:14px; background:#e0f2f1; border:1px solid rgba(0,121,107,.25); }

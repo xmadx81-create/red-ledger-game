@@ -15,12 +15,13 @@ const els = {
   modeNegotiate: document.querySelector('#mode-negotiate'),
   modeInfiltrate: document.querySelector('#mode-infiltrate'),
   modeDefend: document.querySelector('#mode-defend'),
+  modeTransport: document.querySelector('#mode-transport'),
   objective: document.querySelector('#objective'),
   log: document.querySelector('#log')
 };
 let mode = 'battle'; // 'battle' | 'negotiate' | 'infiltrate'
-function modeLabel(m) { return ({ battle: '섬멸전', negotiate: '설득전', infiltrate: '잠입전', defend: '방어전' })[m] || m; }
-const OBJ_MODES = ['negotiate', 'infiltrate', 'defend'];
+function modeLabel(m) { return ({ battle: '섬멸전', negotiate: '설득전', infiltrate: '잠입전', defend: '방어전', transport: '수송전' })[m] || m; }
+const OBJ_MODES = ['negotiate', 'infiltrate', 'defend', 'transport'];
 
 const AUTO_DELAY = 600;
 const PARTY_KEY = 'hbh.party.v1';
@@ -568,11 +569,12 @@ function render() {
   els.modeNegotiate.classList.toggle('on', state.mode === 'negotiate');
   els.modeInfiltrate.classList.toggle('on', state.mode === 'infiltrate');
   els.modeDefend.classList.toggle('on', state.mode === 'defend');
+  els.modeTransport.classList.toggle('on', state.mode === 'transport');
 
   // 목표 바 (설득전/잠입전)
   if (isObjMode()) {
     const c = objCfg();
-    const icon = ({ negotiate: '🕊', infiltrate: '🥷', defend: '🛡' })[state.mode] || '🎯';
+    const icon = ({ negotiate: '🕊', infiltrate: '🥷', defend: '🛡', transport: '🏍' })[state.mode] || '🎯';
     const gp = Math.round((state.goal / c.goalTarget) * 100);
     const rp = Math.round((state.risk / c.riskMax) * 100);
     els.objective.className = 'objective show';
@@ -654,6 +656,7 @@ els.modeBattle.addEventListener('click', () => { if (mode !== 'battle') { mode =
 els.modeNegotiate.addEventListener('click', () => { if (mode !== 'negotiate') { mode = 'negotiate'; initState(); } });
 els.modeInfiltrate.addEventListener('click', () => { if (mode !== 'infiltrate') { mode = 'infiltrate'; initState(); } });
 els.modeDefend.addEventListener('click', () => { if (mode !== 'defend') { mode = 'defend'; initState(); } });
+els.modeTransport.addEventListener('click', () => { if (mode !== 'transport') { mode = 'transport'; initState(); } });
 
 function renderPartySource() {
   if (!labParty.length) {

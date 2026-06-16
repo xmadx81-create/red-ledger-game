@@ -90,6 +90,23 @@
         { "actionId": "DF-AID", "name": "응급 처치", "bloodCost": 2, "kind": "heal", "scale": "PERSUADE", "power": 18, "target": "ally", "desc": "아군 회복." }
       ]
     },
+    "transport": {
+      "title": "야간 수송 아케이드",
+      "goalName": "수송 진행",
+      "goalTarget": 120,
+      "riskName": "추격 위험",
+      "riskStart": 15,
+      "riskMax": 100,
+      "riskPerEnemyTurn": 15,
+      "turnLimit": 11,
+      "desc": "회피 기동으로 수송 진행을 채우면 승리. 추격 위험이 가득 차거나 전멸·턴 초과 시 패배. 회피(도적)·행운(술사)이 핵심.",
+      "actions": [
+        { "actionId": "TR-EVADE", "name": "회피 기동", "bloodCost": 2, "kind": "goalUp", "scale": "EVA", "scaleFactor": 0.45, "power": 12, "target": "self", "desc": "수송 진행 상승 (회피 비례)." },
+        { "actionId": "TR-DECOY", "name": "교란 미끼", "bloodCost": 1, "kind": "riskDown", "scale": "LUK", "power": 12, "target": "self", "desc": "추격 위험 감소 (행운 비례)." },
+        { "actionId": "TR-DASH", "name": "가속 돌파", "bloodCost": 2, "kind": "goalUp", "scale": "LUK", "scaleFactor": 0.5, "power": 14, "selfRisk": 8, "target": "self", "desc": "수송 진행 크게 상승 (행운 비례), 추격 위험 증가." },
+        { "actionId": "TR-AID", "name": "응급 처치", "bloodCost": 2, "kind": "heal", "scale": "PERSUADE", "power": 18, "target": "ally", "desc": "아군 회복." }
+      ]
+    },
     "infiltrate": {
       "title": "봉인 구역 잠입전",
       "goalName": "잠입 진행",
