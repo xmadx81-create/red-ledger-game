@@ -272,7 +272,7 @@ async function checkCardGameData() {
 
 // ---- 프로토타입 JS 구문 (회귀 방지) ----
 async function checkPrototypeSyntax() {
-  const protos = ['hub.js', 'world-map.js', 'fusion-lab.js', 'job-lab.js', 'battle-prototype.js', 'collection.js', 'hidden-lab.js', 'card-studio.js'];
+  const protos = ['hub.js', 'world-map.js', 'fusion-lab.js', 'job-lab.js', 'battle-prototype.js', 'collection.js', 'hidden-lab.js', 'gallery.js', 'card-studio.js'];
   for (const f of protos) {
     const src = await readFile(path.join(WEB_DIR, f), 'utf8');
     try { new Function(src); } catch (e) { throw new Error(`${f} 구문 오류: ${e.message}`); }
