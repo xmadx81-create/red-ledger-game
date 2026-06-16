@@ -62,6 +62,12 @@ function grantRewards() {
     const r = Math.random(); let g = 'SR', acc = 0;
     for (const k of Object.keys(w)) { acc += w[k]; if (r < acc) { g = k; break; } }
     inv.counts[g] = (inv.counts[g] || 0) + 1; got.push(`★잭팟 ${g} ×1`); jackpot = true;
+    try {
+      const coll = JSON.parse(localStorage.getItem('hbh.collection.v1')) || [];
+      coll.push({ uid: `COL-${Date.now()}-${Math.floor(Math.random() * 1000)}`, grade: g, name: '전장의 잭팟 카드', via: '전투 잭팟', at: Date.now() });
+      if (coll.length > 300) coll.splice(0, coll.length - 300);
+      localStorage.setItem('hbh.collection.v1', JSON.stringify(coll));
+    } catch (e) { /* noop */ }
   }
   saveInv(inv);
   if (got.length) addLog(`전투 보상: ${got.join(', ')} → 인벤토리 적립`, jackpot ? 'win' : 'heal');

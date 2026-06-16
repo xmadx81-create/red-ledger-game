@@ -1,5 +1,17 @@
 const DATA_PATH = './data/';
 const INV_KEY = 'hbh.inventory.v1';
+const COLLECTION_KEY = 'hbh.collection.v1';
+let namePool = [];
+
+function loadCollection() { try { return JSON.parse(localStorage.getItem(COLLECTION_KEY)) || []; } catch (e) { return []; } }
+function saveCollection(c) { localStorage.setItem(COLLECTION_KEY, JSON.stringify(c)); }
+function recordCard(grade, via) {
+  const coll = loadCollection();
+  const name = namePool.length ? namePool[Math.floor(Math.random() * namePool.length)] : '무명 카드';
+  coll.push({ uid: `COL-${Date.now()}-${Math.floor(Math.random() * 1000)}`, grade, name, via, at: Date.now() });
+  if (coll.length > 300) coll.splice(0, coll.length - 300);
+  saveCollection(coll);
+}
 
 const els = {
   invRow: document.querySelector('#inv-row'),
@@ -75,6 +87,7 @@ function attempt(j) {
     inv.counts[j.to] += 1;
     inv.pity[key] = 0;
     inv.success += 1;
+    recordCard(j.to, '합성');
     const tName = tierOf(j.to).name || j.to;
     if (j.to === 'L') { inv.madeL += 1; addLog(`★☆★ 전설(${tName}) 카드 탄생!! ${guaranteed ? '(천장 확정)' : `(${Math.round(j.baseSuccessRate * 100)}% 돌파!)`}`, 'big'); }
     else addLog(`합성 성공! ${j.from} → ${tName}(${j.to}) ${guaranteed ? '(천장 확정)' : ''}`, 'ok');
@@ -138,10 +151,13 @@ function render() {
 }
 
 async function boot() {
-  [tree, styles] = await Promise.all([
+  let roster;
+  [tree, styles, roster] = await Promise.all([
     loadJson('fusion-recipe-tree.json'),
-    loadJson('card-style-system.json')
+    loadJson('card-style-system.json'),
+    loadJson('hero-roster-by-race.json').catch(() => null)
   ]);
+  namePool = roster ? (roster.races || []).flatMap((r) => (r.heroes || []).map((h) => h.name)) : [];
   inv = loadInv();
   els.grantN.addEventListener('click', grantN);
   els.resetInv.addEventListener('click', resetInv);
