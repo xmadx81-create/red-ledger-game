@@ -31,6 +31,8 @@ p { margin: 0; line-height: 1.55; color: var(--muted); }
 .battle-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
 .battle-nav a { display: inline-flex; min-height: 34px; align-items: center; padding: 6px 12px; border-radius: 999px; background: #fff; color: #c62828; border: 1px solid var(--line); text-decoration: none; font-weight: 800; font-size: 13px; }
 
+.party-source { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; padding: 10px 12px; border-radius: 12px; background: #f3ecff; border: 1px solid rgba(122,53,216,.25); font-weight: 800; font-size: 13px; color: #5e2aa8; }
+.party-source button { margin-left: auto; border: 1px solid rgba(122,53,216,.35); background: #fff; color: #5e2aa8; border-radius: 9px; padding: 6px 12px; font: inherit; font-weight: 900; cursor: pointer; }
 .battle-field { display: grid; gap: 14px; margin-bottom: 16px; }
 .side { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 14px; box-shadow: var(--shadow); }
 .enemy-side { border-color: rgba(229,57,53,0.28); }

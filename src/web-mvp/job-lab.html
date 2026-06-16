@@ -48,6 +48,17 @@
         <div id="selected-job" class="selected-job"></div>
         <div id="job-list" class="job-list"></div>
       </section>
+
+      <section class="lab-party">
+        <h2>전투 파티 (육성소 → 전투)</h2>
+        <p class="party-hint">직업을 선택한 카드를 파티에 담아 전투에 데려갑니다 (최대 3명). 전사·마법사·힐러를 모두 담으면 전투에서 시너지가 발동합니다.</p>
+        <div class="party-add-row">
+          <input id="card-name" class="card-name" placeholder="카드 이름 (선택)" />
+          <button id="add-party" class="btn-good">현재 카드를 파티에 추가</button>
+        </div>
+        <div id="party-saved" class="party-saved"></div>
+        <a id="go-battle" class="btn-battle" href="./battle-prototype.html">이 파티로 전투 시작 →</a>
+      </section>
     </main>
     <script src="./job-lab.js"></script>
   </body>

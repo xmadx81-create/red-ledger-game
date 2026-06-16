@@ -10,10 +10,21 @@ const els = {
   endTurn: document.querySelector('#end-turn'),
   restart: document.querySelector('#restart'),
   autoToggle: document.querySelector('#auto-toggle'),
+  partySource: document.querySelector('#party-source'),
   log: document.querySelector('#log')
 };
 
 const AUTO_DELAY = 600;
+const PARTY_KEY = 'hbh.party.v1';
+
+function loadLabParty() {
+  try { return JSON.parse(localStorage.getItem(PARTY_KEY)) || []; } catch (e) { return []; }
+}
+let labParty = [];
+let useLab = false;
+function activePartyData() {
+  return (useLab && labParty.length) ? labParty : setup.party;
+}
 
 let setup = null;
 let state = null;
@@ -86,7 +97,7 @@ function initState() {
     blood: setup.blood.start,
     turn: 1,
     phase: 'player',
-    party: setup.party.map((p) => makeUnit(p, 'party')),
+    party: activePartyData().map((p) => makeUnit(p, 'party')),
     enemies: setup.enemies.map((e) => makeUnit(e, 'enemy')),
     pendingAction: null,
     pendingActor: null,
@@ -468,6 +479,24 @@ els.autoToggle.addEventListener('click', () => {
   if (state.auto) scheduleAuto();
 });
 
+function renderPartySource() {
+  if (!labParty.length) {
+    els.partySource.innerHTML = '<span>기본 샘플 파티로 전투 중 — 🧪 배치 육성소에서 키운 카드를 데려올 수 있어요.</span>';
+    return;
+  }
+  els.partySource.innerHTML = `<span>현재 파티: ${useLab ? `🧪 육성소 파티 (${labParty.length}명)` : '기본 샘플 파티'}</span>`;
+  const btn = document.createElement('button');
+  btn.textContent = useLab ? '기본 파티로 전환' : '육성 파티로 전환';
+  btn.addEventListener('click', () => { useLab = !useLab; renderPartySource(); initState(); });
+  els.partySource.appendChild(btn);
+}
+
 loadSetup()
-  .then((data) => { setup = data; initState(); })
+  .then((data) => {
+    setup = data;
+    labParty = loadLabParty();
+    useLab = labParty.length > 0;
+    renderPartySource();
+    initState();
+  })
   .catch((err) => { els.turnInfo.textContent = err.message; });

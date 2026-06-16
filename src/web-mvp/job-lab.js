@@ -1,6 +1,8 @@
 const DATA_PATH = './data/';
 const STEP = 3; // 작업 1틱당 raise 스탯에 더해지는 포인트(제로섬으로 다른 스탯에서 차감)
 const RACES = ['인간', '뱀파이어', '늑대인간', '드워프', '엘프', '골렘', '도깨비', '요괴'];
+const PARTY_KEY = 'hbh.party.v1';
+const PARTY_MAX = 3;
 
 const els = {
   raceSelect: document.querySelector('#race-select'),
@@ -12,8 +14,17 @@ const els = {
   statList: document.querySelector('#stat-list'),
   locationList: document.querySelector('#location-list'),
   jobList: document.querySelector('#job-list'),
-  selectedJob: document.querySelector('#selected-job')
+  selectedJob: document.querySelector('#selected-job'),
+  cardName: document.querySelector('#card-name'),
+  addParty: document.querySelector('#add-party'),
+  partySaved: document.querySelector('#party-saved'),
+  goBattle: document.querySelector('#go-battle')
 };
+
+function loadParty() {
+  try { return JSON.parse(localStorage.getItem(PARTY_KEY)) || []; } catch (e) { return []; }
+}
+function saveParty(arr) { localStorage.setItem(PARTY_KEY, JSON.stringify(arr)); }
 
 let schema = null;
 let locations = [];
@@ -103,6 +114,51 @@ function selectJob(job) {
   render();
 }
 
+function addToParty() {
+  if (!state.selectedJob) return;
+  const party = loadParty();
+  if (party.length >= PARTY_MAX) return;
+  const name = (els.cardName.value || '').trim() || `${state.race} ${state.selectedJob.name}`;
+  party.push({
+    id: `LAB-${Date.now()}`,
+    name,
+    race: state.race,
+    job: state.selectedJob.name,
+    grade: state.grade,
+    primary: { ...state.stats }
+  });
+  saveParty(party);
+  els.cardName.value = '';
+  renderParty();
+}
+
+function removeFromParty(id) {
+  saveParty(loadParty().filter((m) => m.id !== id));
+  renderParty();
+}
+
+function renderParty() {
+  const party = loadParty();
+  els.addParty.disabled = !state.selectedJob || party.length >= PARTY_MAX;
+  els.addParty.textContent = party.length >= PARTY_MAX
+    ? '파티가 가득 찼습니다 (3/3)'
+    : (state.selectedJob ? `현재 카드를 파티에 추가 (${party.length}/${PARTY_MAX})` : '먼저 직업을 선택하세요');
+  if (!party.length) {
+    els.partySaved.innerHTML = '<div class="party-empty">담긴 카드 없음. 직업을 선택해 파티에 추가하세요.</div>';
+  } else {
+    els.partySaved.innerHTML = '';
+    party.forEach((m) => {
+      const div = document.createElement('div');
+      div.className = 'party-member';
+      div.innerHTML = `<span class="pm-name">${m.name}</span><span class="pm-sub">${m.race} · ${m.job} · ${m.grade}</span><button class="pm-rm">제거</button>`;
+      div.querySelector('.pm-rm').addEventListener('click', () => removeFromParty(m.id));
+      els.partySaved.appendChild(div);
+    });
+  }
+  els.goBattle.classList.toggle('disabled', party.length === 0);
+  els.goBattle.textContent = party.length ? `이 파티로 전투 시작 (${party.length}명) →` : '파티를 먼저 담으세요';
+}
+
 function render() {
   els.budgetVal.textContent = state.budget;
   const sum = sumStats();
@@ -167,6 +223,8 @@ function render() {
     div.querySelector('button').addEventListener('click', () => selectJob(job));
     els.jobList.appendChild(div);
   });
+
+  renderParty();
 }
 
 async function boot() {
@@ -179,11 +237,12 @@ async function boot() {
   els.raceSelect.innerHTML = RACES.map((r) => `<option>${r}</option>`).join('');
   els.gradeSelect.innerHTML = schema.statBudget.byGrade
     .map((g) => `<option value="${g.grade}">${g.grade} (총량 ${g.gradeBase})</option>`).join('');
-  els.gradeSelect.value = 'R';
+  els.gradeSelect.value = 'SR';
 
   els.raceSelect.addEventListener('change', initState);
   els.gradeSelect.addEventListener('change', initState);
   els.reset.addEventListener('click', initState);
+  els.addParty.addEventListener('click', addToParty);
 
   initState();
 }
