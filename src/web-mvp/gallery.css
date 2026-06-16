@@ -30,13 +30,13 @@ p { margin:0; line-height:1.55; color:var(--muted); }
 .badge { position:absolute; top:0; right:12px; min-width:38px; padding:3px 8px 5px; border-radius:0 0 12px 12px;
   background: linear-gradient(180deg, var(--b), color-mix(in srgb, var(--b) 70%, #000)); color:#fff; font-weight:1000; font-size:13px; text-align:center; z-index:2; }
 .enemy-flag { position:absolute; top:10px; left:10px; z-index:2; font-size:9px; font-weight:900; color:#fff; background:#8b1e24; border-radius:999px; padding:2px 7px; }
-.slot { position:relative; height:230px; border-radius:14px; margin-bottom:8px; display:grid; place-items:center; overflow:hidden;
-  border:1px dashed color-mix(in srgb, var(--b) 40%, transparent);
+.slot { position:relative; height:230px; border-radius:14px; margin-bottom:8px; overflow:hidden;
+  border:1px dashed color-mix(in srgb, var(--b) 40%, transparent); }
+.ph-layer { position:absolute; inset:0; display:grid; place-items:center;
   background: radial-gradient(circle at 50% 38%, color-mix(in srgb, var(--aura) 38%, transparent), transparent 60%), linear-gradient(180deg,#fff,rgba(255,255,255,.4)); }
-.slot img { width:100%; height:100%; object-fit:cover; }
+.slot .portrait { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:1; }
 .slot .initial { font-size:64px; font-weight:1000; color: color-mix(in srgb, var(--aura) 70%, #333); }
-.slot .ph { position:absolute; bottom:6px; font-size:10px; color:#fff; font-weight:800; background:rgba(0,0,0,.35); padding:2px 8px; border-radius:999px; }
-.slot .ph:not(.real) { color:var(--muted); background:rgba(255,255,255,.7); }
+.slot .ph { position:absolute; bottom:6px; left:50%; transform:translateX(-50%); font-size:10px; color:var(--muted); font-weight:800; background:rgba(255,255,255,.72); padding:2px 8px; border-radius:999px; }
 .nm { font-weight:1000; font-size:19px; letter-spacing:-0.03em; }
 .sub { font-size:12px; color:#6d4c41; font-weight:800; margin-top:2px; }
 .stars { color:#c79524; font-size:12px; margin-top:6px; display:flex; justify-content:space-between; align-items:center; }

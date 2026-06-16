@@ -12,15 +12,6 @@ let cards = [];
 let raceFilter = 'all';
 let gradeFilter = 'all';
 
-// 보유 자산(개별 초상)을 카드에 임시 적용 — 기존 구 시뮬 PNG 차용
-const PORTRAIT = {
-  'HUM-001': 'seo_yoonjae.png',
-  'HUM-005': 'jung_harin.png',
-  'HUM-004': 'kim_dohyun.png',
-  'HUM-003': 'park_seyeon.png',
-  'VMP-002': 'elliot_cartein.png'
-};
-
 const loadJson = (n) => fetch(`${DATA_PATH}${n}`).then((r) => (r.ok ? r.json() : null)).catch(() => null);
 
 function inferAlignment(a) {
@@ -121,7 +112,6 @@ function render() {
     const aE = auraEntry(c.alignment, c.rarity);
     const aura = aE.auraColor || '#888';
     const stars = '★'.repeat(t.starCount) + '☆'.repeat(Math.max(0, 5 - t.starCount));
-    const portrait = PORTRAIT[c.id];
     const d = c.derived;
     const effects = auraEffects(c.aura);
 
@@ -135,9 +125,8 @@ function render() {
           <div class="badge">${c.rarity}</div>
           ${c.enemy ? '<span class="enemy-flag">적</span>' : ''}
           <div class="slot">
-            ${portrait
-              ? `<img src="./assets/portraits/${portrait}" alt="${c.name}" loading="lazy" /><span class="ph real">임시 일러스트</span>`
-              : `<span class="initial">${(c.name || '?').slice(0, 1)}</span><span class="ph">일러스트 준비중</span>`}
+            <div class="ph-layer"><span class="initial">${(c.name || '?').slice(0, 1)}</span><span class="ph">일러스트 준비중</span></div>
+            <img class="portrait" src="./assets/portraits/${c.id}.png" alt="${c.name}" loading="lazy" onerror="this.remove()" />
           </div>
           <div class="nm">${c.name}</div>
           <div class="sub">${c.race} · ${c.job}</div>
