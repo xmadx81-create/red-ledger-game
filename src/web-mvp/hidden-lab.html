@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>헌혈의 집 · 히든 합성</title>
+    <link rel="stylesheet" href="./hidden-lab.css" />
+  </head>
+  <body>
+    <main class="hl-shell">
+      <header class="hl-header">
+        <p class="eyebrow">hidden fusion · demo</p>
+        <h1>히든 합성 트리</h1>
+        <p>특정 카드 조합을 정확히 맞추면 50% 확률로 한 등급 도약합니다. 이를 연쇄하면 전설까지 가는 비공개 최단 루트가 됩니다. (카드는 미정 — placeholder, 본 경제와 분리된 데모. 실제 게임에선 조합이 숨겨져 발견해야 합니다.)</p>
+        <nav class="hl-nav">
+          <a href="./hub.html">🏠 홈</a>
+          <a href="./fusion-lab.html">⚗ 일반 합성소</a>
+        </nav>
+      </header>
+
+      <section class="hl-goal" id="goal"></section>
+
+      <section class="hl-mats">
+        <h2>보유 재료 (placeholder)</h2>
+        <div id="owned" class="owned"></div>
+        <div class="hl-actions">
+          <button id="refill" class="btn-good">＋ 리프 재료 보충 (데모)</button>
+          <button id="reset" class="btn-ghost">초기화</button>
+        </div>
+      </section>
+
+      <section class="hl-steps">
+        <h2>비공개 합성 체인</h2>
+        <div id="steps" class="steps"></div>
+      </section>
+
+      <section class="hl-log">
+        <h2>합성 로그</h2>
+        <div id="log" class="log"></div>
+      </section>
+    </main>
+    <script src="./hidden-lab.js"></script>
+  </body>
+</html>
