@@ -1,0 +1,405 @@
+{
+  "version": "0.1.0",
+  "description": "카드 일러스트 생성용 프롬프트 시트(자동 생성). gen-portrait-prompts.mjs로 재생성. 출력 파일명 {characterId}.png를 src/web-mvp/assets/portraits/에 드롭하면 카드 도감에 자동 적용.",
+  "tone": "bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable",
+  "negative": "no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone",
+  "count": 66,
+  "prompts": [
+    {
+      "id": "HUM-001",
+      "file": "HUM-001.png",
+      "name": "서윤",
+      "prompt": "서윤 — human, grounded gear, 여성 청년, 격투가, role: 근접 체술 딜러. calm protective blue aura, trustworthy. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "HUM-002",
+      "file": "HUM-002.png",
+      "name": "지호",
+      "prompt": "지호 — human, grounded gear, 남성 청년, 특수요원, role: 제압/침투. calm protective blue aura, trustworthy. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "HUM-003",
+      "file": "HUM-003.png",
+      "name": "민서",
+      "prompt": "민서 — human, grounded gear, 여성 장년, 구조대원, role: 구조/보호. calm protective blue aura, trustworthy. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "HUM-004",
+      "file": "HUM-004.png",
+      "name": "현우",
+      "prompt": "현우 — human, grounded gear, 남성 청년, 무에타이 파이터, role: 고화력 근접. soft purple aura, mysterious but not scary. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "HUM-005",
+      "file": "HUM-005.png",
+      "name": "하린",
+      "prompt": "하린 — human, grounded gear, 여성 노년, 방호 전문가, role: 탱커/보호. calm protective blue aura, trustworthy. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "VMP-001",
+      "file": "VMP-001.png",
+      "name": "카멜리아",
+      "prompt": "카멜리아 — vampire, elegant but not gothic-cliché, 여성 성인, 혈액술사, role: 혈액술/지원. calm protective blue aura, trustworthy. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "VMP-002",
+      "file": "VMP-002.png",
+      "name": "발렌",
+      "prompt": "발렌 — vampire, elegant but not gothic-cliché, 남성 성인, 환영술사, role: 은폐/환영. soft purple aura, mysterious but not scary. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "VMP-003",
+      "file": "VMP-003.png",
+      "name": "리아스",
+      "prompt": "리아스 — vampire, elegant but not gothic-cliché, 남성 청년, 정신 지배자, role: 정신계/정보. soft purple aura, mysterious but not scary. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "VMP-004",
+      "file": "VMP-004.png",
+      "name": "그라프",
+      "prompt": "그라프 — vampire, elegant but not gothic-cliché, 남성 노년, 혈향 감지자, role: 추적/분석. calm protective blue aura, trustworthy. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "VMP-005",
+      "file": "VMP-005.png",
+      "name": "태오",
+      "prompt": "태오 — vampire, elegant but not gothic-cliché, 남성 청년, 혈기 폭발 전사, role: 폭발형 딜러/수송. soft purple aura, mysterious but not scary. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "ELF-001",
+      "file": "ELF-001.png",
+      "name": "세라엘",
+      "prompt": "세라엘 — elf/fae, nature & rune motifs, white/green/blue, 여성 청년, 아케인 힐러, role: 치유/보호. calm protective blue aura, trustworthy. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "ELF-002",
+      "file": "ELF-002.png",
+      "name": "리아",
+      "prompt": "리아 — elf/fae, nature & rune motifs, white/green/blue, 남성 청년, 윈드 아처-메이지, role: 원거리/수송 지원. calm protective blue aura, trustworthy. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "ELF-003",
+      "file": "ELF-003.png",
+      "name": "루나리",
+      "prompt": "루나리 — elf/fae, nature & rune motifs, white/green/blue, 여성 성인, 문 라이트 리추얼리스트, role: 야간 의식/정화. calm protective blue aura, trustworthy. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "ELF-004",
+      "file": "ELF-004.png",
+      "name": "에일론",
+      "prompt": "에일론 — elf/fae, nature & rune motifs, white/green/blue, 남성 노년, 룬 스칼라, role: 기록 해독/전설 퀘스트. radiant golden aura, iconic legendary presence. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "ELF-005",
+      "file": "ELF-005.png",
+      "name": "아이리",
+      "prompt": "아이리 — elf/fae, nature & rune motifs, white/green/blue, 여성 소녀, 스피릿 싱어, role: 정신 안정/지원. calm protective blue aura, trustworthy. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "DWF-001",
+      "file": "DWF-001.png",
+      "name": "브록",
+      "prompt": "브록 — dwarf, sturdy, engineering gear, 남성 장년, 블러드뱅크 메카닉, role: 보관 장비 정비. calm protective blue aura, trustworthy. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "DWF-002",
+      "file": "DWF-002.png",
+      "name": "하르그",
+      "prompt": "하르그 — dwarf, sturdy, engineering gear, 여성 청년, 엑소-수트 스미스, role: 장비 제작/방어. calm protective blue aura, trustworthy. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "DWF-003",
+      "file": "DWF-003.png",
+      "name": "티르",
+      "prompt": "티르 — dwarf, sturdy, engineering gear, 남성 노년, 가젯 디펜더, role: 트랩/퍼즐. calm protective blue aura, trustworthy. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "DWF-004",
+      "file": "DWF-004.png",
+      "name": "몰딘",
+      "prompt": "몰딘 — dwarf, sturdy, engineering gear, 남성 성인, 알케미 엔지니어, role: 합성/강화. soft purple aura, mysterious but not scary. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "DWF-005",
+      "file": "DWF-005.png",
+      "name": "그럼블",
+      "prompt": "그럼블 — dwarf, sturdy, engineering gear, 남성 노년, 터렛 아티잔, role: 대규모 방어. calm protective blue aura, trustworthy. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "HYB-001",
+      "file": "HYB-001.png",
+      "name": "이든",
+      "prompt": "이든 — hybrid, dual-trait subtle, 남성 청년, 수혈 전략가, role: 전략/편성. soft purple aura, mysterious but not scary. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "HYB-002",
+      "file": "HYB-002.png",
+      "name": "레이나",
+      "prompt": "레이나 — hybrid, dual-trait subtle, 여성 성인, 유전자 전환자, role: 각성/변환. soft purple aura, mysterious but not scary. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "HYB-003",
+      "file": "HYB-003.png",
+      "name": "세린",
+      "prompt": "세린 — hybrid, dual-trait subtle, 여성 청년, 이중 마법 치료사, role: 공격/치유. calm protective blue aura, trustworthy. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "HYB-004",
+      "file": "HYB-004.png",
+      "name": "카온",
+      "prompt": "카온 — hybrid, dual-trait subtle, 남성 소년, 키메라 스카우트, role: 탐색/정찰. calm protective blue aura, trustworthy. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "HYB-005",
+      "file": "HYB-005.png",
+      "name": "카인",
+      "prompt": "카인 — hybrid, dual-trait subtle, 남성 성인, 공명 듀얼리스트, role: 결투/분기. soft purple aura, mysterious but not scary. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "WRW-001",
+      "file": "WRW-001.png",
+      "name": "루나",
+      "prompt": "루나 — werewolf, athletic, fur accents, 여성 청년, 문 추적자, role: 추적/야간. calm protective blue aura, trustworthy. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "WRW-002",
+      "file": "WRW-002.png",
+      "name": "브란",
+      "prompt": "브란 — werewolf, athletic, fur accents, 남성 장년, 팩 가디언, role: 탱커/보호. calm protective blue aura, trustworthy. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "WRW-003",
+      "file": "WRW-003.png",
+      "name": "하울",
+      "prompt": "하울 — werewolf, athletic, fur accents, 남성 청년, 센트 헌터, role: 암거래 추적. soft purple aura, mysterious but not scary. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "WRW-004",
+      "file": "WRW-004.png",
+      "name": "바이론",
+      "prompt": "바이론 — werewolf, athletic, fur accents, 남성 성인, 버서커 스트라이커, role: 고화력 전투. soft purple aura, mysterious but not scary. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "WRW-005",
+      "file": "WRW-005.png",
+      "name": "알드릭",
+      "prompt": "알드릭 — werewolf, athletic, fur accents, 남성 노년, 알파 센티널, role: 팩 지휘. radiant golden aura, iconic legendary presence. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "AVP-001",
+      "file": "AVP-001.png",
+      "name": "릴리스",
+      "prompt": "릴리스 — ancient vampire, regal radiant, 여성 초고대, 블러드 오라클, role: 예언/메인 서사. radiant golden aura, iconic legendary presence. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "AVP-002",
+      "file": "AVP-002.png",
+      "name": "발터스",
+      "prompt": "발터스 — ancient vampire, regal radiant, 남성 초고대, 메모리 모나크, role: 기억 복원. radiant golden aura, iconic legendary presence. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "AVP-003",
+      "file": "AVP-003.png",
+      "name": "누아르",
+      "prompt": "누아르 — ancient vampire, regal radiant, 남성 초고대, 섀도우 노블, role: 그림자/정치. soft purple aura, mysterious but not scary. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "AVP-004",
+      "file": "AVP-004.png",
+      "name": "세레나",
+      "prompt": "세레나 — ancient vampire, regal radiant, 여성 초고대, 크림슨 시어, role: 운명 분기. radiant golden aura, iconic legendary presence. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "AVP-005",
+      "file": "AVP-005.png",
+      "name": "아자조엘",
+      "prompt": "아자조엘 — ancient vampire, regal radiant, 남성 초고대, 에인션트 마인드브레이커, role: 정신 시험. soft purple aura, mysterious but not scary. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "AWR-001",
+      "file": "AWR-001.png",
+      "name": "가르문",
+      "prompt": "가르문 — ancient werewolf, primal noble, 남성 초고대, 문 워 치프, role: 전쟁 지휘. radiant golden aura, iconic legendary presence. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "AWR-002",
+      "file": "AWR-002.png",
+      "name": "유나이",
+      "prompt": "유나이 — ancient werewolf, primal noble, 여성 초고대, 프라이멀 샤먼, role: 저주 해제/의식. radiant golden aura, iconic legendary presence. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "AWR-003",
+      "file": "AWR-003.png",
+      "name": "카이라",
+      "prompt": "카이라 — ancient werewolf, primal noble, 여성 초고대, 엘더 로얄 워든, role: 수호/시험. radiant golden aura, iconic legendary presence. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "AWR-004",
+      "file": "AWR-004.png",
+      "name": "아이락",
+      "prompt": "아이락 — ancient werewolf, primal noble, 남성 초고대, 이클립스 스토커, role: 잠입/추적. soft purple aura, mysterious but not scary. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "AWR-005",
+      "file": "AWR-005.png",
+      "name": "라에벨",
+      "prompt": "라에벨 — ancient werewolf, primal noble, 여성 초고대, 팩 소버린, role: 무리 통합. radiant golden aura, iconic legendary presence. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "HOB-001",
+      "file": "HOB-001.png",
+      "name": "피프",
+      "prompt": "피프 — hobbit, small & cheerful, 남성 소년, 쿠리어 로그, role: 배달/정보. calm protective blue aura, trustworthy. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "HOB-002",
+      "file": "HOB-002.png",
+      "name": "메리골드",
+      "prompt": "메리골드 — hobbit, small & cheerful, 여성 성인, 파우더 연금사, role: 회복 아이템. calm protective blue aura, trustworthy. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "HOB-003",
+      "file": "HOB-003.png",
+      "name": "로리안",
+      "prompt": "로리안 — hobbit, small & cheerful, 남성 청년, 럭키 스카우트, role: 탐색 보너스. calm protective blue aura, trustworthy. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "HOB-004",
+      "file": "HOB-004.png",
+      "name": "샤이",
+      "prompt": "샤이 — hobbit, small & cheerful, 여성 소녀, 슬링 에이스, role: 원거리 지원. calm protective blue aura, trustworthy. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "HOB-005",
+      "file": "HOB-005.png",
+      "name": "바름",
+      "prompt": "바름 — hobbit, small & cheerful, 남성 노년, 클리닉 픽서, role: 수리/정비. calm protective blue aura, trustworthy. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "SPR-001",
+      "file": "SPR-001.png",
+      "name": "이그니스",
+      "prompt": "이그니스 — elemental spirit, glowing, 무성/성인형, 플레임 위스퍼러, role: 정화/화염. calm protective blue aura, trustworthy. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "SPR-002",
+      "file": "SPR-002.png",
+      "name": "리비아",
+      "prompt": "리비아 — elemental spirit, glowing, 여성형 청년, 스트림 힐러, role: 회복/감정 안정. calm protective blue aura, trustworthy. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "SPR-003",
+      "file": "SPR-003.png",
+      "name": "실프",
+      "prompt": "실프 — elemental spirit, glowing, 남성형 소년, 윈드 댄서, role: 회피/수송. calm protective blue aura, trustworthy. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "SPR-004",
+      "file": "SPR-004.png",
+      "name": "그랜",
+      "prompt": "그랜 — elemental spirit, glowing, 남성형 노년, 스톤 힘 캐스터, role: 방벽/시설 안정. calm protective blue aura, trustworthy. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "SPR-005",
+      "file": "SPR-005.png",
+      "name": "아우로라",
+      "prompt": "아우로라 — elemental spirit, glowing, 여성형 전설, 오로라 가이드, role: 전설 길잡이. radiant golden aura, iconic legendary presence. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "GLM-001",
+      "file": "GLM-001.png",
+      "name": "아르고스",
+      "prompt": "아르고스 — golem, stone/metal/crystal, large silhouette, 무성/거대형, 성벽 수호자, role: 탱커/방어. calm protective blue aura, trustworthy. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "GLM-002",
+      "file": "GLM-002.png",
+      "name": "볼키온",
+      "prompt": "볼키온 — golem, stone/metal/crystal, large silhouette, 남성형 장년, 이동식 대장간, role: 장비 강화. calm protective blue aura, trustworthy. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "GLM-003",
+      "file": "GLM-003.png",
+      "name": "세레스",
+      "prompt": "세레스 — golem, stone/metal/crystal, large silhouette, 여성형 청년, 수정 치유체, role: 상태 이상 회복. calm protective blue aura, trustworthy. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "GLM-004",
+      "file": "GLM-004.png",
+      "name": "바실리스크",
+      "prompt": "바실리스크 — golem, stone/metal/crystal, large silhouette, 무성/전투형, 유물 포격체, role: 원거리 포격. soft purple aura, mysterious but not scary. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "GLM-005",
+      "file": "GLM-005.png",
+      "name": "모니토르",
+      "prompt": "모니토르 — golem, stone/metal/crystal, large silhouette, 무성/노년형, 기록 보관자, role: 예측/기록. radiant golden aura, iconic legendary presence. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "ENM-HUM-001",
+      "file": "ENM-HUM-001.png",
+      "name": "카엘 다크크",
+      "prompt": "카엘 다크크 — human, grounded gear, 남성 청년, 전략 지휘관, role: undefined. restrained crimson accent (kept bright, not pitch-dark), antagonist but readable. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "ENM-VMP-001",
+      "file": "ENM-VMP-001.png",
+      "name": "릴리아 벨로어",
+      "prompt": "릴리아 벨로어 — vampire, elegant but not gothic-cliché, 여성 성인, 밤의 귀족, role: undefined. restrained crimson accent (kept bright, not pitch-dark), antagonist but readable. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "ENM-ELF-001",
+      "file": "ENM-ELF-001.png",
+      "name": "셀린 그린셰이드",
+      "prompt": "셀린 그린셰이드 — elf/fae, nature & rune motifs, white/green/blue, 여성 장년, 숲의 심판자, role: undefined. soft purple aura, mysterious but not scary. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "ENM-DWF-001",
+      "file": "ENM-DWF-001.png",
+      "name": "그록 아이언헤일",
+      "prompt": "그록 아이언헤일 — dwarf, sturdy, engineering gear, 남성 장년, 공성 엔지니어, role: undefined. restrained crimson accent (kept bright, not pitch-dark), antagonist but readable. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "ENM-HYB-001",
+      "file": "ENM-HYB-001.png",
+      "name": "베르나 나이트혼",
+      "prompt": "베르나 나이트혼 — hybrid, dual-trait subtle, 여성 청년, 혼혈 암살자, role: undefined. soft purple aura, mysterious but not scary. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "ENM-WRW-001",
+      "file": "ENM-WRW-001.png",
+      "name": "루카르 블러드하울",
+      "prompt": "루카르 블러드하울 — werewolf, athletic, fur accents, 남성 성인, 울부짖는 군주, role: undefined. restrained crimson accent (kept bright, not pitch-dark), antagonist but readable. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "ENM-AVP-001",
+      "file": "ENM-AVP-001.png",
+      "name": "발테른 드라큘",
+      "prompt": "발테른 드라큘 — ancient vampire, regal radiant, 남성 초고대, 피의 계승자, role: undefined. radiant golden aura, iconic legendary presence. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "ENM-AWR-001",
+      "file": "ENM-AWR-001.png",
+      "name": "리칸 하울프",
+      "prompt": "리칸 하울프 — ancient werewolf, primal noble, 남성 초고대, 폭풍의 왕, role: undefined. radiant golden aura, iconic legendary presence. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "ENM-HOB-001",
+      "file": "ENM-HOB-001.png",
+      "name": "핍 스케르스",
+      "prompt": "핍 스케르스 — hobbit, small & cheerful, 남성 청년, 정보 브로커, role: undefined. soft purple aura, mysterious but not scary. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "ENM-SPR-001",
+      "file": "ENM-SPR-001.png",
+      "name": "미라 스펙트롬",
+      "prompt": "미라 스펙트롬 — elemental spirit, glowing, 여성형 성인, 영혼 저주자, role: undefined. soft purple aura, mysterious but not scary. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    },
+    {
+      "id": "ENM-GLM-001",
+      "file": "ENM-GLM-001.png",
+      "name": "옵시디언 센티널",
+      "prompt": "옵시디언 센티널 — golem, stone/metal/crystal, large silhouette, 무성/고대형, 철벽 수호자, role: undefined. radiant golden aura, iconic legendary presence. bright cheerful blood-donation-center world, warm friendly community tone, clean soft lighting, single character, vertical card portrait (3:4), simple bright interior or soft gradient background, wholesome, approachable. no text, no letters, no logos, no real organization/Red-Cross marks; avoid ruins, war, gore, blood splatter, black gothic castle, demonic, dark magic circle, horror-poster mood, cruel laboratory, morgue tone."
+    }
+  ]
+}
