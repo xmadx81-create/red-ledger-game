@@ -77,9 +77,10 @@
       "alignmentTarget": {
         "GOOD": 3,
         "NEUTRAL": 3,
-        "EVIL": 3,
-        "LEGEND": 1
+        "EVIL": 4,
+        "LEGEND": 0
       },
+      "alignmentTargetNote": "LEGEND을 0으로 정정(rarityTarget.L=0, legendaryCardsAllowed=0과 정합). 해당 1칸은 Batch 001의 EVIL=0 부족을 보강하기 위해 EVIL로 이동(3→4).",
       "raceTargetPolicy": "인간/뱀프 외 엘프, 드워프, 골렘, 늑대인간, 하이브리드, 임프, 위자드 중 최소 4종족 포함",
       "textSpecRequired": true,
       "visualToneRequired": true

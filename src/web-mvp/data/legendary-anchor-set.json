@@ -7,7 +7,8 @@
     "rarity": "L",
     "auraPriority": "전설은 기본 성향과 별개로 골드 아우라를 우선 적용한다(card-style-system.json).",
     "obtainPolicy": "직접 뽑기 없음. 합성 도약(확률+행운+천장)으로 도달하거나, 일부는 스토리/시즌 한정 보상으로만 지급.",
-    "reachability": "확정 가챠가 아니다. 매우 희귀하지만 천장형 누적 보정으로 노력하면 반드시 도달 가능한 범주로 세팅한다."
+    "reachability": "확정 가챠가 아니다. 매우 희귀하지만 천장형 누적 보정으로 노력하면 반드시 도달 가능한 범주로 세팅한다.",
+    "auraRepresentationRule": "전설 카드의 표시 아우라는 골드(rarity=L 기반 렌더 오버라이드)다. 로스터 원본 아우라는 캐릭터의 '기저 성향'을 보존할 수 있으며(예: 서윤=AURA-GOOD-BLUE), 기저 성향은 underlyingAlignment 필드로 기록한다. 둘은 모순이 아니다."
   },
   "legends": [
     {
@@ -47,7 +48,7 @@
       "cardUid": "CARD-ELF-004-L-0001",
       "characterId": "ELF-004",
       "name": "에일론",
-      "race": "요정·엘프",
+      "race": "엘프",
       "rarity": "L",
       "serial": 1,
       "aura": "AURA-LEGEND-GOLD",
