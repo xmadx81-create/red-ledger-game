@@ -36,6 +36,7 @@ function derive(p) {
 
 function makeUnit(raw, sideKey) {
   const d = derive(raw.primary);
+  const skill = sideKey === 'party' && setup.jobSkills ? setup.jobSkills[raw.job] || null : null;
   return {
     id: raw.id,
     name: raw.name,
@@ -48,8 +49,29 @@ function makeUnit(raw, sideKey) {
     shield: 0,
     atkDebuff: 0,
     attack: raw.attack || null,
+    skill,
+    skillCd: 0,
     alive: true
   };
+}
+
+function computeSynergy(party) {
+  const active = [];
+  const mult = { dmgMult: 1, healMult: 1, defMult: 1 };
+  const jobs = new Set(party.map((u) => u.job));
+  const humanCount = party.filter((u) => u.race === '인간').length;
+  for (const syn of setup.synergies || []) {
+    let ok = false;
+    if (syn.id === 'ROLE-TRINITY') ok = jobs.has('전사') && jobs.has('마법사') && jobs.has('힐러');
+    else if (syn.id === 'HUMAN-PACT') ok = humanCount >= 2;
+    if (ok) {
+      active.push(syn);
+      mult.dmgMult *= syn.effect.dmgMult;
+      mult.healMult *= syn.effect.healMult;
+      mult.defMult *= syn.effect.defMult;
+    }
+  }
+  return { active, mult };
 }
 
 async function loadSetup() {
@@ -71,7 +93,11 @@ function initState() {
     auto: keepAuto,
     over: false
   };
+  state.synergy = computeSynergy(state.party);
   els.log.innerHTML = '';
+  if (state.synergy.active.length) {
+    addLog(`시너지 발동: ${state.synergy.active.map((s) => s.name).join(', ')}`, 'sys');
+  }
   addLog(`전투 시작! 파티 ${state.party.length}명 vs 적 ${state.enemies.length}명.`, 'sys');
   render();
   if (state.auto) scheduleAuto();
@@ -107,9 +133,11 @@ function dealDamage(attacker, target, kind, scaleStat, power) {
   }
   let raw = (power + attacker.derived[scaleStat]) * rng();
   if (attacker.atkDebuff > 0) { raw *= 0.65; }
+  if (attacker.side === 'party') raw *= state.synergy.mult.dmgMult;
   let crit = critRoll(attacker);
   if (crit) raw *= 1.8;
-  let dmg = Math.max(1, Math.round(raw - target.derived.DEF * 0.35));
+  const defMult = target.side === 'party' ? state.synergy.mult.defMult : 1;
+  let dmg = Math.max(1, Math.round(raw - target.derived.DEF * 0.35 * defMult));
   // 보호막 우선 차감
   if (target.shield > 0) {
     const absorbed = Math.min(target.shield, dmg);
@@ -122,7 +150,9 @@ function dealDamage(attacker, target, kind, scaleStat, power) {
 }
 
 function heal(actor, target, scaleStat, power) {
-  const amount = Math.round((power + actor.derived[scaleStat]) * rng());
+  let amount = (power + actor.derived[scaleStat]) * rng();
+  if (actor.side === 'party') amount *= state.synergy.mult.healMult;
+  amount = Math.round(amount);
   target.hp = Math.min(target.maxHp, target.hp + amount);
   addLog(`${actor.name} → ${target.name} ${amount} 회복`, 'heal');
 }
@@ -158,6 +188,7 @@ function pickTarget(unit) {
   if (!a || !state.pendingActor) return;
   if (a.target === 'enemy' && (unit.side !== 'enemy' || !unit.alive)) return;
   if (a.target === 'ally' && (unit.side !== 'party' || !unit.alive)) return;
+  if (a.isSkill) { castSkill(state.pendingActor, unit); return; }
   resolvePlayerAction(unit);
 }
 
@@ -169,6 +200,44 @@ function resolvePlayerAction(target) {
   else if (a.kind === 'heal') heal(actor, target, a.scale, a.power);
   else if (a.kind === 'shield') shield(actor, target, a.scale, a.power);
   else if (a.kind === 'debuff') { target.atkDebuff = 1; addLog(`${actor.name} → ${target.name} 다음 공격 약화(봉쇄)`, 'sys'); }
+  state.pendingAction = null;
+  state.pendingActor = null;
+  els.turnInfo.textContent = '';
+  if (checkEnd()) return;
+  render();
+}
+
+// ---- 직업 고유 스킬 ----
+function canUseSkill(unit) {
+  return unit.alive && unit.skill && unit.skillCd === 0 && state.blood >= unit.skill.bloodCost;
+}
+
+function useSkill(unit) {
+  if (state.over || state.phase !== 'player' || !canUseSkill(unit)) return;
+  const sk = unit.skill;
+  if (sk.scope === 'all') {
+    castSkill(unit, null);
+  } else {
+    // 단일 대상: 적 선택 대기 (pendingAction에 스킬 표식)
+    state.pendingAction = { isSkill: true, skill: sk, target: sk.kind === 'heal' ? 'ally' : 'enemy', name: sk.name };
+    state.pendingActor = unit;
+    els.turnInfo.textContent = `[${sk.name}] 대상 선택`;
+    render();
+  }
+}
+
+function castSkill(actor, singleTarget) {
+  const sk = actor.skill;
+  state.blood -= sk.bloodCost;
+  actor.skillCd = sk.cooldown;
+  let targets;
+  if (sk.scope === 'all') targets = sk.kind === 'heal' ? livingParty() : livingEnemies();
+  else targets = [singleTarget];
+  addLog(`✦ ${actor.name}의 [${sk.name}]`, 'sys');
+  for (const t of targets) {
+    if (sk.kind === 'damage') dealDamage(actor, t, sk.name, sk.scale, sk.power);
+    else if (sk.kind === 'heal') heal(actor, t, sk.scale, sk.power);
+  }
   state.pendingAction = null;
   state.pendingActor = null;
   els.turnInfo.textContent = '';
@@ -204,8 +273,11 @@ function startPlayerTurn() {
   state.turn += 1;
   state.phase = 'player';
   state.blood = Math.min(setup.blood.max, state.blood + setup.blood.perTurn);
-  // 파티 공격 디버프 해제
-  state.party.forEach((u) => (u.atkDebuff = 0));
+  // 파티 공격 디버프 해제 + 스킬 쿨다운 감소
+  state.party.forEach((u) => {
+    u.atkDebuff = 0;
+    if (u.skillCd > 0) u.skillCd -= 1;
+  });
   addLog(`— ${state.turn}턴 시작 (혈액 ${state.blood}) —`, 'sys');
   render();
   scheduleAuto();
@@ -248,6 +320,20 @@ function autoChoose() {
   return null;
 }
 
+function autoChooseSkill() {
+  const allies = livingParty();
+  const foes = livingEnemies();
+  if (!foes.length || !allies.length) return null;
+  const mage = allies.find((u) => u.job === '마법사');
+  if (mage && canUseSkill(mage) && foes.length >= 2) return { actor: mage, target: null };
+  const healer = allies.find((u) => u.job === '힐러');
+  const hurtCount = allies.filter((u) => u.hp / u.maxHp < 0.6).length;
+  if (healer && canUseSkill(healer) && hurtCount >= 2) return { actor: healer, target: null };
+  const striker = allies.find((u) => u.job === '전사');
+  if (striker && canUseSkill(striker)) return { actor: striker, target: foes.slice().sort((a, b) => a.hp - b.hp)[0] };
+  return null;
+}
+
 function scheduleAuto() {
   if (state.auto && !state.over && state.phase === 'player') setTimeout(autoStep, AUTO_DELAY);
 }
@@ -256,6 +342,12 @@ function autoStep() {
   if (!state.auto || state.over || state.phase !== 'player') return;
   state.pendingAction = null;
   state.pendingActor = null;
+  const skillChoice = autoChooseSkill();
+  if (skillChoice) {
+    castSkill(skillChoice.actor, skillChoice.target);
+    if (!state.over) scheduleAuto();
+    return;
+  }
   const choice = autoChoose();
   if (!choice) { endTurnClicked(); return; }
   const { action, actor, target } = choice;
@@ -327,13 +419,29 @@ function render() {
   // 행동 패널
   els.actionPanel.innerHTML = '';
   if (!state.over && state.phase === 'player') {
+    if (state.synergy.active.length) {
+      const syn = document.createElement('div');
+      syn.className = 'synergy-chip';
+      syn.textContent = `시너지: ${state.synergy.active.map((s) => s.name).join(' · ')}`;
+      els.actionPanel.appendChild(syn);
+    }
     setup.actions.forEach((a) => {
       const btn = document.createElement('button');
       const disabled = a.bloodCost > state.blood || state.auto;
-      btn.className = `action-btn${state.pendingAction && state.pendingAction.actionId === a.actionId ? ' selected' : ''}`;
+      btn.className = `action-btn${state.pendingAction && !state.pendingAction.isSkill && state.pendingAction.actionId === a.actionId ? ' selected' : ''}`;
       btn.disabled = disabled;
       btn.innerHTML = `<span>${a.name} <span class="cost">혈 ${a.bloodCost}</span></span><small>${a.desc}</small>`;
       btn.addEventListener('click', () => selectAction(a));
+      els.actionPanel.appendChild(btn);
+    });
+    state.party.filter((u) => u.alive && u.skill).forEach((u) => {
+      const sk = u.skill;
+      const btn = document.createElement('button');
+      const onCd = u.skillCd > 0;
+      btn.className = `action-btn skill-btn${state.pendingActor === u && state.pendingAction && state.pendingAction.isSkill ? ' selected' : ''}`;
+      btn.disabled = state.auto || onCd || sk.bloodCost > state.blood;
+      btn.innerHTML = `<span>✦ ${u.name}: ${sk.name} <span class="cost">혈 ${sk.bloodCost}</span></span><small>${onCd ? `재사용까지 ${u.skillCd}턴` : sk.desc}</small>`;
+      btn.addEventListener('click', () => useSkill(u));
       els.actionPanel.appendChild(btn);
     });
     if (state.auto) {

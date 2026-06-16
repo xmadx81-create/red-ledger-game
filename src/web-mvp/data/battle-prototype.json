@@ -48,6 +48,15 @@
     { "actionId": "ACT-PROTECT",   "name": "보호",       "bloodCost": 1, "kind": "shield", "scale": "DEF", "power": 14, "target": "ally", "desc": "아군에 보호막. 방어(DEF) 비례." },
     { "actionId": "ACT-LOCKDOWN",  "name": "보안 봉쇄",   "bloodCost": 2, "kind": "debuff", "scale": "DEF", "power": 0, "target": "enemy", "desc": "적 다음 공격 위력 35% 감소(1턴)." }
   ],
+  "jobSkills": {
+    "전사": { "skillId": "SK-WAR", "name": "혈투 강타", "kind": "damage", "scope": "single", "scale": "PATK", "power": 34, "bloodCost": 4, "cooldown": 2, "desc": "적 1체에 강력한 물리 일격(쿨2)." },
+    "마법사": { "skillId": "SK-MAGE", "name": "비전 폭발", "kind": "damage", "scope": "all", "scale": "MATK", "power": 16, "bloodCost": 5, "cooldown": 3, "desc": "적 전체에 기술 피해(쿨3)." },
+    "힐러": { "skillId": "SK-HEAL", "name": "치유의 빛", "kind": "heal", "scope": "all", "scale": "PERSUADE", "power": 16, "bloodCost": 4, "cooldown": 3, "desc": "아군 전체 회복(쿨3)." }
+  },
+  "synergies": [
+    { "id": "ROLE-TRINITY", "name": "역할 균형", "effect": { "dmgMult": 1.12, "healMult": 1.12, "defMult": 1.0 }, "desc": "전사·마법사·힐러를 모두 편성하면 피해·회복 +12%." },
+    { "id": "HUMAN-PACT", "name": "인간 연대", "effect": { "dmgMult": 1.0, "healMult": 1.0, "defMult": 1.1 }, "desc": "인간 2명 이상 편성 시 방어 +10%." }
+  ],
   "rules": {
     "hitChance": "기본 0.9 + (공격 HIT - 대상 EVA)/200, 0.5~0.99 클램프",
     "critChance": "공격 CRIT/300 (최대 0.6), 치명 시 1.8배",
