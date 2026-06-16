@@ -6,6 +6,25 @@
     <title>헌혈의 집 - Web MVP</title>
     <link rel="stylesheet" href="./styles.css" />
     <style>
+      .quick-battle-link {
+        position: fixed;
+        z-index: 20;
+        top: 14px;
+        left: 14px;
+        min-height: 38px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 13px;
+        border-radius: 999px;
+        background: linear-gradient(180deg, #ffffff, #e7f0ff);
+        color: #1769d1;
+        border: 1px solid rgba(23, 105, 209, 0.25);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 900;
+      }
       .quick-codex-link {
         position: fixed;
         z-index: 20;
@@ -28,6 +47,7 @@
     </style>
   </head>
   <body>
+    <a class="quick-battle-link" href="./battle-prototype.html">⚔ 전투 프로토타입</a>
     <a class="quick-codex-link" href="./characters.html">캐릭터 도감</a>
     <main id="app" class="app-shell">
       <section class="loading-screen">

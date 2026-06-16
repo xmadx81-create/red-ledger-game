@@ -1,0 +1,57 @@
+{
+  "version": "0.1.0",
+  "description": "전투 프로토타입 셋업. card-stat-schema.json의 1차 스탯→파생 전투 스탯 공식을 실제로 돌려보기 위한 데이터. 파티/적의 1차 스탯은 등급 budget을 직업 성향대로 분배한 v0 값. 행동 효과는 combat-actions.json을 전투용으로 매핑.",
+  "blood": { "start": 4, "perTurn": 3, "max": 12 },
+  "derivedFormulas": {
+    "note": "card-stat-schema.json derivedCombatStats와 동일. JS에서 동일하게 구현.",
+    "HP": "VIT*8 + STR*2",
+    "PATK": "STR*2 + DEX*0.5",
+    "MATK": "INT*2 + ACC*0.5",
+    "DEF": "VIT*1.5 + STR*0.5",
+    "SPD": "DEX*2",
+    "HIT": "ACC*1.5 + DEX*0.5",
+    "EVA": "DEX*1.2",
+    "CRIT": "ACC*0.7 + LUK*0.8",
+    "PERSUADE": "CHA*1.5 + INT*0.5",
+    "RESIST": "WIL*1.5 + VIT*0.5"
+  },
+  "party": [
+    {
+      "id": "HUM-001", "name": "서윤", "race": "인간", "job": "전사", "grade": "SR",
+      "primary": { "STR": 60, "DEX": 22, "INT": 6, "VIT": 34, "ACC": 14, "CHA": 4, "WIL": 4, "LUK": 6 }
+    },
+    {
+      "id": "VMP-002", "name": "발렌", "race": "뱀파이어", "job": "마법사", "grade": "SR",
+      "primary": { "STR": 8, "DEX": 14, "INT": 64, "VIT": 18, "ACC": 22, "CHA": 6, "WIL": 14, "LUK": 4 }
+    },
+    {
+      "id": "HUM-003", "name": "민서", "race": "인간", "job": "힐러", "grade": "SR",
+      "primary": { "STR": 14, "DEX": 16, "INT": 30, "VIT": 28, "ACC": 16, "CHA": 38, "WIL": 4, "LUK": 4 }
+    }
+  ],
+  "enemies": [
+    {
+      "id": "ENM-HUM-001", "name": "카엘 다크크", "race": "인간", "job": "전략 지휘관", "grade": "SR",
+      "primary": { "STR": 52, "DEX": 20, "INT": 36, "VIT": 54, "ACC": 22, "CHA": 8, "WIL": 14, "LUK": 4 },
+      "attack": { "name": "지휘 일격", "kind": "damage", "scale": "PATK", "power": 26 }
+    },
+    {
+      "id": "ENM-VMP-001", "name": "그림자 사냥꾼", "race": "뱀파이어", "job": "추적자", "grade": "R",
+      "primary": { "STR": 34, "DEX": 46, "INT": 10, "VIT": 26, "ACC": 30, "CHA": 4, "WIL": 6, "LUK": 8 },
+      "attack": { "name": "기습", "kind": "damage", "scale": "PATK", "power": 18 }
+    }
+  ],
+  "actions": [
+    { "actionId": "ACT-SUBDUE",    "name": "제압",       "bloodCost": 2, "kind": "damage", "scale": "PATK", "power": 16, "target": "enemy", "desc": "물리 피해. 힘(STR) 비례." },
+    { "actionId": "ACT-MAGIC",     "name": "기술 일격",   "bloodCost": 3, "kind": "damage", "scale": "MATK", "power": 20, "target": "enemy", "desc": "기술 피해. 지능(INT) 비례. (프로토타입 전용)" },
+    { "actionId": "ACT-FIRST-AID", "name": "응급 처치",   "bloodCost": 2, "kind": "heal",   "scale": "PERSUADE", "power": 22, "target": "ally", "desc": "아군 회복. 친화(CHA) 비례." },
+    { "actionId": "ACT-PROTECT",   "name": "보호",       "bloodCost": 1, "kind": "shield", "scale": "DEF", "power": 14, "target": "ally", "desc": "아군에 보호막. 방어(DEF) 비례." },
+    { "actionId": "ACT-LOCKDOWN",  "name": "보안 봉쇄",   "bloodCost": 2, "kind": "debuff", "scale": "DEF", "power": 0, "target": "enemy", "desc": "적 다음 공격 위력 35% 감소(1턴)." }
+  ],
+  "rules": {
+    "hitChance": "기본 0.9 + (공격 HIT - 대상 EVA)/200, 0.5~0.99 클램프",
+    "critChance": "공격 CRIT/300 (최대 0.6), 치명 시 1.8배",
+    "mitigation": "최종 피해 = max(1, 원피해 - 대상 DEF*0.35) (보호막 우선 차감)",
+    "variance": "±10% 난수"
+  }
+}
