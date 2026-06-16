@@ -20,7 +20,7 @@
     "attribute": "string",
     "level": "number",
     "exp": "number",
-    "grade": "N | R | SR | SSR | UR | LR | Mythic",
+    "grade": "N | R | SR | EP | L",
     "roleMastery": "object",
     "workTraits": "array",
     "specialty": "array",
@@ -31,14 +31,13 @@
     "gearSlots": "array",
     "relationship": "number"
   },
+  "gradeLadder": "공식 카드 등급 사다리는 N · R · SR · EP · L 5단계로 통일(card-style-system.json 기준). '세분화'는 등급 내 ★ 단계로 처리(card-stat-schema.json §statBudget). 과거 SSR/UR/LR/Mythic 7단계는 폐기, SSR≈EP 위치.",
   "grades": [
     { "grade": "N", "maxPromotion": 2, "baseBuffSlots": 0 },
     { "grade": "R", "maxPromotion": 3, "baseBuffSlots": 1 },
     { "grade": "SR", "maxPromotion": 4, "baseBuffSlots": 2 },
-    { "grade": "SSR", "maxPromotion": 5, "baseBuffSlots": 3 },
-    { "grade": "UR", "maxPromotion": 6, "baseBuffSlots": 4 },
-    { "grade": "LR", "maxPromotion": 7, "baseBuffSlots": 5 },
-    { "grade": "Mythic", "maxPromotion": 8, "baseBuffSlots": 6 }
+    { "grade": "EP", "maxPromotion": 5, "baseBuffSlots": 3 },
+    { "grade": "L", "maxPromotion": 6, "baseBuffSlots": 5 }
   ],
   "workTraits": [
     "접수",

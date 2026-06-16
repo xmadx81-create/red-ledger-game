@@ -42,7 +42,7 @@
       { "grade": "L",  "gradeBase": 320, "levelStep": 6, "maxLevel": 100, "budgetAtMax": 914 }
     ],
     "perStatFloor": 1,
-    "note": "등급 사다리는 card-style-system.json(N/R/SR/EP/L) 기준. character-growth-schema.json의 SSR/UR/LR/Mythic 사다리와 통일 필요(미해소 이슈)."
+    "note": "등급 사다리는 card-style-system.json(N/R/SR/EP/L)으로 통일됨. character-growth-schema.json도 동일 5단계로 정렬 완료. '세분화'는 등급 내 ★ 단계로 처리."
   },
   "activityRedistribution": {
     "rule": "활동 1회 수행 시 statProfile의 스탯이 +Δ 만큼 오르고, 동일한 총 Δ 만큼이 '잠기지 않은 비프로필 스탯'에서 비례 차감된다(제로섬). 총량 budget은 불변.",
