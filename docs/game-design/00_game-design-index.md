@@ -28,6 +28,8 @@ docs/game-design/
 ├─ LEGENDARY_TOPDOWN_FUSION_STRUCTURE_001.md (전설 우선→하위 역산 합성 구조)
 ├─ CARD_STAT_SYSTEM_001.md              (유동 스탯·고정총량 재분배·합성/레벨)
 ├─ MAP_PLACEMENT_JOB_SYSTEM_001.md      (맵 배치 육성·스탯기반 자유 직업)
+├─ CARD_ACQUISITION_ECONOMY_001.md      (일반카드 획득: 출석/사냥/퀘스트, 합성 철학)
+├─ BATTLE_RULES_DIRECTION_001.md        (전투 규칙 방향 제안)
 ├─ CORE_LOOP_REDESIGN_001.md            (지속형 성장 루프)
 ├─ CARD_PRODUCTION_PIPELINE_001.md      (카드 제작/ cardUid 규칙)
 ├─ VISUAL_TONE_GUIDE_001.md             (밝은 톤 가이드)

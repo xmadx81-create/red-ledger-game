@@ -1,0 +1,51 @@
+{
+  "version": "0.1.0",
+  "description": "일반(N) 카드 획득 장치 정형화. 핵심 철학: N 획득은 쉽게(합성 연료 풍족), 합성은 매우 어렵게(전설로 가는 길). 상위 카드는 원칙적으로 합성으로만 만들되, 사냥에서 '정말 희귀한 잭팟 드랍'만 예외로 둔다. 수치는 v0 초안으로 전부 튜닝 대상.",
+  "philosophy": {
+    "nAcquisitionEasy": true,
+    "fusionVeryHard": true,
+    "goal": "사람들이 합성에 미치게 만든다. N은 흔하고, 전설은 합성 누적으로만 도달.",
+    "reachable": "노력하면 도달 가능(개인차 존재). 합성 천장(fusion-recipe-tree.json)으로 보장.",
+    "ref": "fusion-recipe-tree.json, RACE_HYBRID_FUSION_SYSTEM_001.md"
+  },
+  "attendanceRewards": {
+    "description": "로그인 주기 기반 무료 N 카드 지급.",
+    "daily": { "reward": [{ "rarity": "N", "count": 1 }], "note": "매일 접속 시" },
+    "weeklyStreak7": { "reward": [{ "rarity": "N", "count": 5 }], "note": "7일 연속 접속 보너스" },
+    "monthlyCumulative": {
+      "reward": [{ "rarity": "N", "count": 20 }],
+      "guaranteedBonus": [{ "rarity": "R", "count": 1 }],
+      "note": "월 누적 출석. 합성 시드용으로 R 1장 보장."
+    },
+    "comebackBonus": { "reward": [{ "rarity": "N", "count": 10 }], "note": "장기 미접속 복귀 시(피로도 강매 아님, 복귀 환영)" }
+  },
+  "huntDrops": {
+    "description": "사냥(스테이지/던전 클리어) 보상. 기본은 N 위주, 극히 드물게 상위 잭팟.",
+    "baseDrop": { "rarity": "N", "countRange": [1, 3], "dropChance": 0.85, "note": "클리어 시 대부분 N 카드 드랍" },
+    "midDrop": { "rarity": "R", "count": 1, "dropChance": 0.08, "note": "중간 등급 직접 공급(곱셈 폭증 완화)" },
+    "jackpotDrop": {
+      "rarity": "SR+",
+      "count": 1,
+      "dropChance": 0.0005,
+      "note": "정말 희귀한 잭팟. 떴을 때 환호할 확률(약 0.05%). 상위 카드는 원칙상 합성이지만, 사냥 잭팟만 예외로 직접 드랍."
+    },
+    "rarityWeightWhenJackpot": { "SR": 0.85, "EP": 0.145, "L": 0.005 }
+  },
+  "questRewards": {
+    "description": "퀘스트를 통한 N 카드 획득.",
+    "dailyQuest": { "reward": [{ "rarity": "N", "count": 2 }], "note": "일일 퀘스트 1세트" },
+    "weeklyQuest": { "reward": [{ "rarity": "N", "count": 10 }], "note": "주간 퀘스트 완료" },
+    "storyQuest": { "reward": [{ "rarity": "N", "count": 3 }], "occasionalBonus": [{ "rarity": "R", "count": 1 }], "note": "스토리 진행 보상" }
+  },
+  "noPullGacha": {
+    "rule": "카드 뽑기(pull) 상품 없음. 획득 채널은 출석/사냥/퀘스트뿐.",
+    "excitementSource": "두근거림은 합성 결과와 사냥 잭팟에서만 발생."
+  },
+  "economySanityCheck": {
+    "approxDailyN": "출석1 + 사냥(~10판×~1.7) + 일일퀘2 ≈ 약 20장/일 (v0 가정)",
+    "approxMonthlyN": "약 600~720장/월 (+주간/월간 보너스)",
+    "legendCostRef": "fusion-recipe-tree.json: 전설 1장 ≈ N 기대 약 1.7만 장",
+    "impliedTimeToLegend": "순수 바닥쌓기 약 24개월 → 중간등급 직접공급(midDrop/jackpot) 반영 시 체감 단축. 매우 오래·도달 가능 의도와 일치.",
+    "note": "전부 v0. 일일 N 공급량·합성 확률·시즌 길이를 함께 튜닝해 목표 도달 시간을 맞춘다."
+  }
+}
