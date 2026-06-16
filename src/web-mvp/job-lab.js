@@ -2,7 +2,17 @@ const DATA_PATH = './data/';
 const STEP = 3; // 작업 1틱당 raise 스탯에 더해지는 포인트(제로섬으로 다른 스탯에서 차감)
 const RACES = ['인간', '뱀파이어', '늑대인간', '드워프', '엘프', '골렘', '도깨비', '요괴'];
 const PARTY_KEY = 'hbh.party.v1';
+const INV_KEY = 'hbh.inventory.v1';
 const PARTY_MAX = 3;
+
+function defaultInv() {
+  return { counts: { N: 30, R: 4, SR: 3, EP: 0, L: 0 }, pity: {}, attempts: 0, success: 0, madeL: 0 };
+}
+function loadInv() {
+  try { const v = JSON.parse(localStorage.getItem(INV_KEY)); if (v && v.counts) return v; } catch (e) { /* noop */ }
+  return defaultInv();
+}
+function saveInv(v) { localStorage.setItem(INV_KEY, JSON.stringify(v)); }
 
 const els = {
   raceSelect: document.querySelector('#race-select'),
@@ -18,7 +28,9 @@ const els = {
   cardName: document.querySelector('#card-name'),
   addParty: document.querySelector('#add-party'),
   partySaved: document.querySelector('#party-saved'),
-  goBattle: document.querySelector('#go-battle')
+  goBattle: document.querySelector('#go-battle'),
+  invReadout: document.querySelector('#inv-readout'),
+  grantN: document.querySelector('#grant-n')
 };
 
 function loadParty() {
@@ -118,6 +130,10 @@ function addToParty() {
   if (!state.selectedJob) return;
   const party = loadParty();
   if (party.length >= PARTY_MAX) return;
+  const inv = loadInv();
+  if ((inv.counts[state.grade] || 0) < 1) return; // 보유 카드 없으면 불가
+  inv.counts[state.grade] -= 1;
+  saveInv(inv);
   const name = (els.cardName.value || '').trim() || `${state.race} ${state.selectedJob.name}`;
   party.push({
     id: `LAB-${Date.now()}`,
@@ -129,6 +145,7 @@ function addToParty() {
   });
   saveParty(party);
   els.cardName.value = '';
+  renderInv();
   renderParty();
 }
 
@@ -137,12 +154,30 @@ function removeFromParty(id) {
   renderParty();
 }
 
+function renderInv() {
+  const inv = loadInv();
+  const order = ['N', 'R', 'SR', 'EP', 'L'];
+  els.invReadout.innerHTML = '보유 카드 — ' + order.map((g) => `${g} <b>${inv.counts[g] || 0}</b>`).join(' · ') + ' <span style="opacity:.7">(합성소와 공유)</span>';
+}
+
+function grantN() {
+  const inv = loadInv();
+  inv.counts.N = (inv.counts.N || 0) + 5;
+  saveInv(inv);
+  renderInv();
+  renderParty();
+}
+
 function renderParty() {
   const party = loadParty();
-  els.addParty.disabled = !state.selectedJob || party.length >= PARTY_MAX;
+  const inv = loadInv();
+  const owned = inv.counts[state.grade] || 0;
+  const blocked = !state.selectedJob || party.length >= PARTY_MAX || owned < 1;
+  els.addParty.disabled = blocked;
   els.addParty.textContent = party.length >= PARTY_MAX
     ? '파티가 가득 찼습니다 (3/3)'
-    : (state.selectedJob ? `현재 카드를 파티에 추가 (${party.length}/${PARTY_MAX})` : '먼저 직업을 선택하세요');
+    : (!state.selectedJob ? '먼저 직업을 선택하세요'
+      : (owned < 1 ? `${state.grade} 카드 보유 0 (합성소에서 확보)` : `현재 카드를 파티에 추가 — ${state.grade} 1장 소비 (${party.length}/${PARTY_MAX})`));
   if (!party.length) {
     els.partySaved.innerHTML = '<div class="party-empty">담긴 카드 없음. 직업을 선택해 파티에 추가하세요.</div>';
   } else {
@@ -224,6 +259,7 @@ function render() {
     els.jobList.appendChild(div);
   });
 
+  renderInv();
   renderParty();
 }
 
@@ -243,6 +279,7 @@ async function boot() {
   els.gradeSelect.addEventListener('change', initState);
   els.reset.addEventListener('click', initState);
   els.addParty.addEventListener('click', addToParty);
+  els.grantN.addEventListener('click', grantN);
 
   initState();
 }

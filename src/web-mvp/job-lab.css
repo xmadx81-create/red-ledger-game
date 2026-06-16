@@ -66,6 +66,8 @@ select { min-height:42px; border-radius:12px; border:1px solid var(--line); back
 .selected-job .none { color:var(--muted); font-weight:700; }
 
 .party-hint { font-size:12px; margin-bottom:10px; }
+.inv-readout { font-size:12px; font-weight:800; color:var(--muted); margin-bottom:8px; padding:8px 10px; background:#f7f3ff; border:1px solid rgba(122,53,216,.18); border-radius:10px; }
+.inv-readout b { color:#5e2aa8; }
 .party-add-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; }
 .card-name { flex:1; min-width:140px; min-height:42px; border-radius:12px; border:1px solid var(--line); padding:8px 12px; font:inherit; font-weight:700; }
 .btn-good { background:linear-gradient(180deg,#43a047,#2e7d32); color:#fff; border:none; border-radius:12px; padding:10px 16px; font:inherit; font-weight:900; cursor:pointer; min-height:42px; }

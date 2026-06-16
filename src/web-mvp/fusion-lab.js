@@ -23,7 +23,7 @@ async function loadJson(name) {
 
 function defaultInv() {
   return {
-    counts: { N: 30, R: 0, SR: 0, EP: 0, L: 0 },
+    counts: { N: 30, R: 4, SR: 3, EP: 0, L: 0 },
     pity: {},      // jumpKey -> 연속 실패 수
     attempts: 0,
     success: 0,
