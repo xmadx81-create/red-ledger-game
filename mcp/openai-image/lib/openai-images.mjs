@@ -8,8 +8,9 @@ function apiKey() {
   if (!k) throw new Error('OPENAI_API_KEY 환경변수가 설정되어 있지 않습니다. (.env 또는 셸 export 필요)');
   return k;
 }
+
 export function model() {
-  return process.env.OPENAI_IMAGE_MODEL || 'gpt-image-1';
+  return process.env.OPENAI_IMAGE_MODEL || 'gpt-image-2';
 }
 
 function pickB64(json) {
@@ -21,12 +22,14 @@ function pickB64(json) {
 // 텍스트→이미지 생성
 export async function generate({ prompt, size, output_format }) {
   const body = { model: model(), prompt, size: size || 'auto', n: 1 };
-  if (output_format) body.output_format = output_format; // gpt-image-1: png|jpeg|webp
+  if (output_format) body.output_format = output_format; // png|jpeg|webp
+
   const res = await fetch(`${API}/images/generations`, {
     method: 'POST',
     headers: { Authorization: `Bearer ${apiKey()}`, 'Content-Type': 'application/json' },
     body: JSON.stringify(body)
   });
+
   const json = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(`OpenAI ${res.status} ${res.statusText}: ${JSON.stringify(json.error || json).slice(0, 500)}`);
   return pickB64(json);
@@ -40,12 +43,15 @@ export async function edit({ imagePath, prompt, size, output_format }) {
   fd.append('prompt', prompt);
   if (size) fd.append('size', size);
   if (output_format) fd.append('output_format', output_format);
-  fd.append('image', new Blob([buf]), imagePath.split('/').pop() || 'image.png');
+  // OpenAI Images edit endpoint examples use image[] for image upload fields.
+  fd.append('image[]', new Blob([buf]), imagePath.split('/').pop() || 'image.png');
+
   const res = await fetch(`${API}/images/edits`, {
     method: 'POST',
     headers: { Authorization: `Bearer ${apiKey()}` },
     body: fd
   });
+
   const json = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(`OpenAI ${res.status} ${res.statusText}: ${JSON.stringify(json.error || json).slice(0, 500)}`);
   return pickB64(json);
