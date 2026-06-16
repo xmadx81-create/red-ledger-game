@@ -16,5 +16,5 @@
 - 영웅: `hero-roster-by-race.json` (HUM/VMP/WRW/DWF/ELF/SPR/HOB/GLM/AVP/AWR/HYB-00x)
 - 적: `enemy-hero-roster.json` (ENM-*)
 
-## 현재 적용된 임시 일러스트(기존 자산 차용)
-HUM-001, HUM-003, HUM-004, HUM-005, VMP-002 (구 시뮬 PNG)
+## 현재 적용된 일러스트
+없음 — 전 카드가 "준비중" 스타일 슬롯으로 표시됩니다. 캐릭터와 맞지 않던 구 시뮬 차용 이미지(체크무늬 배경)는 제거했습니다. `{characterId}.png`를 넣으면 해당 카드에 자동 적용됩니다.
