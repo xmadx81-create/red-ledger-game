@@ -22,7 +22,7 @@ function siteHref(id) {
   const t = siteType(id);
   if (t === 'HUB') return './hub.html';
   if (t === 'LOC') return './job-lab.html';
-  return './battle-prototype.html'; // STG / DUN
+  return `./battle-prototype.html?stage=${encodeURIComponent(id)}`; // STG / DUN → 승리 시 해당 거점 클리어
 }
 
 function islandOpen(island, cleared) {

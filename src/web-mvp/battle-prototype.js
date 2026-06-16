@@ -21,7 +21,14 @@ let mode = 'battle'; // 'battle' | 'negotiate'
 const AUTO_DELAY = 600;
 const PARTY_KEY = 'hbh.party.v1';
 const INV_KEY = 'hbh.inventory.v1';
+const CLEARED_KEY = 'hbh.cleared.v1';
 let acquisition = null;
+let stageName = {};
+const stageId = (typeof location !== 'undefined' && location.search)
+  ? new URLSearchParams(location.search).get('stage') : null;
+
+function loadCleared() { try { return new Set(JSON.parse(localStorage.getItem(CLEARED_KEY)) || []); } catch (e) { return new Set(); } }
+function saveCleared(s) { localStorage.setItem(CLEARED_KEY, JSON.stringify([...s])); }
 
 function loadInv() {
   try { const v = JSON.parse(localStorage.getItem(INV_KEY)); if (v && v.counts) return v; } catch (e) { /* noop */ }
@@ -54,6 +61,13 @@ function grantRewards() {
   saveInv(inv);
   if (got.length) addLog(`전투 보상: ${got.join(', ')} → 인벤토리 적립`, jackpot ? 'win' : 'heal');
   else addLog('전투 보상: 이번엔 카드 드랍 없음.', 'sys');
+  if (stageId) {
+    const c = loadCleared();
+    if (!c.has(stageId)) {
+      c.add(stageId); saveCleared(c);
+      addLog(`스테이지 [${stageName[stageId] || stageId}] 클리어! 월드맵에서 다음 섬이 열립니다.`, 'win');
+    }
+  }
 }
 
 function loadLabParty() {
@@ -154,6 +168,7 @@ function initState() {
     addLog(`시너지 발동: ${state.synergy.active.map((s) => s.name).join(', ')}`, 'sys');
   }
   addLog(`전투 시작! 파티 ${state.party.length}명 vs 적 ${state.enemies.length}명.`, 'sys');
+  if (stageId) addLog(`스테이지: ${stageName[stageId] || stageId} (${state.mode === 'negotiate' ? '설득전' : '섬멸전'})`, 'sys');
   render();
   if (state.auto) scheduleAuto();
 }
@@ -621,11 +636,15 @@ function renderPartySource() {
 function loadAcquisition() {
   return fetch(`${DATA_PATH}card-acquisition.json`).then((r) => (r.ok ? r.json() : null)).catch(() => null);
 }
+function loadStages() {
+  return fetch(`${DATA_PATH}stages.json`).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+}
 
-Promise.all([loadSetup(), loadAcquisition()])
-  .then(([data, acq]) => {
+Promise.all([loadSetup(), loadAcquisition(), loadStages()])
+  .then(([data, acq, stages]) => {
     setup = data;
     acquisition = acq;
+    (stages || []).forEach((s) => { stageName[s.stageId] = s.stageName; });
     labParty = loadLabParty();
     useLab = labParty.length > 0;
     renderPartySource();
