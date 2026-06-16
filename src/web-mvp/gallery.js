@@ -12,6 +12,12 @@ let cards = [];
 let raceFilter = 'all';
 let gradeFilter = 'all';
 
+// 헌혈의 집 엠블럼: 집(House) + 혈액 방울(Drop). 적십자류 표식 미사용(오리지널).
+const EMBLEM = `<svg viewBox="0 0 64 64" class="emb" aria-hidden="true">
+  <path d="M32 7 L57 28 L51 28 L51 55 L13 55 L13 28 L7 28 Z" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linejoin="round"/>
+  <path d="M32 29 C40.5 41 44 47.5 32 51.5 C20 47.5 23.5 41 32 29 Z" fill="currentColor"/>
+</svg>`;
+
 const loadJson = (n) => fetch(`${DATA_PATH}${n}`).then((r) => (r.ok ? r.json() : null)).catch(() => null);
 
 function inferAlignment(a) {
@@ -36,7 +42,6 @@ function auraEffects(auraId) {
   return a ? (a.gameEffect || []) : [];
 }
 
-// 역할/직업 키워드 → 1차 스탯 가중치
 function weights(text) {
   const w = { STR: 1, DEX: 1, INT: 1, VIT: 1, ACC: 1, CHA: 1, WIL: 1, LUK: 1 };
   const t = text || '';
@@ -53,11 +58,10 @@ function weights(text) {
 function primaryFrom(budget, text) {
   const w = weights(text);
   const sum = Object.values(w).reduce((a, b) => a + b, 0);
-  const ids = Object.keys(w);
   const out = {};
   let used = 0;
-  ids.forEach((k) => { out[k] = Math.max(1, Math.round(budget * w[k] / sum)); used += out[k]; });
-  out.STR += (budget - used); // 잔차 보정
+  Object.keys(w).forEach((k) => { out[k] = Math.max(1, Math.round(budget * w[k] / sum)); used += out[k]; });
+  out.STR += (budget - used);
   if (out.STR < 1) out.STR = 1;
   return out;
 }
@@ -69,7 +73,6 @@ function derive(p) {
     방어: Math.round(p.VIT * 1.5 + p.STR * 0.5),
     속도: Math.round(p.DEX * 2),
     명중: Math.round(p.ACC * 1.5 + p.DEX * 0.5),
-    회피: Math.round(p.DEX * 1.2),
     치명: Math.round(p.ACC * 0.7 + p.LUK * 0.8)
   };
 }
@@ -78,27 +81,21 @@ function build(heroData, enemyData, registry, budgetByGrade) {
   const regMap = new Map((registry.cards || []).map((c) => [c.characterId, c]));
   const out = [];
   const push = (o) => {
-    const text = `${o.job} ${o.role}`;
-    const budget = (budgetByGrade[o.rarity] || 100);
-    o.derived = derive(primaryFrom(budget, text));
+    o.derived = derive(primaryFrom(budgetByGrade[o.rarity] || 100, `${o.job} ${o.role}`));
     out.push(o);
   };
   for (const race of (heroData.races || [])) {
     for (const h of (race.heroes || [])) {
       const reg = regMap.get(h.id) || {};
-      push({
-        id: h.id, name: h.name, race: race.raceName, job: h.job, role: h.role,
+      push({ id: h.id, name: h.name, race: race.raceName, job: h.job, role: h.role,
         rarity: reg.rarity || inferRarity(h.aura), alignment: reg.alignment || inferAlignment(h.aura),
-        aura: h.aura, story: h.storyArc || '', enemy: false
-      });
+        aura: h.aura, story: h.storyArc || '', enemy: false });
     }
   }
   for (const e of (enemyData.enemyHeroes || [])) {
-    push({
-      id: e.id, name: e.name, race: e.race, job: e.job, role: (e.threatType || [])[0] || '적 영웅',
+    push({ id: e.id, name: e.name, race: e.race, job: e.job, role: (e.threatType || [])[0] || '적 영웅',
       rarity: inferRarity(e.aura), alignment: inferAlignment(e.secondaryAura || e.aura),
-      aura: e.aura, story: e.personalStory || e.motive || '', enemy: true
-    });
+      aura: e.aura, story: e.personalStory || e.motive || '', enemy: true });
   }
   return out;
 }
@@ -113,35 +110,48 @@ function render() {
     const aura = aE.auraColor || '#888';
     const stars = '★'.repeat(t.starCount) + '☆'.repeat(Math.max(0, 5 - t.starCount));
     const d = c.derived;
-    const effects = auraEffects(c.aura);
+    const fx = auraEffects(c.aura);
+    const statRow = ['물공', '기공', '방어', '속도', '명중', '치명']
+      .map((k) => `<div class="stat"><span>${k}</span><b>${d[k]}</b></div>`).join('');
 
     const wrap = document.createElement('div');
     wrap.className = 'flip';
     wrap.style.setProperty('--b', t.borderColor);
+    wrap.style.setProperty('--acc', t.accentColor || t.borderColor);
     wrap.style.setProperty('--aura', aura);
     wrap.innerHTML = `
       <div class="flip-inner">
+        <!-- 앞면: 풀 카드 -->
         <div class="face front">
-          <div class="badge">${c.rarity}</div>
-          ${c.enemy ? '<span class="enemy-flag">적</span>' : ''}
-          <div class="slot">
-            <div class="ph-layer"><span class="initial">${(c.name || '?').slice(0, 1)}</span><span class="ph">일러스트 준비중</span></div>
-            <img class="portrait" src="./assets/portraits/${c.id}.png" alt="${c.name}" loading="lazy" onerror="this.remove()" />
+          <div class="frame">
+            <div class="c-head">
+              <span class="c-name">${c.name}</span>
+              <span class="c-hp">HP <b>${d.HP}</b></span>
+            </div>
+            <div class="c-art">
+              <div class="ph-layer"><span class="initial">${(c.name || '?').slice(0, 1)}</span><span class="ph">일러스트 준비중</span></div>
+              <img class="portrait" src="./assets/portraits/${c.id}.png" alt="${c.name}" loading="lazy" onerror="this.remove()" />
+              <span class="gem">${c.rarity}</span>
+              ${c.enemy ? '<span class="enemy-flag">적</span>' : ''}
+              <span class="stars">${stars}</span>
+            </div>
+            <div class="c-meta">${c.race} · ${c.job} <span class="role">${c.role || ''}</span></div>
+            <div class="c-stats">${statRow}</div>
+            <div class="c-skill">
+              <div class="sk-h"><span class="dot"></span>${aE.name || ''} 아우라</div>
+              <div class="sk-b">${fx[0] || aE.meaning || '—'}${fx[1] ? ' · ' + fx[1] : ''}</div>
+            </div>
+            <div class="c-foot"><span class="emblem-mini">${EMBLEM}</span><span>${t.name} · ${c.id}</span><span class="flip-hint">뒤집기 ⟳</span></div>
           </div>
-          <div class="nm">${c.name}</div>
-          <div class="sub">${c.race} · ${c.job}</div>
-          <div class="stars">${stars} <span class="flip-hint">뒤집기 ⟳</span></div>
         </div>
+        <!-- 뒷면: 카드 백(아이덴티티) -->
         <div class="face back">
-          <div class="bk-title">${c.name} <span>${t.name}(${c.rarity})</span></div>
-          <div class="bk-sub">${c.race} · ${c.job} · ${c.role}</div>
-          <div class="stat-grid">
-            ${Object.entries(d).map(([k, v]) => `<div class="st"><span>${k}</span><b>${v}</b></div>`).join('')}
+          <div class="back-skin">
+            <div class="back-emblem">${EMBLEM}</div>
+            <div class="back-title">헌혈의 집</div>
+            <div class="back-sub">BLOOD DONATION HOUSE</div>
+            <div class="back-rar">${t.name} · ${c.rarity}</div>
           </div>
-          <div class="bk-sec">아우라 효과 (${aE.name || ''})</div>
-          <ul class="fx">${effects.length ? effects.map((e) => `<li>${e}</li>`).join('') : '<li>—</li>'}</ul>
-          <div class="bk-sec">스토리</div>
-          <p class="story">${c.story || '—'}</p>
         </div>
       </div>`;
     wrap.addEventListener('click', () => wrap.classList.toggle('flipped'));
@@ -151,12 +161,9 @@ function render() {
 
 async function boot() {
   const [style, aura, hero, enemy, registry, stat] = await Promise.all([
-    loadJson('card-style-system.json'),
-    loadJson('aura-system.json'),
-    loadJson('hero-roster-by-race.json'),
-    loadJson('enemy-hero-roster.json'),
-    loadJson('character-card-registry.json'),
-    loadJson('card-stat-schema.json')
+    loadJson('card-style-system.json'), loadJson('aura-system.json'),
+    loadJson('hero-roster-by-race.json'), loadJson('enemy-hero-roster.json'),
+    loadJson('character-card-registry.json'), loadJson('card-stat-schema.json')
   ]);
   styles = style;
   auraSys = aura || { auraTypes: [] };
