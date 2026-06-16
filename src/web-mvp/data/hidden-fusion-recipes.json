@@ -75,7 +75,17 @@
     "CARD-GLM-001-N-9001": "아르고스 (성벽)",
     "CARD-GLM-002-R-9001": "볼키온 (대장간)",
     "CARD-GLM-003-SR-9001": "세레스 (수정)",
-    "CARD-GLM-004-EP-9001": "바실리스크 (포격체)"
+    "CARD-GLM-004-EP-9001": "바실리스크 (포격체)",
+
+    "CARD-ENM-AVP-001-N-9001": "발테른 (잠든 저주)",
+    "CARD-ENM-AVP-001-R-9001": "발테른 (각성)",
+    "CARD-ENM-AVP-001-SR-9001": "발테른 (혈주)",
+    "CARD-ENM-AVP-001-EP-9001": "발테른 (군주)",
+    "CARD-ENM-AVP-001-L-0001": "발테른 드라큘 (적대 전설)",
+    "CARD-ENM-VMP-001-N-9001": "릴리아 (밤의 귀족)",
+    "CARD-ENM-HUM-001-R-9001": "카엘 (선동가)",
+    "CARD-ENM-WRW-001-SR-9001": "루카르 (광폭)",
+    "CARD-ENM-AWR-001-EP-9001": "리칸 (폭풍의 왕)"
   },
   "chains": [
     {
@@ -169,6 +179,19 @@
         { "step": 2, "fromGrade": "R", "toGrade": "SR", "inputs": ["CARD-GLM-005-R-9001", "CARD-GLM-002-R-9001"], "result": "CARD-GLM-005-SR-9001", "successRate": 0.5 },
         { "step": 3, "fromGrade": "SR", "toGrade": "EP", "inputs": ["CARD-GLM-005-SR-9001", "CARD-GLM-003-SR-9001"], "result": "CARD-GLM-005-EP-9001", "successRate": 0.5 },
         { "step": 4, "fromGrade": "EP", "toGrade": "L", "inputs": ["CARD-GLM-005-EP-9001", "CARD-GLM-004-EP-9001"], "result": "CARD-GLM-005-L-0001", "successRate": 0.5 }
+      ]
+    },
+    {
+      "chainId": "HIDDEN-CHAIN-006",
+      "name": "피의 계승 (적대)",
+      "discovered": false,
+      "targetLegend": "CARD-ENM-AVP-001-L-0001",
+      "lore": "빌런 연합이 잠든 저주를 일깨워 피의 계승자 발테른 드라큘을 적대 전설로 부활시킨다. 릴리스 루트의 어둠의 거울.",
+      "steps": [
+        { "step": 1, "fromGrade": "N", "toGrade": "R", "inputs": ["CARD-ENM-AVP-001-N-9001", "CARD-ENM-VMP-001-N-9001"], "result": "CARD-ENM-AVP-001-R-9001", "successRate": 0.5 },
+        { "step": 2, "fromGrade": "R", "toGrade": "SR", "inputs": ["CARD-ENM-AVP-001-R-9001", "CARD-ENM-HUM-001-R-9001"], "result": "CARD-ENM-AVP-001-SR-9001", "successRate": 0.5 },
+        { "step": 3, "fromGrade": "SR", "toGrade": "EP", "inputs": ["CARD-ENM-AVP-001-SR-9001", "CARD-ENM-WRW-001-SR-9001"], "result": "CARD-ENM-AVP-001-EP-9001", "successRate": 0.5 },
+        { "step": 4, "fromGrade": "EP", "toGrade": "L", "inputs": ["CARD-ENM-AVP-001-EP-9001", "CARD-ENM-AWR-001-EP-9001"], "result": "CARD-ENM-AVP-001-L-0001", "successRate": 0.5 }
       ]
     }
   ],
