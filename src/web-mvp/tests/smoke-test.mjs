@@ -228,13 +228,15 @@ async function checkCardGameData() {
 
   const leg = await loadJson('legendary-anchor-set.json');
   const roster = await loadJson('hero-roster-by-race.json');
+  const enemy = await loadJson('enemy-hero-roster.json');
   const rmap = new Map();
-  for (const r of roster.races) for (const h of r.heroes) rmap.set(h.id, { ...h, raceName: r.raceName });
+  for (const r of roster.races) for (const h of r.heroes) rmap.set(h.id, { race: r.raceName });
+  for (const e of (enemy.enemyHeroes || [])) rmap.set(e.id, { race: e.race });
   for (const l of leg.legends) {
     assert(CARD_UID_RE.test(l.cardUid), `전설 cardUid 형식 ${l.cardUid}`);
     const h = rmap.get(l.characterId);
     assert(h, `전설 characterId 로스터 없음 ${l.characterId}`);
-    assert(h.raceName === l.race, `전설 race 불일치 ${l.characterId}(${l.race}/${h.raceName})`);
+    assert(h.race === l.race, `전설 race 불일치 ${l.characterId}(${l.race}/${h.race})`);
   }
 
   const bp = await loadJson('battle-prototype.json');
