@@ -1,7 +1,7 @@
 {
   "version": "0.1.0",
   "description": "일반 확률 합성(fusion-recipe-tree.json)의 예외로 동작하는 비공개 히든 레시피 트리. 특정 카드 조합을 정확히 맞추면 일반보다 훨씬 높은 확률(기본 50%)로 한 등급 상위 카드로 합성되고, 이를 연쇄해 전설까지 가는 '최단 비공개 루트'를 만든다. 카드 식별자는 미정(추후 확정).",
-  "status": "design-skeleton",
+  "status": "cards-proposed",
   "concept": {
     "isExceptionToGenericFusion": true,
     "hidden": true,
@@ -21,58 +21,71 @@
       "체인 단계별로 입력 난도를 올려 최단 루트라도 비용이 들게 함"
     ]
   },
-  "cardPlaceholderPolicy": {
-    "tbd": true,
-    "note": "아래 입력/결과 카드 ID는 전부 placeholder(TBD-*)다. 실제 캐릭터/카드 확정 시 characterId·cardUid로 교체한다.",
+  "cardPolicy": {
+    "confirmedCards": true,
+    "note": "히든 루트 전용 카드는 기존 캐릭터(roster)의 특수 변종으로, SERIAL 9001번대를 사용해 일반 카드(0001)와 구분한다.",
+    "serialBand": "9001+",
     "idFormatRef": "CARD-{CHARACTER_ID}-{RARITY}-{SERIAL} (CARD_PRODUCTION_PIPELINE_001.md)"
+  },
+  "cardLabels": {
+    "CARD-VMP-005-N-9001": "태오 (미각성)",
+    "CARD-HUM-002-N-9001": "지호 (제보)",
+    "CARD-VMP-002-R-9001": "발렌 (각성)",
+    "CARD-VMP-004-R-9001": "그라프 (혈향)",
+    "CARD-VMP-003-SR-9001": "리아스 (정신각성)",
+    "CARD-VMP-001-EP-9001": "카멜리아 (혈액술)",
+    "CARD-AVP-003-EP-9001": "누아르 (섀도우 노블)",
+    "CARD-AVP-002-EP-9001": "발터스 (기억 군주)",
+    "CARD-AVP-001-L-0001": "릴리스 (블러드 오라클·전설)"
   },
   "chains": [
     {
       "chainId": "HIDDEN-CHAIN-001",
-      "name": "(미정) 비밀 전설 루트 α",
+      "name": "붉은 예언 각성",
       "discovered": false,
-      "targetLegendRef": "legendary-anchor-set.json 중 1종(추후 지정) 또는 신규 전설",
+      "targetLegend": "CARD-AVP-001-L-0001",
+      "lore": "잊혀진 혈맹의 조각들을 정확한 순서로 합치면 초고대 예언자 릴리스가 깨어난다는 비공개 전승.",
       "steps": [
         {
           "step": 1,
           "fromGrade": "N",
           "toGrade": "R",
-          "inputs": ["TBD-N-α1", "TBD-N-α2"],
-          "result": "TBD-R-α",
+          "inputs": ["CARD-VMP-005-N-9001", "CARD-HUM-002-N-9001"],
+          "result": "CARD-VMP-002-R-9001",
           "successRate": 0.5
         },
         {
           "step": 2,
           "fromGrade": "R",
           "toGrade": "SR",
-          "inputs": ["TBD-R-α", "TBD-?-α3"],
-          "result": "TBD-SR-α",
+          "inputs": ["CARD-VMP-002-R-9001", "CARD-VMP-004-R-9001"],
+          "result": "CARD-VMP-003-SR-9001",
           "successRate": 0.5
         },
         {
           "step": 3,
           "fromGrade": "SR",
           "toGrade": "EP",
-          "inputs": ["TBD-SR-α", "TBD-?-α4"],
-          "result": "TBD-EP-α",
+          "inputs": ["CARD-VMP-003-SR-9001", "CARD-VMP-001-EP-9001"],
+          "result": "CARD-AVP-003-EP-9001",
           "successRate": 0.5
         },
         {
           "step": 4,
           "fromGrade": "EP",
           "toGrade": "L",
-          "inputs": ["TBD-EP-α", "TBD-?-α5"],
-          "result": "TBD-L-α (전설)",
+          "inputs": ["CARD-AVP-003-EP-9001", "CARD-AVP-002-EP-9001"],
+          "result": "CARD-AVP-001-L-0001",
           "successRate": 0.5
         }
       ]
     }
   ],
   "todo": [
-    "각 단계 입력/결과 카드 확정(characterId·cardUid)",
     "히든 발견 트리거 설계(힌트/로어/이벤트)",
     "실패 시 입력 처리·천장 정책 확정",
-    "fusion-lab은 현재 등급별 fungible 카운트라 카드 식별 기반 매칭 미지원 → 카드 인스턴스 식별 추가 후 구현",
-    "여러 비공개 체인(전설별) 추가"
+    "fusion-lab은 현재 등급별 fungible 카운트라 카드 식별 기반 매칭 미지원 → 카드 인스턴스 식별 추가 후 본 합성소 통합",
+    "전설별 추가 비공개 체인(서윤/에일론/알드릭/모니토르 루트) 설계",
+    "EVIL 전설 슬롯 추가 시 적대 비공개 체인 검토"
   ]
 }

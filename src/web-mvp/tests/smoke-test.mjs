@@ -247,6 +247,24 @@ async function checkCardGameData() {
   for (const cont of w.continents) for (const isl of (cont.islands || [])) for (const sid of (isl.sites || [])) {
     assert(/^(HUB|STG|DUN|LOC)/.test(sid), `world-map site 형식 ${sid}`);
   }
+
+  // 히든 합성 체인: cardUid 형식 + characterId 로스터 존재 + 전설 타깃 정합
+  const hidden = await loadJson('hidden-fusion-recipes.json');
+  const legendUids = new Set(leg.legends.map((l) => l.cardUid));
+  for (const ch of hidden.chains) {
+    const cardIds = new Set();
+    for (const s of ch.steps) { s.inputs.forEach((i) => cardIds.add(i)); cardIds.add(s.result); }
+    for (const cid of cardIds) {
+      const m = CARD_UID_RE.exec(cid);
+      assert(m, `히든 cardUid 형식 ${cid}`);
+      assert(rmap.has(m[1]), `히든 카드 characterId 로스터 없음 ${cid}`);
+    }
+    if (ch.targetLegend) assert(legendUids.has(ch.targetLegend), `히든 체인 전설 타깃 불일치 ${ch.targetLegend}`);
+    // 체인 연결성: 각 단계 결과가 다음 단계 입력에 포함
+    for (let i = 0; i < ch.steps.length - 1; i++) {
+      assert(ch.steps[i + 1].inputs.includes(ch.steps[i].result), `히든 체인 연결 끊김 step${i + 1}→${i + 2}`);
+    }
+  }
   console.log('카드게임 데이터 정합성 통과.');
 }
 
