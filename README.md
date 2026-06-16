@@ -49,11 +49,14 @@
 
 ```bash
 npm install
-npm run dev        # 개발 서버 → 브라우저에서 src/web-mvp/hub.html 진입
-npm run build      # 빌드 확인
+npm run play       # ★ 카드게임 실행 → http://localhost:5173/hub.html 접속
+npm run dev        # (구) 운영 시뮬 React 앱 → http://localhost:5173/
+npm run build      # (구) 시뮬 프로덕션 빌드(dist/)
 npm test           # 데이터 정합성 + 프로토타입 JS 구문 회귀 스모크
 npm run sim        # 경제 시뮬: 전설 1장 도달 일수 측정
 ```
+
+> **카드게임을 보려면 `npm run play` 후 브라우저에서 `http://localhost:5173/hub.html`을 엽니다.** (정적 exe가 아니라 웹 앱이라 로컬 서버가 필요 — `fetch`로 데이터를 읽기 때문)
 
 ## 폴더 구조 (요약)
 
