@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>헌혈의 집 · 카드 갤러리</title>
+    <link rel="stylesheet" href="./gallery.css" />
+  </head>
+  <body>
+    <main class="gal-shell">
+      <header class="gal-header">
+        <p class="eyebrow">card gallery</p>
+        <h1>카드 갤러리</h1>
+        <p>전체 로스터를 등급 테두리·성향 아우라가 입혀진 카드로 봅니다. 일러스트는 아직 준비 전이라 슬롯으로 표시됩니다(원칙: 데이터·코드 먼저, 이미지는 마지막).</p>
+        <nav class="gal-nav">
+          <a href="./hub.html">🏠 홈</a>
+          <a href="./card-studio.html">🎴 카드 스튜디오</a>
+          <a href="./collection.html">🗂 내 컬렉션</a>
+        </nav>
+        <div class="gal-filters">
+          <select id="race-filter"></select>
+          <select id="grade-filter"></select>
+          <span id="count" class="count"></span>
+        </div>
+      </header>
+      <div id="grid" class="grid"></div>
+    </main>
+    <script src="./gallery.js"></script>
+  </body>
+</html>
