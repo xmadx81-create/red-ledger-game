@@ -9,8 +9,11 @@ const els = {
   actionPanel: document.querySelector('#action-panel'),
   endTurn: document.querySelector('#end-turn'),
   restart: document.querySelector('#restart'),
+  autoToggle: document.querySelector('#auto-toggle'),
   log: document.querySelector('#log')
 };
+
+const AUTO_DELAY = 600;
 
 let setup = null;
 let state = null;
@@ -56,6 +59,7 @@ async function loadSetup() {
 }
 
 function initState() {
+  const keepAuto = state ? state.auto : false;
   state = {
     blood: setup.blood.start,
     turn: 1,
@@ -64,11 +68,13 @@ function initState() {
     enemies: setup.enemies.map((e) => makeUnit(e, 'enemy')),
     pendingAction: null,
     pendingActor: null,
+    auto: keepAuto,
     over: false
   };
   els.log.innerHTML = '';
   addLog(`전투 시작! 파티 ${state.party.length}명 vs 적 ${state.enemies.length}명.`, 'sys');
   render();
+  if (state.auto) scheduleAuto();
 }
 
 function addLog(text, cls = '') {
@@ -202,6 +208,7 @@ function startPlayerTurn() {
   state.party.forEach((u) => (u.atkDebuff = 0));
   addLog(`— ${state.turn}턴 시작 (혈액 ${state.blood}) —`, 'sys');
   render();
+  scheduleAuto();
 }
 
 function endTurnClicked() {
@@ -209,6 +216,57 @@ function endTurnClicked() {
   state.pendingAction = null;
   state.pendingActor = null;
   enemyTurn();
+}
+
+// ---- 오토 배틀 (하이브리드: node 시뮬에서 검증한 휴리스틱 이식) ----
+function getAction(id) { return setup.actions.find((a) => a.actionId === id); }
+
+function autoChoose() {
+  const allies = livingParty();
+  const foes = livingEnemies();
+  if (!foes.length || !allies.length) return null;
+  const lowFoe = foes.slice().sort((a, b) => a.hp - b.hp)[0];
+  // 1) 위급 아군 회복
+  const healAct = getAction('ACT-FIRST-AID');
+  const healer = allies.find((u) => u.job === '힐러');
+  const hurt = allies.filter((u) => u.hp / u.maxHp < 0.45).sort((a, b) => a.hp - b.hp)[0];
+  if (hurt && healer && healAct && state.blood >= healAct.bloodCost) {
+    return { action: healAct, actor: healer, target: hurt };
+  }
+  // 2) 마법사 기술 일격
+  const magic = getAction('ACT-MAGIC');
+  const mage = allies.find((u) => u.job === '마법사');
+  if (mage && magic && state.blood >= magic.bloodCost) {
+    return { action: magic, actor: mage, target: lowFoe };
+  }
+  // 3) 전사/그 외 제압
+  const subdue = getAction('ACT-SUBDUE');
+  const striker = allies.find((u) => u.job === '전사') || allies[0];
+  if (subdue && state.blood >= subdue.bloodCost) {
+    return { action: subdue, actor: striker, target: lowFoe };
+  }
+  return null;
+}
+
+function scheduleAuto() {
+  if (state.auto && !state.over && state.phase === 'player') setTimeout(autoStep, AUTO_DELAY);
+}
+
+function autoStep() {
+  if (!state.auto || state.over || state.phase !== 'player') return;
+  state.pendingAction = null;
+  state.pendingActor = null;
+  const choice = autoChoose();
+  if (!choice) { endTurnClicked(); return; }
+  const { action, actor, target } = choice;
+  state.blood -= action.bloodCost;
+  if (action.kind === 'damage') dealDamage(actor, target, action.name, action.scale, action.power);
+  else if (action.kind === 'heal') heal(actor, target, action.scale, action.power);
+  else if (action.kind === 'shield') shield(actor, target, action.scale, action.power);
+  else if (action.kind === 'debuff') { target.atkDebuff = 1; addLog(`${actor.name} → ${target.name} 다음 공격 약화(봉쇄)`, 'sys'); }
+  if (checkEnd()) return;
+  render();
+  scheduleAuto();
 }
 
 function checkEnd() {
@@ -271,14 +329,16 @@ function render() {
   if (!state.over && state.phase === 'player') {
     setup.actions.forEach((a) => {
       const btn = document.createElement('button');
-      const disabled = a.bloodCost > state.blood;
+      const disabled = a.bloodCost > state.blood || state.auto;
       btn.className = `action-btn${state.pendingAction && state.pendingAction.actionId === a.actionId ? ' selected' : ''}`;
       btn.disabled = disabled;
       btn.innerHTML = `<span>${a.name} <span class="cost">혈 ${a.bloodCost}</span></span><small>${a.desc}</small>`;
       btn.addEventListener('click', () => selectAction(a));
       els.actionPanel.appendChild(btn);
     });
-    if (!state.turnInfo.textContent && !state.pendingAction) {
+    if (state.auto) {
+      els.turnInfo.textContent = `${state.turn}턴 · 오토 진행 중 (수동 전환하려면 오토를 끄세요)`;
+    } else if (!els.turnInfo.textContent && !state.pendingAction) {
       els.turnInfo.textContent = `${state.turn}턴 · 행동 카드를 선택하세요 (혈액으로 여러 번 행동, 끝나면 턴 종료)`;
     }
   } else if (state.phase === 'enemy') {
@@ -287,11 +347,18 @@ function render() {
     els.turnInfo.textContent = '전투 종료 — 다시 시작을 눌러 재도전';
   }
 
-  els.endTurn.disabled = state.over || state.phase !== 'player';
+  els.endTurn.disabled = state.over || state.phase !== 'player' || state.auto;
+  els.autoToggle.textContent = `오토: ${state.auto ? '켜짐' : '꺼짐'}`;
+  els.autoToggle.classList.toggle('on', state.auto);
 }
 
 els.endTurn.addEventListener('click', endTurnClicked);
 els.restart.addEventListener('click', initState);
+els.autoToggle.addEventListener('click', () => {
+  state.auto = !state.auto;
+  render();
+  if (state.auto) scheduleAuto();
+});
 
 loadSetup()
   .then((data) => { setup = data; initState(); })
