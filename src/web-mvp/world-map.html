@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>헌혈의 집 · 월드맵</title>
+    <link rel="stylesheet" href="./world-map.css" />
+  </head>
+  <body>
+    <main class="map-shell">
+      <header class="map-header">
+        <p class="eyebrow">world map</p>
+        <h1>월드맵</h1>
+        <p>대륙 → 섬 → 거점. 섬은 앞 거점을 클리어하면 점진적으로 열립니다. 거점을 눌러 전투·육성 화면으로 이동하세요.</p>
+        <nav class="map-nav">
+          <a href="./hub.html">🏠 홈</a>
+          <a href="./battle-prototype.html">⚔ 전투</a>
+          <a href="./job-lab.html">🧪 배치 육성소</a>
+        </nav>
+        <button id="reset-progress" class="btn-ghost">진행도 초기화</button>
+      </header>
+      <div id="continents" class="continents"></div>
+    </main>
+    <script src="./world-map.js"></script>
+  </body>
+</html>
