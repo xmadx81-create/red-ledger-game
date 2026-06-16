@@ -26,6 +26,7 @@ docs/game-design/
 ├─ CARD_GAME_DESIGN_001.md              (★ 마스터 기획서)
 ├─ RACE_HYBRID_FUSION_SYSTEM_001.md     (종족·하이브리드·합성 가챠·등급 세분화)
 ├─ LEGENDARY_TOPDOWN_FUSION_STRUCTURE_001.md (전설 우선→하위 역산 합성 구조)
+├─ HIDDEN_FUSION_TREE_001.md            (비공개 최단 전설 루트 — 히든 레시피, 카드 미정)
 ├─ CARD_STAT_SYSTEM_001.md              (유동 스탯·고정총량 재분배·합성/레벨)
 ├─ MAP_PLACEMENT_JOB_SYSTEM_001.md      (맵 배치 육성·스탯기반 자유 직업)
 ├─ CARD_ACQUISITION_ECONOMY_001.md      (일반카드 획득: 출석/사냥/퀘스트, 합성 철학)

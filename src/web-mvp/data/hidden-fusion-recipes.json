@@ -1,0 +1,78 @@
+{
+  "version": "0.1.0",
+  "description": "일반 확률 합성(fusion-recipe-tree.json)의 예외로 동작하는 비공개 히든 레시피 트리. 특정 카드 조합을 정확히 맞추면 일반보다 훨씬 높은 확률(기본 50%)로 한 등급 상위 카드로 합성되고, 이를 연쇄해 전설까지 가는 '최단 비공개 루트'를 만든다. 카드 식별자는 미정(추후 확정).",
+  "status": "design-skeleton",
+  "concept": {
+    "isExceptionToGenericFusion": true,
+    "hidden": true,
+    "shortestRouteToLegend": true,
+    "note": "일반 합성은 등급별 낮은 확률+천장으로 매우 오래 걸린다. 히든 루트는 '정확한 비밀 조합'을 알아야만 열리며, 알면 훨씬 빠르게 전설에 도달한다."
+  },
+  "rules": {
+    "matchBy": "specificCardPair",
+    "defaultSuccessRate": 0.5,
+    "onSuccess": "지정된 상위 결과 카드 1장 생성(새 cardUid 발급), 입력 카드 소비",
+    "onFail": "입력 카드 소비(또는 일부 환원 — 추후 결정). 일반 합성과 달리 천장(pity)은 적용하지 않거나 별도 정책으로 둔다",
+    "visibility": "UI에 표시하지 않음. 힌트/로어/이벤트/커뮤니티 발견으로만 알게 됨",
+    "discoveryFlagPerRecipe": true,
+    "antiAbuse": [
+      "확정이 아니라 50% RNG라 양산 방지",
+      "입력에 희귀/특정 카드가 끼어 무한 반복 불가하게 설계 가능",
+      "체인 단계별로 입력 난도를 올려 최단 루트라도 비용이 들게 함"
+    ]
+  },
+  "cardPlaceholderPolicy": {
+    "tbd": true,
+    "note": "아래 입력/결과 카드 ID는 전부 placeholder(TBD-*)다. 실제 캐릭터/카드 확정 시 characterId·cardUid로 교체한다.",
+    "idFormatRef": "CARD-{CHARACTER_ID}-{RARITY}-{SERIAL} (CARD_PRODUCTION_PIPELINE_001.md)"
+  },
+  "chains": [
+    {
+      "chainId": "HIDDEN-CHAIN-001",
+      "name": "(미정) 비밀 전설 루트 α",
+      "discovered": false,
+      "targetLegendRef": "legendary-anchor-set.json 중 1종(추후 지정) 또는 신규 전설",
+      "steps": [
+        {
+          "step": 1,
+          "fromGrade": "N",
+          "toGrade": "R",
+          "inputs": ["TBD-N-α1", "TBD-N-α2"],
+          "result": "TBD-R-α",
+          "successRate": 0.5
+        },
+        {
+          "step": 2,
+          "fromGrade": "R",
+          "toGrade": "SR",
+          "inputs": ["TBD-R-α", "TBD-?-α3"],
+          "result": "TBD-SR-α",
+          "successRate": 0.5
+        },
+        {
+          "step": 3,
+          "fromGrade": "SR",
+          "toGrade": "EP",
+          "inputs": ["TBD-SR-α", "TBD-?-α4"],
+          "result": "TBD-EP-α",
+          "successRate": 0.5
+        },
+        {
+          "step": 4,
+          "fromGrade": "EP",
+          "toGrade": "L",
+          "inputs": ["TBD-EP-α", "TBD-?-α5"],
+          "result": "TBD-L-α (전설)",
+          "successRate": 0.5
+        }
+      ]
+    }
+  ],
+  "todo": [
+    "각 단계 입력/결과 카드 확정(characterId·cardUid)",
+    "히든 발견 트리거 설계(힌트/로어/이벤트)",
+    "실패 시 입력 처리·천장 정책 확정",
+    "fusion-lab은 현재 등급별 fungible 카운트라 카드 식별 기반 매칭 미지원 → 카드 인스턴스 식별 추가 후 구현",
+    "여러 비공개 체인(전설별) 추가"
+  ]
+}

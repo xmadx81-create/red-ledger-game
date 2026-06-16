@@ -86,6 +86,7 @@
     "note": "성공률 = baseSuccessRate + 재료보정 + 행운보정 + 누적보정(천장).",
     "luckSources": ["캐릭터 행운 스탯", "합성석/촉매", "이벤트 보너스", "동일 종족/성향 재료 보너스"]
   },
+  "hiddenRouteRef": "이 트리는 공개된 기본 합성 루트다. 특정 카드 조합으로 50% 등업되는 비공개 최단 루트는 hidden-fusion-recipes.json / HIDDEN_FUSION_TREE_001.md 참조(예외 시스템).",
   "tuningNotes": [
     "곱셈 구조 특성상 pityCap/baseSuccessRate를 조금만 바꿔도 전설 도달 난이도가 크게 변한다.",
     "전설 5장(legendary-anchor-set.json)을 기준점으로, 시즌 길이/일일 N 공급량과 함께 함께 튜닝해야 한다.",
