@@ -57,6 +57,20 @@
     { "id": "ROLE-TRINITY", "name": "역할 균형", "effect": { "dmgMult": 1.12, "healMult": 1.12, "defMult": 1.0 }, "desc": "전사·마법사·힐러를 모두 편성하면 피해·회복 +12%." },
     { "id": "HUMAN-PACT", "name": "인간 연대", "effect": { "dmgMult": 1.0, "healMult": 1.0, "defMult": 1.1 }, "desc": "인간 2명 이상 편성 시 방어 +10%." }
   ],
+  "negotiation": {
+    "title": "오해한 인간 세력 설득전",
+    "empathyTarget": 130,
+    "panicStart": 20,
+    "panicMax": 100,
+    "panicPerEnemyTurn": 16,
+    "turnLimit": 11,
+    "actions": [
+      { "actionId": "NG-PERSUADE", "name": "설득", "bloodCost": 2, "kind": "empathy", "scale": "PERSUADE", "power": 12, "target": "self", "desc": "공감 게이지 상승 (설득력 비례)." },
+      { "actionId": "NG-CALM", "name": "진정 안내", "bloodCost": 1, "kind": "calm", "scale": "CHA", "power": 10, "target": "self", "desc": "패닉 감소 (친화 비례)." },
+      { "actionId": "NG-AID", "name": "응급 처치", "bloodCost": 2, "kind": "heal", "scale": "PERSUADE", "power": 20, "target": "ally", "desc": "아군 회복 (피해 받을 때)." }
+    ],
+    "desc": "적을 쓰러뜨리는 대신 공감 게이지를 목표치까지 채우면 승리. 패닉이 가득 차거나 파티 전멸·턴 초과 시 패배."
+  },
   "rules": {
     "hitChance": "기본 0.9 + (공격 HIT - 대상 EVA)/200, 0.5~0.99 클램프",
     "critChance": "공격 CRIT/300 (최대 0.6), 치명 시 1.8배",

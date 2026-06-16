@@ -11,8 +11,12 @@ const els = {
   restart: document.querySelector('#restart'),
   autoToggle: document.querySelector('#auto-toggle'),
   partySource: document.querySelector('#party-source'),
+  modeBattle: document.querySelector('#mode-battle'),
+  modeNegotiate: document.querySelector('#mode-negotiate'),
+  objective: document.querySelector('#objective'),
   log: document.querySelector('#log')
 };
+let mode = 'battle'; // 'battle' | 'negotiate'
 
 const AUTO_DELAY = 600;
 const PARTY_KEY = 'hbh.party.v1';
@@ -54,6 +58,7 @@ function makeUnit(raw, sideKey) {
     job: raw.job,
     race: raw.race,
     side: sideKey,
+    primary: raw.primary,
     derived: d,
     maxHp: d.HP,
     hp: d.HP,
@@ -102,6 +107,9 @@ function initState() {
     pendingAction: null,
     pendingActor: null,
     auto: keepAuto,
+    mode,
+    empathy: 0,
+    panic: mode === 'negotiate' ? setup.negotiation.panicStart : 0,
     over: false
   };
   state.synergy = computeSynergy(state.party);
@@ -203,14 +211,31 @@ function pickTarget(unit) {
   resolvePlayerAction(unit);
 }
 
-function resolvePlayerAction(target) {
-  const a = state.pendingAction;
-  const actor = state.pendingActor;
-  state.blood -= a.bloodCost;
+function currentActions() {
+  return state.mode === 'negotiate' ? setup.negotiation.actions : setup.actions;
+}
+
+function applyAction(a, actor, target) {
   if (a.kind === 'damage') dealDamage(actor, target, a.name, a.scale, a.power);
   else if (a.kind === 'heal') heal(actor, target, a.scale, a.power);
   else if (a.kind === 'shield') shield(actor, target, a.scale, a.power);
   else if (a.kind === 'debuff') { target.atkDebuff = 1; addLog(`${actor.name} → ${target.name} 다음 공격 약화(봉쇄)`, 'sys'); }
+  else if (a.kind === 'empathy') {
+    const g = Math.round((a.power + actor.derived.PERSUADE * 0.35) * state.synergy.mult.healMult);
+    state.empathy = Math.min(setup.negotiation.empathyTarget, state.empathy + g);
+    addLog(`${actor.name}의 설득 → 공감 +${g}`, 'heal');
+  } else if (a.kind === 'calm') {
+    const r = Math.round(a.power + (actor.primary ? actor.primary.CHA : 0) * 0.8);
+    state.panic = Math.max(0, state.panic - r);
+    addLog(`${actor.name}의 진정 안내 → 패닉 -${r}`, 'heal');
+  }
+}
+
+function resolvePlayerAction(target) {
+  const a = state.pendingAction;
+  const actor = state.pendingActor;
+  state.blood -= a.bloodCost;
+  applyAction(a, actor, target);
   state.pendingAction = null;
   state.pendingActor = null;
   els.turnInfo.textContent = '';
@@ -261,16 +286,23 @@ function enemyTurn() {
   render();
   let i = 0;
   const enemies = livingEnemies();
+  let panicAdded = false;
   const step = () => {
-    if (i >= enemies.length || state.over) { startPlayerTurn(); return; }
+    if (state.over) return;
+    if (state.mode === 'negotiate' && !panicAdded) {
+      panicAdded = true;
+      state.panic = Math.min(setup.negotiation.panicMax, state.panic + setup.negotiation.panicPerEnemyTurn);
+      addLog(`군중 동요 → 패닉 +${setup.negotiation.panicPerEnemyTurn}`, 'sys');
+      if (checkEnd()) return;
+    }
+    if (i >= enemies.length) { startPlayerTurn(); return; }
     const e = enemies[i++];
     const targets = livingParty();
     if (targets.length) {
-      // 가장 HP 낮은 아군 우선
       const target = targets.slice().sort((a, b) => a.hp - b.hp)[0];
       const atk = e.attack || { name: '공격', kind: 'damage', scale: 'PATK', power: 10 };
       dealDamage(e, target, atk.name, atk.scale, atk.power);
-      e.atkDebuff = 0; // 디버프는 1회 공격 후 해제
+      e.atkDebuff = 0;
     }
     if (checkEnd()) return;
     render();
@@ -290,6 +322,7 @@ function startPlayerTurn() {
     if (u.skillCd > 0) u.skillCd -= 1;
   });
   addLog(`— ${state.turn}턴 시작 (혈액 ${state.blood}) —`, 'sys');
+  if (checkEnd()) return; // 설득전 턴 제한
   render();
   scheduleAuto();
 }
@@ -345,6 +378,25 @@ function autoChooseSkill() {
   return null;
 }
 
+function autoChooseNegotiate() {
+  const allies = livingParty();
+  if (!allies.length) return null;
+  const acts = setup.negotiation.actions;
+  const calm = acts.find((a) => a.kind === 'calm');
+  const persuade = acts.find((a) => a.kind === 'empathy');
+  const aid = acts.find((a) => a.kind === 'heal');
+  const neg = setup.negotiation;
+  const bestP = allies.slice().sort((a, b) => b.derived.PERSUADE - a.derived.PERSUADE)[0];
+  if (state.panic > neg.panicMax * 0.55 && state.blood >= calm.bloodCost) {
+    const bestC = allies.slice().sort((a, b) => ((b.primary ? b.primary.CHA : 0) - (a.primary ? a.primary.CHA : 0)))[0];
+    return { action: calm, actor: bestC, target: bestC };
+  }
+  const hurt = allies.filter((u) => u.hp / u.maxHp < 0.45).sort((a, b) => a.hp - b.hp)[0];
+  if (hurt && state.blood >= aid.bloodCost) return { action: aid, actor: bestP, target: hurt };
+  if (state.blood >= persuade.bloodCost) return { action: persuade, actor: bestP, target: bestP };
+  return null;
+}
+
 function scheduleAuto() {
   if (state.auto && !state.over && state.phase === 'player') setTimeout(autoStep, AUTO_DELAY);
 }
@@ -353,6 +405,16 @@ function autoStep() {
   if (!state.auto || state.over || state.phase !== 'player') return;
   state.pendingAction = null;
   state.pendingActor = null;
+  if (state.mode === 'negotiate') {
+    const c = autoChooseNegotiate();
+    if (!c) { endTurnClicked(); return; }
+    state.blood -= c.action.bloodCost;
+    applyAction(c.action, c.actor, c.target);
+    if (checkEnd()) return;
+    render();
+    scheduleAuto();
+    return;
+  }
   const skillChoice = autoChooseSkill();
   if (skillChoice) {
     castSkill(skillChoice.actor, skillChoice.target);
@@ -373,6 +435,14 @@ function autoStep() {
 }
 
 function checkEnd() {
+  if (state.mode === 'negotiate') {
+    const neg = setup.negotiation;
+    if (state.empathy >= neg.empathyTarget) { state.over = true; addLog('설득 성공! 공감을 모두 얻었습니다.', 'win'); render(); return true; }
+    if (state.panic >= neg.panicMax) { state.over = true; addLog('설득 실패... 군중이 패닉에 빠졌습니다.', 'lose'); render(); return true; }
+    if (livingParty().length === 0) { state.over = true; addLog('패배... 파티가 전멸했습니다.', 'lose'); render(); return true; }
+    if (state.turn > neg.turnLimit) { state.over = true; addLog('설득 실패... 시간이 초과되었습니다.', 'lose'); render(); return true; }
+    return false;
+  }
   if (livingEnemies().length === 0) {
     state.over = true; addLog('승리! 모든 적을 제압했습니다.', 'win'); render(); return true;
   }
@@ -413,6 +483,25 @@ function unitCard(u) {
 }
 
 function render() {
+  // 모드 버튼
+  els.modeBattle.classList.toggle('on', state.mode === 'battle');
+  els.modeNegotiate.classList.toggle('on', state.mode === 'negotiate');
+
+  // 목표 바 (설득전)
+  if (state.mode === 'negotiate') {
+    const neg = setup.negotiation;
+    const ep = Math.round((state.empathy / neg.empathyTarget) * 100);
+    const pa = Math.round((state.panic / neg.panicMax) * 100);
+    els.objective.className = 'objective show';
+    els.objective.innerHTML = `
+      <div class="obj-title">🕊 ${neg.title} · ${state.turn}/${neg.turnLimit}턴</div>
+      <div class="obj-bar-row"><div class="obj-label"><span>공감(목표 ${neg.empathyTarget})</span><span>${state.empathy}/${neg.empathyTarget}</span></div><div class="obj-bar"><div class="obj-fill-empathy" style="width:${ep}%"></div></div></div>
+      <div class="obj-bar-row"><div class="obj-label"><span>패닉(한계 ${neg.panicMax})</span><span>${state.panic}/${neg.panicMax}</span></div><div class="obj-bar"><div class="obj-fill-panic" style="width:${pa}%"></div></div></div>`;
+  } else {
+    els.objective.className = 'objective';
+    els.objective.innerHTML = '';
+  }
+
   els.enemyUnits.innerHTML = '';
   state.enemies.forEach((u) => els.enemyUnits.appendChild(unitCard(u)));
   els.partyUnits.innerHTML = '';
@@ -436,7 +525,7 @@ function render() {
       syn.textContent = `시너지: ${state.synergy.active.map((s) => s.name).join(' · ')}`;
       els.actionPanel.appendChild(syn);
     }
-    setup.actions.forEach((a) => {
+    currentActions().forEach((a) => {
       const btn = document.createElement('button');
       const disabled = a.bloodCost > state.blood || state.auto;
       btn.className = `action-btn${state.pendingAction && !state.pendingAction.isSkill && state.pendingAction.actionId === a.actionId ? ' selected' : ''}`;
@@ -445,7 +534,7 @@ function render() {
       btn.addEventListener('click', () => selectAction(a));
       els.actionPanel.appendChild(btn);
     });
-    state.party.filter((u) => u.alive && u.skill).forEach((u) => {
+    if (state.mode === 'battle') state.party.filter((u) => u.alive && u.skill).forEach((u) => {
       const sk = u.skill;
       const btn = document.createElement('button');
       const onCd = u.skillCd > 0;
@@ -478,6 +567,8 @@ els.autoToggle.addEventListener('click', () => {
   render();
   if (state.auto) scheduleAuto();
 });
+els.modeBattle.addEventListener('click', () => { if (mode !== 'battle') { mode = 'battle'; initState(); } });
+els.modeNegotiate.addEventListener('click', () => { if (mode !== 'negotiate') { mode = 'negotiate'; initState(); } });
 
 function renderPartySource() {
   if (!labParty.length) {
