@@ -215,12 +215,14 @@
         <div class="rule"><span class="dot" style="background:#ffd23c"></span><span>일반 코인 <b>+5</b></span></div>
         <div class="rule"><span class="dot" style="background:#2f6dd6"></span><span>글자 코인 <b>+10</b> · 7글자 세트 보너스</span></div>
         <div class="rule"><span class="ico">🚧</span><span>장애물 충돌 시 하트 <b>−1</b></span></div>
-        <div class="rule"><span class="ico">💧</span><span>물웅덩이 · <b>감속</b></span></div>
-        <div class="rule"><span class="ico">🍌</span><span>바나나 · <b>가속</b></span></div>
+        <div class="rule"><span class="ico">🐱</span><span>움직이는 적 · <b>밟으면 처치 +15</b> (옆 충돌은 −1)</span></div>
+        <div class="rule"><span class="ico">⚡</span><span>부스트 · <b>초고속 질주</b> (장애물 뚫음)</span></div>
+        <div class="rule"><span class="ico">⭐</span><span>글자 세트 완성 시 <b>슈퍼 변신·무적</b></span></div>
+        <div class="rule"><span class="ico">💧🍌</span><span>물웅덩이 감속 · 바나나 가속</span></div>
       </div>
       <input id="nameInput" class="name-input" type="text" maxlength="8" placeholder="이름을 입력하세요" autocomplete="off" />
       <button class="btn" id="startBtn">시작하기</button>
-      <div class="hint"><kbd>Space</kbd> · <kbd>클릭 / 탭</kbd> 으로 점프 · <kbd>P</kbd> 일시정지</div>
+      <div class="hint"><kbd>Space</kbd> · <kbd>클릭 / 탭</kbd> 점프 · <b>두 번</b>이면 이단점프(스핀) · <kbd>P</kbd> 일시정지</div>
     </div>
   </div>
 
@@ -314,15 +316,31 @@ const ASSETS = {"character": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPsA
     ],
     COLOR_HEX: { blue:'#2f6dd6', red:'#e23b3b', green:'#34a64a' },
     COLOR_RIM: { blue:'#bcd4ff', red:'#ffd0d0', green:'#bdf0c8' },
-    BASIC_OBS: ['cone','tire','cat','manhole','guard','box'], // hit -1 life
+    BASIC_OBS: ['cone','tire','manhole','guard','box'], // hit -1 life ('cat' is now the stompable enemy)
     LIVES: 3,
     SCORE_NORMAL: 5,
     SCORE_LETTER: 10,
+    SCORE_STOMP: 15,             // jumping on an enemy
     SET_BONUS_STEP: 30,          // +30, +60, +90 ...
     EFFECT_DUR: 1.6,
     SLOW_MUL: 0.6,
     FAST_MUL: 1.7,
     INVULN: 1.1,
+    // double jump
+    MAX_JUMPS: 2,               // ground jump + 1 air (spin) jump
+    JUMP2_BOOST: 1.08,          // second jump a touch higher
+    // boost item (long speed surge, plows through hazards)
+    BOOST_DUR: 11,              // seconds (~10-12)
+    BOOST_MUL: 2.1,
+    BOOST_SPAWN: 0.05,          // chance per spawn tick
+    // super mode (triggered by completing a letter set)
+    SUPER_DUR: 7,
+    SUPER_BIG: 1.85,            // huge scale
+    SUPER_SMALL: 0.5,           // tiny scale
+    // enemies
+    ENEMY_FROM_STAGE: 1,        // 0-indexed: appears from stage 2
+    ENEMY_CHANCE: 0.35,         // share of obstacle spawns that become enemies
+    ENEMY_REL_SPEED: 1.12,      // moves faster than the world -> closes in
     // per-stage atmosphere tint (rgba) applied as a soft colour grade
     TINT: {
       sky_morning: [255, 224, 170, 0.05],
@@ -575,9 +593,12 @@ const ASSETS = {"character": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPsA
       speed:RUN_SPEED_BASE,
       py:0, vy:0, onGround:true,
       squash:0,                      // landing squash timer
+      jumps:0, maxJumps:CONFIG.MAX_JUMPS, spin:0,  // double jump + spin anim
       nextSpawn:0.8,
-      obstacles:[], coinsArr:[],
+      obstacles:[], coinsArr:[], enemies:[],
       effect:null, effectT:0,        // 'slow'|'fast'
+      boostT:0,                      // boost item timer
+      super:0, superScale:1,         // super mode (huge/tiny + invincible)
       invuln:0,
       bgX:0, seaX:0, vilX:0, roadX:0,
       hitFlash:0,
@@ -595,8 +616,18 @@ const ASSETS = {"character": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPsA
 
   function jump(){
     if(G.state!=='play') return;
-    if(G.onGround){ G.vy = -JUMP_V(); G.onGround=false; Audio_.jump();
-      FX.burst(W*0.18, FEET_Y, 6, {col:['rgba(210,210,210,0.8)','rgba(170,170,170,0.7)'], r:3.5*SCALE, life:0.35, spd:90, g:300}); }
+    if(G.jumps >= G.maxJumps) return;          // out of jumps
+    const first = (G.jumps===0);
+    G.vy = -JUMP_V() * (first ? 1 : CONFIG.JUMP2_BOOST);  // 2nd jump a touch higher
+    G.onGround=false;
+    G.jumps++;
+    Audio_.jump();
+    if(first){
+      FX.burst(W*0.18, FEET_Y+G.py, 6, {col:['rgba(210,210,210,0.8)','rgba(170,170,170,0.7)'], r:3.5*SCALE, life:0.35, spd:90, g:300});
+    } else {
+      G.spin = Math.PI*2;                       // trigger one full mid-air spin
+      FX.burst(W*0.18, FEET_Y - CH_H*0.5 + G.py, 10, {col:['#cfe0ff','#fff','#9fc0ff'], r:4*SCALE, life:0.4, spd:150, g:60, shape:'star'});
+    }
   }
   window.addEventListener('keydown', e=>{
     if(e.code==='Space'){
@@ -657,10 +688,28 @@ const ASSETS = {"character": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPsA
 
   function spawnSomething(){
     const st = curStage();
-    const obstacleChance = st.adv ? 0.62 : 0.48;
-    if(Math.random() < obstacleChance){ spawnObstacle(); }
-    else { spawnCoins(); }
+    if(Math.random() < CONFIG.BOOST_SPAWN){          // rare boost orb
+      spawnBoost();
+    } else {
+      const obstacleChance = st.adv ? 0.62 : 0.48;
+      if(Math.random() < obstacleChance){
+        if(G.stageIdx >= CONFIG.ENEMY_FROM_STAGE && Math.random() < CONFIG.ENEMY_CHANCE){ spawnEnemy(); }
+        else { spawnObstacle(); }
+      } else { spawnCoins(); }
+    }
     G.nextSpawn = st.gapMin + Math.random()*(st.gapMax-st.gapMin);
+  }
+
+  function spawnBoost(){
+    const sz = 70*SCALE;
+    G.coinsArr.push({kind:'boost', x:W+sz, y:FEET_Y - CH_H*0.6, sz, got:false, bob:Math.random()*6.28});
+  }
+
+  function spawnEnemy(){
+    const img = IMG.cat;
+    const h = 86*SCALE;
+    const w = h*(img.naturalWidth/img.naturalHeight||1);
+    G.enemies.push({ x:W+w, w, h, hop:Math.random()*6.28, dead:false });
   }
 
   function spawnObstacle(){
@@ -748,8 +797,10 @@ const ASSETS = {"character": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPsA
     let mul = st.speedMul;
     if(G.effect==='slow') mul *= CONFIG.SLOW_MUL;
     if(G.effect==='fast') mul *= CONFIG.FAST_MUL;
+    if(G.boostT>0){ mul *= CONFIG.BOOST_MUL; G.boostT-=dt; if(G.boostT<0) G.boostT=0; }
     G.speed = RUN_SPEED_BASE * mul;
     if(G.effect){ G.effectT -= dt; if(G.effectT<=0) G.effect=null; }
+    if(G.super>0){ G.super-=dt; if(G.super<0) G.super=0; }
 
     G.dist += G.speed*dt;
     const speedFrac = G.speed/RUN_SPEED_BASE - 1;
@@ -772,12 +823,17 @@ const ASSETS = {"character": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPsA
         FX.burst(W*0.18, FEET_Y, 8, {col:['rgba(210,210,210,0.85)','rgba(160,160,160,0.7)'], r:4*SCALE, life:0.4, spd:130, g:200});
       } else { G.onGround=true; }
     }
+    if(G.onGround){ G.jumps=0; G.spin=0; }                 // refill jumps on the ground
+    if(G.spin>0){ G.spin -= dt*(Math.PI*2/0.55); if(G.spin<0) G.spin=0; }  // spin decays over ~0.55s
     if(G.squash>0) G.squash-=dt;
     if(G.invuln>0) G.invuln-=dt;
     if(G.hitFlash>0) G.hitFlash-=dt;
 
     // run dust
     if(G.onGround && Math.sin(G.t*16)>0.85) FX.dust(W*0.18 - CH_W*0.3, FEET_Y);
+    // boost flame trail
+    if(G.boostT>0) FX.burst(W*0.18 - CH_W*0.35, FEET_Y - CH_H*0.45 + G.py, 2,
+      {col:['#ff9d2e','#ffe44d','#ff5a2e'], r:5*SCALE, life:0.3, spd:60, g:-30});
 
     // combo decay
     if(G.combo>0){ G.comboT-=dt; if(G.comboT<=0){ G.combo=0; updateCombo(); } }
@@ -786,11 +842,12 @@ const ASSETS = {"character": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPsA
     G.nextSpawn -= dt;
     if(G.nextSpawn<=0) spawnSomething();
 
-    // collision box
+    // collision box (scales with super mode: huge reaches wider, tiny is smaller)
     const feetY = FEET_Y;
     const px = W*0.18;
-    const pw = CH_W*0.62;
-    const pbox = { x:px - pw/2, y:feetY - CH_H*0.72 + G.py, w:pw, h:CH_H*0.7 };
+    const sc = G.super>0 ? G.superScale : 1;
+    const pw = CH_W*0.62*sc;
+    const pbox = { x:px - pw/2, y:feetY - CH_H*0.72*sc + G.py, w:pw, h:CH_H*0.7*sc };
 
     // obstacles
     for(const o of G.obstacles){
@@ -803,6 +860,39 @@ const ASSETS = {"character": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPsA
       }
     }
     G.obstacles = G.obstacles.filter(o=> o.x > -o.w-20 && !o._dead);
+
+    // enemies (moving; stomp from above, hurt from the side)
+    for(const e of G.enemies){
+      e.x -= G.speed*dt*CONFIG.ENEMY_REL_SPEED;
+      e.hop += dt*7;
+      if(e.dead) continue;
+      const ew = e.w*0.5, eh = e.h*0.72;
+      const ex = e.x - ew/2, etop = feetY - eh;
+      if(rectHit(pbox.x,pbox.y,pbox.w,pbox.h, ex,etop,ew,eh)){
+        const playerBottom = pbox.y + pbox.h;
+        const fromAbove = G.vy>0 && playerBottom < etop + eh*0.6;
+        if(fromAbove){                                   // stomp!
+          e.dead=true;
+          G.score += CONFIG.SCORE_STOMP; bumpScore();
+          G.vy = -JUMP_V()*0.6; G.onGround=false; G.jumps=1;  // bounce, keep 1 air-jump
+          Audio_.coin(); FX.shake(4*SCALE,0.18);
+          FX.text(e.x, etop, '+'+CONFIG.SCORE_STOMP, '#ffd23c', 22);
+          FX.burst(e.x, feetY-eh*0.3, 12, {col:['#aaa','#ddd','#888','#ffd23c'], r:4*SCALE, life:0.5, spd:170, g:320, shape:'rect'});
+          syncHUD();
+        } else if(G.super>0 || G.boostT>0){              // power plow-through
+          e.dead=true;
+          FX.burst(e.x, feetY-eh*0.4, 14, {col:['#ffe44d','#fff','#ff9d2e'], r:4*SCALE, life:0.5, spd:200, g:300, shape:'star'});
+        } else if(G.invuln<=0){                          // hit from side -> damage
+          e.dead=true;
+          G.lives--; G.invuln=CONFIG.INVULN; G.hitFlash=0.4; G.combo=0; updateCombo();
+          Audio_.hit(); FX.shake(10*SCALE,0.35);
+          FX.burst(e.x, feetY-eh*0.4, 14, {col:['#ff6b6b','#fff','#888'], r:5*SCALE, life:0.55, spd:200, up:60, g:480, shape:'rect'});
+          hurtHeart(); syncHUD();
+          if(G.lives<=0) return doOver();
+        }
+      }
+    }
+    G.enemies = G.enemies.filter(e=> e.x > -e.w-20 && !e.dead);
 
     // coins
     for(const c of G.coinsArr){
@@ -833,7 +923,13 @@ const ASSETS = {"character": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPsA
       G.effect='fast'; G.effectT=CONFIG.EFFECT_DUR; toast('빨라졌다!','fast'); Audio_.fast();
       FX.burst(o.x, FEET_Y, 12, {col:['#ffe44d','#fff0a0'], r:4*SCALE, life:0.5, spd:160, up:60, g:300});
     } else {
-      if(G.invuln>0 || o._used) return;
+      if(o._used) return;
+      if(G.super>0 || G.boostT>0){            // plow straight through while powered up
+        o._used=true; o._dead=true;
+        FX.burst(o.x, FEET_Y-o.h*0.4, 14, {col:['#ffe44d','#fff','#ff9d2e','#888'], r:5*SCALE, life:0.5, spd:220, up:60, g:420, shape:'rect'});
+        return;
+      }
+      if(G.invuln>0) return;                   // brief mercy after a hit (pass without destroying)
       o._used=true; o._dead=true;
       G.lives--; G.invuln=CONFIG.INVULN; G.hitFlash=0.4;
       G.combo=0; updateCombo();
@@ -847,8 +943,15 @@ const ASSETS = {"character": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPsA
 
   function collectCoin(c){
     c.got=true;
-    G.combo++; G.comboT=1.5; updateCombo();
     const cx=c.x, cy=c.y;
+    if(c.kind==='boost'){                       // boost orb — long speed surge
+      G.boostT = CONFIG.BOOST_DUR;
+      Audio_.fast(); toast('부스트! 🚀','fast'); showBanner('🚀 부스트!','');
+      FX.shake(5*SCALE,0.25);
+      FX.burst(cx, cy, 18, {col:['#ff9d2e','#ffe44d','#fff','#ff5a2e'], r:5*SCALE, life:0.7, spd:250, g:300, shape:'star'});
+      return;
+    }
+    G.combo++; G.comboT=1.5; updateCombo();
     if(c.kind==='normal'){
       G.score+=CONFIG.SCORE_NORMAL; G.coins++;
       Audio_.coin();
@@ -871,6 +974,11 @@ const ASSETS = {"character": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPsA
         popBonus('+'+bonus+' 보너스!');
         Audio_.bonus(); FX.shake(6*SCALE,0.3);
         FX.burst(W*0.5, H*0.4, 28, {col:['#ffe44d','#fff','#ff9d2e','#34a64a','#2f6dd6'], r:5*SCALE, life:0.9, spd:260, g:360, shape:'star'});
+        // SUPER MODE — randomly grow huge or shrink tiny, invincible plow-through
+        G.super = CONFIG.SUPER_DUR;
+        G.superScale = Math.random()<0.5 ? CONFIG.SUPER_BIG : CONFIG.SUPER_SMALL;
+        showBanner(G.superScale>1 ? '⭐ 거대 강치돌!' : '⭐ 미니 강치돌!', '잠시 무적!');
+        Audio_.clear();
         G.collected = new Array(7).fill(false);
         setTimeout(()=> syncHUD(true), 700);
       }
@@ -1081,6 +1189,8 @@ const ASSETS = {"character": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPsA
     for(const c of G.coinsArr) drawCoin(c);
     // obstacles
     for(const o of G.obstacles) drawObstacle(o);
+    // enemies
+    for(const e of G.enemies) drawEnemy(e);
     // character
     drawCharacter(true);
     // particles & floating text (above actors)
@@ -1089,6 +1199,8 @@ const ASSETS = {"character": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPsA
     drawEffectOverlay();
     // atmosphere colour grade + vignette
     drawColourGrade(st.key);
+    // power-up status bars (kept above vignette so they stay bright)
+    drawStatus();
     // hit flash
     if(G.hitFlash>0){ ctx.fillStyle='rgba(255,40,40,'+(G.hitFlash*0.5)+')'; ctx.fillRect(0,0,W,H); }
 
@@ -1128,7 +1240,6 @@ const ASSETS = {"character": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPsA
     const img = IMG.character; if(!img.naturalWidth) return;
     const px = W*0.18;
     drawGroundShadow();
-    let y = FEET_Y - CH_H + G.py;
     let bob = running ? Math.sin(G.t*16)*3*SCALE : Math.sin(performance.now()/400)*2*SCALE;
     if(!G.onGround) bob=0;
 
@@ -1137,12 +1248,42 @@ const ASSETS = {"character": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPsA
     if(G.squash>0){ const k=G.squash/0.16; sx=1+0.18*k; sy=1-0.18*k; }           // landing squash
     else if(!G.onGround){ const v=G.vy/JUMP_V(); const s=Math.max(-0.5,Math.min(0.5,v)); sy=1+0.14*(-s); sx=1-0.10*(-s); } // air stretch
 
-    const dw=CH_W*sx, dh=CH_H*sy;
-    const dx=px-dw/2, dy=(y+bob)+(CH_H-dh);  // keep feet anchored
+    // super-mode scaling (huge or tiny)
+    const sc = G.super>0 ? G.superScale : 1;
+    const dw=CH_W*sx*sc, dh=CH_H*sy*sc;
+    const feetY = (FEET_Y + G.py) + bob;        // feet position
+    const cy = feetY - dh/2;                     // pivot = character centre
 
     ctx.save();
-    if(G.invuln>0 && (Math.floor(G.t*16)%2===0)) ctx.globalAlpha=0.45;
-    ctx.drawImage(img, dx, dy, dw, dh);
+    ctx.translate(px, cy);
+    if(G.spin>0){ ctx.rotate(Math.PI*2 - G.spin); }   // one full forward spin (2nd jump)
+    if(G.super>0) drawSuperAura(dw,dh);
+    if(G.boostT>0) drawBoostAura(dw,dh);
+    if(G.invuln>0 && G.super<=0 && (Math.floor(G.t*16)%2===0)) ctx.globalAlpha=0.45;
+    ctx.drawImage(img, -dw/2, -dh/2, dw, dh);
+    ctx.restore();
+  }
+
+  function drawSuperAura(dw,dh){
+    const r = Math.max(dw,dh)*0.78;
+    const hue = (performance.now()/6)%360;
+    ctx.save();
+    ctx.globalAlpha = 0.55;
+    const g = ctx.createRadialGradient(0,0,r*0.25, 0,0,r);
+    g.addColorStop(0, 'hsla('+hue+',100%,72%,0.85)');
+    g.addColorStop(0.6,'hsla('+((hue+90)%360)+',100%,60%,0.35)');
+    g.addColorStop(1, 'hsla('+((hue+180)%360)+',100%,55%,0)');
+    ctx.fillStyle=g; ctx.beginPath(); ctx.arc(0,0,r,0,6.2832); ctx.fill();
+    ctx.restore();
+  }
+  function drawBoostAura(dw,dh){
+    const r = Math.max(dw,dh)*0.7;
+    const p = 0.5+0.5*Math.sin(performance.now()/80);
+    ctx.save();
+    ctx.globalAlpha = 0.4+0.2*p;
+    const g = ctx.createRadialGradient(0,0,r*0.2, 0,0,r);
+    g.addColorStop(0,'rgba(255,240,170,0.8)'); g.addColorStop(0.6,'rgba(255,140,40,0.35)'); g.addColorStop(1,'rgba(255,90,30,0)');
+    ctx.fillStyle=g; ctx.beginPath(); ctx.arc(0,0,r,0,6.2832); ctx.fill();
     ctx.restore();
   }
 
@@ -1158,17 +1299,79 @@ const ASSETS = {"character": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPsA
     ctx.drawImage(img, o.x-o.w/2, y, o.w, o.h);
   }
 
+  // moving enemy (reuses the cat sprite) — marked with a red glow so it reads as a threat
+  function drawEnemy(e){
+    const img = IMG.cat; if(!img||!img.naturalWidth) return;
+    const hop = Math.abs(Math.sin(e.hop))*8*SCALE;
+    const y = FEET_Y - e.h - hop;
+    // contact shadow
+    ctx.save(); ctx.globalAlpha=0.22; ctx.fillStyle='#000';
+    ctx.beginPath(); ctx.ellipse(e.x, FEET_Y, e.w*0.4, e.h*0.06,0,0,6.2832); ctx.fill(); ctx.restore();
+    // threat glow
+    ctx.save();
+    ctx.globalAlpha = 0.22 + 0.18*Math.abs(Math.sin(e.hop*2));
+    const g = ctx.createRadialGradient(e.x, y+e.h*0.5, e.h*0.1, e.x, y+e.h*0.5, e.h*0.6);
+    g.addColorStop(0,'rgba(255,70,70,0.9)'); g.addColorStop(1,'rgba(255,70,70,0)');
+    ctx.fillStyle=g; ctx.beginPath(); ctx.arc(e.x, y+e.h*0.5, e.h*0.6, 0,6.2832); ctx.fill();
+    ctx.restore();
+    ctx.drawImage(img, e.x-e.w/2, y, e.w, e.h);
+  }
+
+  // boost orb pickup (procedural)
+  function drawBoostOrb(cx,cy,r){
+    const p = 0.5+0.5*Math.sin(performance.now()/120);
+    ctx.save();
+    ctx.globalAlpha = 0.5+0.3*p;
+    const g = ctx.createRadialGradient(cx,cy,r*0.2, cx,cy,r*1.7);
+    g.addColorStop(0,'#fff3b0'); g.addColorStop(0.5,'#ff9d2e'); g.addColorStop(1,'rgba(255,90,30,0)');
+    ctx.fillStyle=g; ctx.beginPath(); ctx.arc(cx,cy,r*1.7,0,6.2832); ctx.fill();
+    ctx.globalAlpha=1;
+    const cg = ctx.createRadialGradient(cx-r*0.3,cy-r*0.3,r*0.1, cx,cy,r);
+    cg.addColorStop(0,'#ffffff'); cg.addColorStop(1,'#ff7a18');
+    ctx.fillStyle=cg; ctx.beginPath(); ctx.arc(cx,cy,r,0,6.2832); ctx.fill();
+    ctx.fillStyle='#fff'; ctx.font='700 '+(r*1.3)+"px 'Apple SD Gothic Neo',sans-serif";
+    ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText('⚡',cx,cy+r*0.04);
+    ctx.restore();
+  }
+
+  // power-up status bars (boost / super remaining)
+  function drawStatus(){
+    const items=[];
+    if(G.boostT>0) items.push({t:G.boostT, max:CONFIG.BOOST_DUR, col:'#ff9d2e', label:'🚀 부스트'});
+    if(G.super>0)  items.push({t:G.super,  max:CONFIG.SUPER_DUR,  col:'#ffe44d', label:'⭐ 슈퍼'});
+    if(!items.length) return;
+    let y = H - 26*SCALE;
+    const w = 170*SCALE, x = W/2 - w/2, h = 10*SCALE;
+    ctx.save();
+    ctx.font='700 '+(13*SCALE)+"px 'Jua','Apple SD Gothic Neo',sans-serif";
+    ctx.textAlign='center'; ctx.textBaseline='bottom';
+    for(const it of items){
+      ctx.fillStyle='rgba(0,0,0,0.45)'; ctx.fillRect(x,y,w,h);
+      ctx.fillStyle=it.col; ctx.fillRect(x,y, w*Math.max(0,Math.min(1,it.t/it.max)), h);
+      ctx.lineWidth=3*SCALE; ctx.strokeStyle='rgba(0,0,0,.5)'; ctx.lineJoin='round';
+      ctx.strokeText(it.label, W/2, y-3*SCALE); ctx.fillStyle='#fff'; ctx.fillText(it.label, W/2, y-3*SCALE);
+      y -= 30*SCALE;
+    }
+    ctx.restore();
+  }
+
   // effect overlays: speed lines (fast) / blue ripple tint (slow)
   function drawEffectOverlay(){
-    if(G.effect==='fast'){
-      ctx.save(); ctx.strokeStyle='rgba(255,240,160,0.55)'; ctx.lineWidth=2*SCALE;
-      for(let i=0;i<10;i++){
+    if(G.boostT>0 || G.effect==='fast'){
+      const boosting = G.boostT>0;
+      const n = boosting ? 16 : 10;
+      ctx.save();
+      ctx.strokeStyle = boosting ? 'rgba(255,180,90,0.6)' : 'rgba(255,240,160,0.55)';
+      ctx.lineWidth = (boosting?3:2)*SCALE;
+      for(let i=0;i<n;i++){
         const yy=((G.t*900 + i*131)% H);
-        const len=80*SCALE + (i%3)*40*SCALE;
-        const xx=((G.t*1600 + i*220)%(W+len)) - len;
+        const len=(boosting?120:80)*SCALE + (i%3)*40*SCALE;
+        const spd=boosting?2400:1600;
+        const xx=((G.t*spd + i*220)%(W+len)) - len;
         ctx.globalAlpha=0.4*(0.5+Math.random()*0.5);
         ctx.beginPath(); ctx.moveTo(xx,yy); ctx.lineTo(xx+len,yy); ctx.stroke();
       }
+      if(boosting){ ctx.globalAlpha=1; ctx.fillStyle='rgba(255,120,30,0.08)'; ctx.fillRect(0,0,W,H); }
       ctx.restore();
     } else if(G.effect==='slow'){
       ctx.save(); ctx.fillStyle='rgba(40,90,180,0.16)'; ctx.fillRect(0,0,W,H);
@@ -1195,6 +1398,7 @@ const ASSETS = {"character": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPsA
     const r = c.sz*0.5;
     const bob = Math.sin(c.bob)*3*SCALE;
     const cx=c.x, cy=c.y+bob;
+    if(c.kind==='boost'){ drawBoostOrb(cx, cy, r*0.9); return; }
     const spin = c.bob*0.9;
     let sx = Math.cos(spin);
     sx = Math.abs(sx)*0.82 + 0.18;
