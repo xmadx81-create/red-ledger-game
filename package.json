@@ -10,14 +10,18 @@
     "preview": "vite preview --host 0.0.0.0",
     "test": "node src/web-mvp/tests/smoke-test.mjs",
     "sim": "node tools/economy-sim.mjs",
-    "prompts": "node tools/gen-portrait-prompts.mjs"
+    "prompts": "node tools/gen-portrait-prompts.mjs",
+    "portal": "node --experimental-sqlite portal/server/index.mjs",
+    "portal:seed": "node --experimental-sqlite portal/server/seed.mjs",
+    "portal:test": "node --experimental-sqlite portal/tests/api-test.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",
-    "vite": "latest",
-    "typescript": "latest",
+    "playwright-core": "^1.61.1",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "typescript": "latest",
+    "vite": "latest"
   },
   "devDependencies": {
     "@types/react": "latest",

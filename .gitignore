@@ -23,3 +23,6 @@ pnpm-debug.log*
 
 # mcp server secrets
 mcp/**/.env
+portal/data/*.db
+portal/data/*.db-*
+portal/data/ebts.db*
