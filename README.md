@@ -58,6 +58,20 @@ npm run sim        # 경제 시뮬: 전설 1장 도달 일수 측정
 
 > **카드게임을 보려면 `npm run play` 후 브라우저에서 `http://localhost:5173/hub.html`을 엽니다.** (정적 exe가 아니라 웹 앱이라 로컬 서버가 필요 — `fetch`로 데이터를 읽기 때문)
 
+## 회원가입·로그인 서버 (`server/`)
+
+홈페이지 회원 기능(회원가입 · 로그인 · 로그인 유지 · 로그아웃)은 별도 Node.js 서버로 동작합니다.
+
+```bash
+npm run auth:install   # 최초 1회 (server/ 의존성 설치)
+npm run auth:dev       # → http://localhost:3000  (/signup · /login · /dashboard)
+npm run auth:test      # 인증 자동 테스트
+```
+
+- 구성: Express 5 + SQLite(회원 DB) + Argon2id(비밀번호 해시) + DB 세션 쿠키
+- 상세: [`server/README.md`](server/README.md), 설계·보안 기준: [`docs/system-design/AUTH_SYSTEM_001.md`](docs/system-design/AUTH_SYSTEM_001.md)
+- GitHub Pages는 정적 호스팅이라 이 서버를 실행할 수 없습니다. 운영 배포에는 Node.js 호스팅이 별도로 필요합니다.
+
 ## 폴더 구조 (요약)
 
 ```text
@@ -65,6 +79,7 @@ red-ledger-game/
 ├─ src/web-mvp/            카드게임 플레이 프로토타입(HTML/CSS/JS)
 │  ├─ data/                게임 데이터(JSON) — 등급/스탯/직업/합성/맵/전투/획득 등
 │  └─ tests/smoke-test.mjs 회귀 스모크 테스트
+├─ server/                 회원 인증 서버(Express + SQLite) — 회원가입·로그인·세션
 ├─ tools/economy-sim.mjs   경제 시뮬레이터
 ├─ docs/game-design/       기획 문서(마스터/시스템별/빌드 현황)
 └─ package.json

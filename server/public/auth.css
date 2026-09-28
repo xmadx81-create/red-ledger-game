@@ -1,0 +1,539 @@
+/* 헌혈의 집 — 회원 화면 공통 스타일 (로그인·회원가입·대시보드) */
+
+:root {
+  --bg: #fff6f4;
+  --surface: #ffffff;
+  --text: #1f2328;
+  --muted: #5b616b;
+  --line: #e4e1e1;
+  --input-line: #8b919a;
+  --accent: #c2334d;
+  --accent-hover: #a82a42;
+  --on-accent: #ffffff;
+  --accent-soft: #fde8ec;
+  --danger: #b42318;
+  --danger-soft: #fef3f2;
+  --success: #067647;
+  --success-soft: #ecfdf3;
+  --info: #1d4ed8;
+  --info-soft: #eff4ff;
+  --focus: #1a56db;
+  --shadow: 0 10px 30px rgba(31, 35, 40, 0.08);
+  --radius: 16px;
+  --font: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR',
+    'Segoe UI', Roboto, sans-serif;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #15171c;
+    --surface: #1f222a;
+    --text: #eef0f3;
+    --muted: #a9b0bb;
+    --line: #353a44;
+    --input-line: #7a818d;
+    --accent: #ff8fa3;
+    --accent-hover: #ffb0bf;
+    --on-accent: #2a0710;
+    --accent-soft: #3a2027;
+    --danger: #ff9c94;
+    --danger-soft: #3a1f1d;
+    --success: #7ee2a8;
+    --success-soft: #16301f;
+    --info: #9dbbff;
+    --info-soft: #1c2640;
+    --focus: #8ab4ff;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    color-scheme: dark;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.5;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+a {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+a:hover {
+  color: var(--accent-hover);
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── 브랜드 ─────────────────────────────── */
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: var(--accent);
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.brand-mark {
+  width: 14px;
+  height: 14px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  background: var(--accent);
+}
+
+/* ── 로그인·회원가입 카드 ─────────────────── */
+
+.auth-page {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 32px 16px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 32px 28px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.auth-title {
+  margin: 16px 0 4px;
+  font-size: 26px;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+
+.auth-subtitle {
+  margin: 0 0 20px;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.auth-form {
+  display: grid;
+  gap: 18px;
+}
+
+.auth-switch {
+  margin: 24px 0 0;
+  text-align: center;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+/* ── 입력란 ─────────────────────────────── */
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+.field label {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.field input {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
+  border: 1px solid var(--input-line);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 16px; /* iOS 입력 시 화면 확대 방지 */
+}
+
+.field input:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 0;
+  border-color: var(--focus);
+}
+
+.field input[aria-invalid='true'] {
+  border-color: var(--danger);
+  border-width: 2px;
+  padding: 11px 13px;
+}
+
+.field-error {
+  margin: 0;
+  color: var(--danger);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.field-error:empty {
+  display: none;
+}
+
+.password-wrap {
+  position: relative;
+}
+
+.password-wrap input {
+  padding-right: 76px;
+}
+
+.password-wrap input[aria-invalid='true'] {
+  padding-right: 75px;
+}
+
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  transform: translateY(-50%);
+  min-width: 60px;
+  min-height: 36px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.password-toggle:hover {
+  background: var(--accent-soft);
+  color: var(--text);
+}
+
+.password-rules {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.password-rules li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.password-rules li::before {
+  content: '';
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--input-line);
+  border-radius: 50%;
+}
+
+.password-rules li.is-met {
+  color: var(--success);
+  font-weight: 600;
+}
+
+.password-rules li.is-met::before {
+  border-color: var(--success);
+  background: var(--success);
+  box-shadow: inset 0 0 0 2px var(--surface);
+}
+
+/* ── 버튼 ───────────────────────────────── */
+
+.submit-button,
+.logout-button,
+.password-toggle {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.submit-button,
+.logout-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 10px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.submit-button {
+  width: 100%;
+  min-height: 52px;
+  margin-top: 4px;
+  padding: 0 20px;
+  border: 0;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 17px;
+}
+
+.submit-button:hover,
+.submit-button:active {
+  background: var(--accent-hover);
+}
+
+.submit-button:disabled,
+.submit-button[aria-disabled='true'],
+.logout-button[aria-disabled='true'] {
+  opacity: 0.7;
+  cursor: progress;
+}
+
+.submit-button:disabled {
+  cursor: not-allowed;
+}
+
+.spinner {
+  display: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+[aria-busy='true'] > .spinner {
+  display: inline-block;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation-duration: 2.4s;
+  }
+}
+
+/* ── 안내·오류 영역 (비어 있으면 자리를 차지하지 않음) ── */
+
+.form-alert,
+.form-notice {
+  margin: 0;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.form-alert:not(:empty),
+.form-notice:not(:empty) {
+  margin-bottom: 16px;
+  padding: 12px 14px;
+}
+
+.form-alert:not(:empty) {
+  background: var(--danger-soft);
+  color: var(--danger);
+  border: 1px solid currentColor;
+}
+
+.form-notice:not(:empty) {
+  background: var(--info-soft);
+  color: var(--info);
+  border: 1px solid currentColor;
+}
+
+.form-notice[data-tone='success']:not(:empty) {
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+/* ── 대시보드 ────────────────────────────── */
+
+.site-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+}
+
+.site-header-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 12px 16px;
+}
+
+.account {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.account-name {
+  font-size: 15px;
+}
+
+.logout-button {
+  min-height: 40px;
+  padding: 0 16px;
+  border: 1px solid var(--input-line);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 15px;
+}
+
+.logout-button:hover {
+  background: var(--accent-soft);
+}
+
+.dashboard {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 28px 16px 48px;
+}
+
+.dashboard .form-alert:not(:empty) {
+  margin-bottom: 20px;
+}
+
+.welcome {
+  padding: 28px 24px;
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, var(--accent-soft), var(--surface));
+  border: 1px solid var(--line);
+}
+
+.welcome h1 {
+  margin: 0 0 8px;
+  font-size: 26px;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+
+.welcome p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.welcome .account-email {
+  margin-top: 12px;
+  font-size: 14px;
+}
+
+.feature-area {
+  margin-top: 32px;
+}
+
+.feature-area h2 {
+  margin: 0 0 14px;
+  font-size: 19px;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.feature-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.feature-card h3 {
+  margin: 0;
+  font-size: 17px;
+}
+
+.feature-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.badge {
+  align-self: flex-start;
+  margin-top: auto;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent-hover);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+@media (prefers-color-scheme: dark) {
+  .badge {
+    color: var(--accent);
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-page {
+    padding: 20px 16px;
+    align-items: start;
+  }
+
+  .auth-card {
+    padding: 24px 20px;
+  }
+
+  .auth-title,
+  .welcome h1 {
+    font-size: 23px;
+  }
+
+  .welcome {
+    padding: 22px 18px;
+  }
+}

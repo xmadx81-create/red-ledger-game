@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>회원가입 | 헌혈의 집</title>
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/assets/auth.css" />
+    <script type="module" src="/assets/signup.js"></script>
+  </head>
+  <body>
+    <main class="auth-page">
+      <section class="auth-card" aria-labelledby="page-title">
+        <p class="brand"><span class="brand-mark" aria-hidden="true"></span>헌혈의 집</p>
+        <h1 id="page-title" class="auth-title">회원가입</h1>
+        <p class="auth-subtitle">몇 가지 정보만 입력하면 바로 시작할 수 있어요.</p>
+
+        <noscript>
+          <p class="form-alert">이 화면을 사용하려면 브라우저에서 JavaScript를 켜 주세요.</p>
+        </noscript>
+        <div id="form-alert" class="form-alert" role="alert"></div>
+
+        <form id="signup-form" class="auth-form" action="/api/auth/signup" method="post" novalidate>
+          <div class="field">
+            <label for="name">이름</label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              autocomplete="name"
+              maxlength="50"
+              required
+              aria-describedby="name-error"
+            />
+            <p id="name-error" class="field-error"></p>
+          </div>
+
+          <div class="field">
+            <label for="email">이메일</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              inputmode="email"
+              autocomplete="email"
+              autocapitalize="none"
+              spellcheck="false"
+              maxlength="254"
+              required
+              aria-describedby="email-error"
+            />
+            <p id="email-error" class="field-error"></p>
+          </div>
+
+          <div class="field">
+            <label for="password">비밀번호</label>
+            <div class="password-wrap">
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autocomplete="new-password"
+                maxlength="128"
+                required
+                aria-describedby="password-hint password-error"
+              />
+              <button
+                type="button"
+                class="password-toggle"
+                data-password-toggle
+                data-label="비밀번호"
+                aria-controls="password"
+                aria-label="비밀번호 표시"
+              >표시</button>
+            </div>
+            <!-- 조건은 아래 체크리스트로 보이고, 화면낭독기에는 이 안내문을 입력란 설명으로 읽어 준다. -->
+            <p id="password-hint" class="sr-only">영문, 숫자, 특수문자를 모두 포함해 8자 이상 입력해 주세요.</p>
+            <ul id="password-rules" class="password-rules" aria-label="비밀번호 조건 충족 여부"></ul>
+            <p id="password-error" class="field-error"></p>
+          </div>
+
+          <div class="field">
+            <label for="passwordConfirm">비밀번호 확인</label>
+            <div class="password-wrap">
+              <input
+                id="passwordConfirm"
+                name="passwordConfirm"
+                type="password"
+                autocomplete="new-password"
+                maxlength="128"
+                required
+                aria-describedby="passwordConfirm-error"
+              />
+              <button
+                type="button"
+                class="password-toggle"
+                data-password-toggle
+                data-label="비밀번호 확인"
+                aria-controls="passwordConfirm"
+                aria-label="비밀번호 확인 표시"
+              >표시</button>
+            </div>
+            <p id="passwordConfirm-error" class="field-error"></p>
+          </div>
+
+          <!-- JavaScript가 준비되면 활성화된다(스크립트 로딩 전 제출 방지). -->
+          <button type="submit" class="submit-button" disabled>
+            <span class="spinner" aria-hidden="true"></span>
+            <span class="submit-label">회원가입</span>
+          </button>
+          <p id="form-status" class="sr-only" role="status"></p>
+        </form>
+
+        <p class="auth-switch">이미 회원이신가요? <a href="/login">로그인</a></p>
+      </section>
+    </main>
+  </body>
+</html>

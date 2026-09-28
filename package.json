@@ -10,7 +10,11 @@
     "preview": "vite preview --host 0.0.0.0",
     "test": "node src/web-mvp/tests/smoke-test.mjs",
     "sim": "node tools/economy-sim.mjs",
-    "prompts": "node tools/gen-portrait-prompts.mjs"
+    "prompts": "node tools/gen-portrait-prompts.mjs",
+    "auth:install": "npm --prefix server install",
+    "auth:dev": "npm --prefix server run dev",
+    "auth:start": "npm --prefix server start",
+    "auth:test": "npm --prefix server test"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",

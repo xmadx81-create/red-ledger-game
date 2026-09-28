@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>로그인 | 헌혈의 집</title>
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/assets/auth.css" />
+    <script type="module" src="/assets/login.js"></script>
+  </head>
+  <body>
+    <main class="auth-page">
+      <section class="auth-card" aria-labelledby="page-title">
+        <p class="brand"><span class="brand-mark" aria-hidden="true"></span>헌혈의 집</p>
+        <h1 id="page-title" class="auth-title">로그인</h1>
+        <p class="auth-subtitle">가입한 이메일과 비밀번호를 입력해 주세요.</p>
+
+        <noscript>
+          <p class="form-alert">이 화면을 사용하려면 브라우저에서 JavaScript를 켜 주세요.</p>
+        </noscript>
+        <p id="form-notice" class="form-notice" role="status"></p>
+        <div id="form-alert" class="form-alert" role="alert"></div>
+
+        <form id="login-form" class="auth-form" action="/api/auth/login" method="post" novalidate>
+          <div class="field">
+            <label for="email">이메일</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              inputmode="email"
+              autocomplete="email"
+              autocapitalize="none"
+              spellcheck="false"
+              maxlength="254"
+              required
+              aria-describedby="email-error"
+            />
+            <p id="email-error" class="field-error"></p>
+          </div>
+
+          <div class="field">
+            <label for="password">비밀번호</label>
+            <div class="password-wrap">
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autocomplete="current-password"
+                required
+                aria-describedby="password-error"
+              />
+              <button
+                type="button"
+                class="password-toggle"
+                data-password-toggle
+                data-label="비밀번호"
+                aria-controls="password"
+                aria-label="비밀번호 표시"
+              >표시</button>
+            </div>
+            <p id="password-error" class="field-error"></p>
+          </div>
+
+          <!-- JavaScript가 준비되면 활성화된다(스크립트 로딩 전 제출 방지). -->
+          <button type="submit" class="submit-button" disabled>
+            <span class="spinner" aria-hidden="true"></span>
+            <span class="submit-label">로그인</span>
+          </button>
+          <p id="form-status" class="sr-only" role="status"></p>
+        </form>
+
+        <p class="auth-switch">아직 회원이 아니신가요? <a href="/signup">회원가입</a></p>
+      </section>
+    </main>
+  </body>
+</html>

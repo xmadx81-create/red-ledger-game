@@ -23,3 +23,9 @@ pnpm-debug.log*
 
 # mcp server secrets
 mcp/**/.env
+
+# auth server local database (server/data/app.db 등)
+server/data/
+*.db
+*.db-wal
+*.db-shm
